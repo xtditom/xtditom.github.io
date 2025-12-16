@@ -1,131 +1,196 @@
-/* --- VARIABLES & THEME --- */
+/* --- VARIABLES --- */
 :root {
-    --bg-color: #0d1117;
-    --text-main: #c9d1d9;
-    --text-muted: #8b949e;
-    --accent: #58a6ff;
-    --card-bg: #161b22;
-    --border: #30363d;
-    --btn-bg: #238636;
+    --bg-color: #0d1117;     /* GitHub Dark Dimmed */
+    --card-bg: #161b22;      /* GitHub Panel Dark */
+    --border: #30363d;       /* Subtle Border */
+    --text-main: #c9d1d9;    /* Light Grey */
+    --text-muted: #8b949e;   /* Muted Grey */
+    --accent: #58a6ff;       /* GitHub Blue */
 }
 
-/* --- RESET & FONTS --- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body { 
     background-color: var(--bg-color); 
     color: var(--text-main); 
     line-height: 1.6; 
-    padding: 20px; 
-    font-family: 'Inter', sans-serif; /* Professional Font */
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
 }
-
-/* Use Monospace for Code-like elements */
-.tech-badge, .status-badge, .specs-list li, code {
-    font-family: 'JetBrains Mono', monospace; 
-}
-
-h1, h2, h3 { font-weight: 800; letter-spacing: -0.5px; }
 
 /* --- LAYOUT --- */
-.container { max-width: 800px; margin: 0 auto; padding-bottom: 50px; }
-
-/* --- HEADER --- */
-header { margin-top: 60px; margin-bottom: 60px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
-h1 { color: #ffffff; font-size: 2.5rem; letter-spacing: -1px; }
-.tagline { color: var(--text-muted); font-size: 1.1rem; margin-top: 5px; min-height: 1.6em; } /* Fixed height to prevent jumping */
-
-.social-nav { margin-top: 20px; display: flex; gap: 15px; }
-.social-nav a { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.95rem; }
-.social-nav a:hover { text-decoration: underline; }
-
-/* --- TYPING CURSOR --- */
-.cursor {
-    display: inline-block;
-    width: 2px;
-    background-color: var(--accent);
-    animation: blink 1s infinite;
-    margin-left: 2px;
-    vertical-align: middle;
+.layout-wrapper {
+    width: 100%; max-width: 600px; margin: 0 auto; padding: 20px;
+    display: flex; flex-direction: column; gap: 40px;
 }
 
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+@media (min-width: 968px) {
+    .layout-wrapper {
+        flex-direction: row; justify-content: space-between; align-items: flex-start;
+        padding: 60px 0; min-height: 100vh; max-width: 90%; gap: 60px;
+    }
+    .profile-sidebar {
+        width: 35%; min-width: 340px; position: sticky; top: 60px; height: auto;
+    }
+    .content-area { width: 60%; max-width: 900px; }
 }
 
-/* --- STATUS BADGE --- */
-.status-badge { 
-    display: inline-block; 
-    font-size: 0.8rem; 
-    font-weight: 600; 
-    padding: 4px 10px; 
-    border-radius: 12px; 
-    margin-top: 10px;
-    background: rgba(56, 139, 253, 0.15); 
-    color: #58a6ff; 
-    border: 1px solid rgba(56, 139, 253, 0.4);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { opacity: 0.8; }
-    50% { opacity: 1; }
-    100% { opacity: 0.8; }
-}
-
-/* --- SECTIONS --- */
-section { margin-bottom: 50px; }
-h2 { color: #ffffff; font-size: 1.5rem; margin-bottom: 20px; display: flex; align-items: center; }
-h2::after { content: ""; flex: 1; height: 1px; background: var(--border); margin-left: 15px; }
-
-/* --- CARDS (With Glow) --- */
-.card {
-    background: var(--card-bg);
+/* --- CARD STYLE --- */
+.card-style {
+    background-color: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 25px;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.card:hover { 
-    border-color: var(--accent); 
-    transform: translateY(-5px); 
-    box-shadow: 0 10px 30px -10px rgba(88, 166, 255, 0.15);
-}
-
-.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-.project-name { font-weight: bold; color: #ffffff; font-size: 1.1rem; }
-.tech-badge { font-size: 0.75rem; color: var(--text-muted); border: 1px solid var(--border); padding: 2px 8px; border-radius: 12px; }
-
-/* --- BUTTONS --- */
-.btn-group { margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--btn-bg);
-    color: #fff;
-    padding: 8px 16px;
-    font-size: 0.85rem;
     border-radius: 6px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.2s;
-    border: 1px solid transparent;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
 }
-.btn:hover { transform: scale(1.05); filter: brightness(1.1); }
-.btn-edge { background-color: #0078D7; }
-.btn-firefox { background-color: #ff7139; }
-.btn-github { background-color: #24292e; border: 1px solid #30363d; }
 
-/* --- SPECS LIST --- */
-.specs-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
-.specs-list li { font-size: 0.9rem; color: var(--text-muted); border: 1px solid var(--border); padding: 10px; border-radius: 6px; }
-.specs-list strong { color: var(--text-main); display: block; margin-bottom: 4px; }
+/* --- PROFILE HEADER --- */
+.center-content { 
+    text-align: center; 
+    display: flex; flex-direction: column; align-items: center;
+} 
 
-/* --- FOOTER --- */
-footer { text-align: center; font-size: 0.8rem; color: var(--text-muted); padding-top: 20px; border-top: 1px solid var(--border); }
+/* 1. BIG NAME (RGB RESTORED) */
+.main-name {
+    font-size: 3rem; 
+    font-weight: 900; 
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+    display: inline-block;
+    
+    /* RGB Gradient */
+    background: linear-gradient(to right, #ef4444, #f59e0b, #10b981, #3b82f6, #8b5cf6, #ef4444);
+    background-size: 200% auto;
+    
+    /* CLIP MAGIC */
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent; /* Makes the gradient visible */
+    
+    animation: runningColors 3s linear infinite;
+    transition: all 0.3s ease;
+}
+
+/* Name turns White on Hover */
+.main-name:hover {
+    background: none;
+    -webkit-text-fill-color: #ffffff;
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(255,255,255,0.8);
+    animation: none;
+}
+
+@keyframes runningColors {
+    to { background-position: 200% center; }
+}
+
+.identity-row {
+    display: flex; align-items: center; justify-content: center;
+    gap: 15px; margin-bottom: 20px; flex-wrap: wrap;
+}
+
+.username-box {
+    display: inline-block; padding: 4px 12px; border: 2px solid #fff;
+    color: #fff; font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    font-size: 1.2rem; background: transparent;
+}
+
+.status-badge { 
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.8rem; font-weight: 600; 
+    padding: 6px 12px; border-radius: 20px; 
+    background: rgba(56, 139, 253, 0.1); 
+    color: var(--accent); border: 1px solid rgba(56, 139, 253, 0.3);
+}
+.status-dot { width: 8px; height: 8px; background-color: currentColor; border-radius: 50%; animation: blink 1s infinite; }
+
+.tagline-wrapper { color: var(--accent); margin-bottom: 30px; font-weight: 500; }
+.highlight { color: #fff; font-weight: 800; }
+.bio { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; text-align: left; }
+.bio p { margin-bottom: 15px; }
+
+/* SOCIAL LIST */
+.social-list { display: flex; flex-direction: column; gap: 10px; text-align: left; width: 100%; }
+.social-row {
+    display: flex; align-items: center; gap: 15px;
+    padding: 12px 16px;
+    background: #0d1117; 
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500; font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+/* BRAND COLOR HOVERS */
+.social-row:hover { color: #fff; border-color: currentColor; }
+
+.github:hover { color: #fff; border-color: #fff; }
+.blog:hover { color: #f97316; border-color: #f97316; } /* Orange */
+.facebook:hover { color: #1877F2; border-color: #1877F2; } /* FB Blue */
+.twitter:hover { color: #1DA1F2; border-color: #1DA1F2; } /* Twitter Blue */
+.instagram:hover { color: #E4405F; border-color: #E4405F; } /* Insta Pink */
+.discord:hover { color: #5865F2; border-color: #5865F2; } /* Discord Blurple */
+.email:hover { color: #ea4335; border-color: #ea4335; } /* Gmail Red */
+
+/* Ensure Icons match the text color on hover */
+.social-row:hover i { color: inherit; }
+
+/* --- CONTENT --- */
+.section-title { font-size: 1.2rem; color: #fff; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; }
+.card { margin-bottom: 25px; transition: all 0.3s ease; }
+.card:hover { border-color: var(--text-muted); }
+
+.project-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+.project-name { font-size: 1.2rem; margin: 0; color: #fff; }
+
+/* BADGES */
+.tech-badge-bold {
+    font-size: 0.75rem; font-weight: 800;
+    color: #f59e0b; background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    padding: 4px 8px; border-radius: 6px; font-family: 'JetBrains Mono', monospace;
+}
+.tech-badge-bold-blue {
+    font-size: 0.75rem; font-weight: 800;
+    color: #3b82f6; background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 4px 8px; border-radius: 6px; font-family: 'JetBrains Mono', monospace;
+}
+
+/* SKILLS */
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+.skill-card { padding: 20px; text-align: left; transition: all 0.3s; }
+.skill-icon { font-size: 2rem; margin-bottom: 10px; transition: color 0.3s; }
+
+.skill-html .skill-icon { color: #e34c26; } .skill-html { border-bottom: 2px solid #e34c26; }
+.skill-js .skill-icon { color: #f7df1e; } .skill-js { border-bottom: 2px solid #f7df1e; }
+.skill-adobe .skill-icon { color: #31a8ff; } .skill-adobe { border-bottom: 2px solid #31a8ff; }
+.skill-collab .skill-icon { color: #4ade80; } .skill-collab { border-bottom: 2px solid #4ade80; }
+
+.skill-card:hover { background: #000000; border-color: #000000; transform: translateY(-3px); }
+.skill-card:hover h4, .skill-card:hover p { color: #ffffff; }
+.skill-card:hover .skill-icon { color: #ffffff; }
+
+/* RIGS */
+.specs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+.spec-item { padding: 15px; border-radius: 8px; display: flex; flex-direction: column; gap: 5px; transition: border-color 0.2s; }
+.spec-item:hover { border-color: var(--text-muted); background: #0d1117; }
+.spec-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+.spec-value { font-size: 0.9rem; color: #fff; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+
+/* BUTTONS */
+.btn-group { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+.btn { padding: 8px 16px; font-size: 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; color: #fff; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease; }
+.btn-edge:hover { background: #0078d7; border-color: #0078d7; }
+.btn-firefox:hover { background: #ff7139; border-color: #ff7139; }
+.btn-github:hover { background: #ffffff; color: #000; border-color: #fff; }
+
+footer { text-align: right; margin-top: 50px; font-size: 0.85rem; color: var(--text-muted); opacity: 0.7; }
+.cursor { animation: blink 1s infinite; margin-left: 2px; color: var(--accent); }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@media (max-width: 768px) { .profile-sidebar { width: 100%; } .content-area { width: 100%; } footer { text-align: center; } }

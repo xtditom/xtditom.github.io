@@ -3,91 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio of Ditom Baroi Antu - Student & Web Developer">
+    <meta name="description" content="Portfolio of Ditom Baroi Antu - Developer & Tech Enthusiast">
     <title>Ditom Baroi Antu | Developer</title>
     
     <link rel="icon" href="https://github.com/xtditom.png">
 
-    <meta property="og:title" content="Ditom Baroi Antu | Developer Portfolio">
-    <meta property="og:description" content="Check out my browser extensions, web projects, and PC specs. Built by a student developer.">
-    <meta property="og:image" content="https://github.com/xtditom.png">
-    <meta property="og:url" content="https://xtditom.github.io">
-    <meta property="og:type" content="website">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body>
 
-    <div class="container">
+    <div class="layout-wrapper">
         
-        <header>
-            <h1>Ditom Baroi Antu</h1>
-            
-            <p class="tagline">
-                I am a <span id="typing-text" style="color: #ffffff; font-weight: bold;"></span><span class="cursor">|</span>
-            </p>
-            
-            <span id="status-badge" class="status-badge">Loading Status...</span>
+        <aside class="profile-sidebar card-style">
+            <div class="profile-content center-content">
+                <header>
+                    <h1 class="main-name">DITOM BAROI ANTU</h1>
+                    
+                    <div class="identity-row">
+                        <div class="username-wrapper">
+                            <span id="glitch-box" class="username-box">XTDITOM</span>
+                        </div>
+                        
+                        <div id="status-badge" class="status-badge">
+                            <span class="status-dot"></span> <span id="status-text">Loading...</span>
+                        </div>
+                    </div>
 
-            <div class="social-nav">
-                <a href="https://github.com/xtditom" target="_blank">GitHub</a>
-                <a href="https://ditom.art.blog" target="_blank">DitomXTechnical (Blog)</a>
-                <a href="mailto:ditombaroi@gmail.com">Email Me</a>
-            </div>
-        </header>
+                    <div class="tagline-wrapper">
+                        <span class="prefix">I am a </span>
+                        <span id="typing-text" class="highlight"></span><span class="cursor">|</span>
+                    </div>
+                </header>
 
-        <section>
-            <h2>Featured Projects</h2>
-            
-            <div class="card">
-                <div class="card-header">
-                    <span class="project-name">Your Dynamic Dashboard</span>
-                    <span class="tech-badge">JavaScript Extension</span>
+                <div class="bio">
+                    <p>
+                        Hi, I'm <strong>Ditom</strong>. I'm an 18-year-old student-developer from <strong>Nawabganj, Dhaka, Bangladesh.</strong> 
+                        Currently, I'm balancing my Class XII studies at <span class="highlight-subtle">Shaikh Burhanuddin Post Graduate College</span> with my obsession for Technology.
+                    </p>
+                    <p>
+                        I’m kicking off my journey in programming and design as a student developer, driven by the logic behind the code and a passion to build amazing projects.
+                        I’m constantly pushing the boundaries of what I can build, moving from simple scripts to complex automation, fueled by late-night coding sessions and pure curiosity.
+                    </p>
                 </div>
-                <p>A customizable browser new tab extension featuring dynamic backgrounds, weather updates, and shortcuts. Published on Edge Store and Firefox Add-ons.</p>
+
+                <div class="social-list">
+                    <a href="https://github.com/xtditom" target="_blank" class="social-row github">
+                        <i class="fab fa-github"></i> <span>xtditom</span>
+                    </a>
+                    <a href="https://ditom.art.blog" target="_blank" class="social-row blog">
+                        <i class="fas fa-rss"></i> <span>DitomXTechnical</span>
+                    </a>
+                    <a href="https://www.facebook.com/xtditom" target="_blank" class="social-row facebook">
+                        <i class="fab fa-facebook"></i> <span>Ditom Baroi Antu</span>
+                    </a>
+                    <a href="https://x.com/xtditom369" target="_blank" class="social-row twitter">
+                        <i class="fab fa-x-twitter"></i> <span>Ditom Baroi Antu</span>
+                    </a>
+                    <a href="https://www.instagram.com/xtditom" target="_blank" class="social-row instagram">
+                        <i class="fab fa-instagram"></i> <span>xtditom</span>
+                    </a>
+                    <a href="https://discordapp.com/users/1116336431099555950" target="_blank" class="social-row discord">
+                        <i class="fab fa-discord"></i> <span>xtditom</span>
+                    </a>
+                    <a href="mailto:ditombaroi@gmail.com" class="social-row email">
+                        <i class="fas fa-envelope"></i> <span>Email Me</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content-area">
+            
+            <section id="projects">
+                <h2 class="section-title"><i class="fas fa-code-branch"></i> Featured Projects</h2>
                 
-                <div class="btn-group">
-                    <a href="https://microsoftedge.microsoft.com/addons/detail/yourdynamicdashboard/phhofebhbmicnfhmmdgikiddaboljnec" class="btn btn-edge" target="_blank">Edge Store</a>
-                    <a href="https://addons.mozilla.org/en-US/firefox/addon/yourdynamicdashboard/" class="btn btn-firefox" target="_blank">Firefox</a>
-                    <a href="https://github.com/xtditom/YourDynamicDashboard" class="btn btn-github" target="_blank">GitHub Source</a>
+                <div class="card card-style">
+                    <div class="card-header">
+                        <div class="project-title-row">
+                            <h3 class="project-name">YourDynamicDashboard</h3>
+                            <span class="tech-badge-bold">JavaScript Extension</span>
+                        </div>
+                    </div>
+                    
+                    <p>A customizable browser new tab extension featuring dynamic backgrounds and weather APIs. Transform your new tab into a privacy-first command center. v2.0 introduces "Zen Mode" for deep focus, "Jarvis" Voice Search, and zero-setup Instant Weather. Navigate like a pro with "God Mode" keyboard shortcuts and customize your space with dual clocks, AI tools, and auto-shuffling themes. No tracking, no API keys needed—just pure productivity.</p>
+                    
+                    <div class="btn-group">
+                        <a href="https://microsoftedge.microsoft.com/addons/detail/yourdynamicdashboard/phhofebhbmicnfhmmdgikiddaboljnec" class="btn btn-edge" target="_blank"><i class="fab fa-edge"></i> Edge</a>
+                        <a href="https://addons.mozilla.org/en-US/firefox/addon/yourdynamicdashboard/" class="btn btn-firefox" target="_blank"><i class="fab fa-firefox-browser"></i> Firefox</a>
+                        <a href="https://github.com/xtditom/YourDynamicDashboard" class="btn btn-github" target="_blank"><i class="fab fa-github"></i> Source</a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <span class="project-name">Portfolio Website</span>
-                    <span class="tech-badge">HTML/CSS</span>
+                <div class="card card-style">
+                    <div class="card-header">
+                        <div class="project-title-row">
+                            <h3 class="project-name">Portfolio Website</h3>
+                            <span class="tech-badge-bold-blue">HTML/CSS</span>
+                        </div>
+                    </div>
+                    <p>A responsive, split-layout portfolio hosted on GitHub Pages. Features clean UI, optimized assets, and zero-dependency architecture.</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-github"><i class="fas fa-eye"></i> You are here</a>
+                    </div>
                 </div>
-                <p>A minimal, responsive portfolio hosted directly on GitHub Pages. No frameworks, just raw code.</p>
-                <div class="btn-group">
-                    <a href="#" class="btn btn-github">You are looking at it</a>
+            </section>
+
+            <section id="skills">
+                <h2 class="section-title"><i class="fas fa-bolt"></i> Tech Stack</h2>
+                <div class="skills-grid">
+                    <div class="card skill-card card-style skill-html">
+                        <div class="skill-icon"><i class="fab fa-html5"></i></div>
+                        <h4>HTML & CSS</h4>
+                        <p>Semantic markup, Flexbox/Grid layouts.</p>
+                    </div>
+                    <div class="card skill-card card-style skill-js">
+                        <div class="skill-icon"><i class="fab fa-js"></i></div>
+                        <h4>JavaScript</h4>
+                        <p>DOM manipulation, Fetch API, modular scripts.</p>
+                    </div>
+                    <div class="card skill-card card-style skill-adobe">
+                        <div class="skill-icon"><i class="fas fa-pen-nib"></i></div>
+                        <h4>Adobe Creative Cloud</h4>
+                        <p>Asset creation using <strong>Illustrator</strong> & <strong>Photoshop</strong>.</p>
+                    </div>
+                    <div class="card skill-card card-style skill-collab">
+                        <div class="skill-icon"><i class="fas fa-users"></i></div>
+                        <h4>Collaboration</h4>
+                        <p>Git workflows and team documentation.</p>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section>
-            <h2>My Rig</h2>
-            <ul class="specs-list">
-                <li><strong>CPU</strong> Ryzen 5 5600GT (3.6GHz - 4.4GHz)</li>
-                <li><strong>GPU</strong> Radeon Vega 7 i-GPU</li>
-                <li><strong>RAM</strong> 16GB Kingston Fury Beast (Dual Channel)</li>
-                <li><strong>Storage</strong> HP EX900 PLUS 512 NVME</li>
-                <li><strong>Case</strong> Maxcool Inferno MC5</li>
-                <li><strong>Monitor</strong> 100Hz Display</li>
-            </ul>
-        </section>
+            <section id="rig">
+                <h2 class="section-title"><i class="fas fa-microchip"></i> My Rig</h2>
+                <div class="specs-grid">
+                    <div class="spec-item card-style">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">Ryzen 5 5600GT</span>
+                    </div>
+                    <div class="spec-item card-style">
+                        <span class="spec-label">GPU</span>
+                        <span class="spec-value">Radeon Vega 7 i-GPU</span>
+                    </div>
+                    <div class="spec-item card-style">
+                        <span class="spec-label">Motherboard</span>
+                        <span class="spec-value">GIGABYTE B450M K</span>
+                    </div>
+                    <div class="spec-item card-style">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">16GB Kingston Fury Beast</span>
+                    </div>
+                    <div class="spec-item card-style">
+                        <span class="spec-label">Storage</span>
+                        <span class="spec-value">HP EX900 PLUS 512GB NVME</span>
+                    </div>
+                    <div class="spec-item card-style">
+                        <span class="spec-label">Monitor</span>
+                        <span class="spec-value">DAHUA DHI-LM22-A201YF</span>
+                    </div>
+                    <div class="spec-item card-style">
+                        <span class="spec-label">Peripherals</span>
+                        <span class="spec-value">AULA F2023 Combo</span>
+                    </div>
+                    <div class="spec-item card-style">
+                        <span class="spec-label">Audio</span>
+                        <span class="spec-value">Fantech HG20 Chief II</span>
+                    </div>
+                </div>
+            </section>
 
-        <footer>
-            <p>&copy; 2025 Ditom Baroi. Built with code & logic.</p>
-        </footer>
+            <footer>
+                <p>&copy; 2025 Ditom Baroi Antu. All rights reserved.</p>
+            </footer>
+        </main>
 
     </div>
 
     <script src="script.js"></script>
-
 </body>
 </html>
