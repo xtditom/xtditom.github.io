@@ -51,6 +51,8 @@
         .project-name { font-weight: bold; color: #ffffff; font-size: 1.1rem; }
         .tech-badge { font-size: 0.75rem; color: var(--text-muted); border: 1px solid var(--border); padding: 2px 8px; border-radius: 12px; }
         
+        /* --- BUTTONS --- */
+        .btn-group { margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
         .btn {
             display: inline-block;
             background-color: var(--btn-bg);
@@ -59,12 +61,17 @@
             font-size: 0.85rem;
             border-radius: 6px;
             text-decoration: none;
-            margin-top: 15px;
             font-weight: 600;
+            border: 1px solid transparent;
         }
-        .btn:hover { background-color: #2ea043; }
+        .btn:hover { opacity: 0.9; }
+        
+        /* Button Colors */
+        .btn-edge { background-color: #0078D7; }
+        .btn-firefox { background-color: #ff7139; }
+        .btn-github { background-color: #24292e; border: 1px solid #30363d; }
 
-        /* --- SPECS LIST (For the PC Enthusiast) --- */
+        /* --- SPECS LIST --- */
         .specs-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
         .specs-list li { font-size: 0.9rem; color: var(--text-muted); border: 1px solid var(--border); padding: 10px; border-radius: 6px; }
         .specs-list strong { color: var(--text-main); display: block; margin-bottom: 4px; }
@@ -82,8 +89,8 @@
             <p class="tagline">Student (Class XII) • Web Developer • Hardware Enthusiast</p>
             <div class="social-nav">
                 <a href="https://github.com/xtditom" target="_blank">GitHub</a>
-                <a href="https://ditom.art.blog" target="_blank">Blog</a>
-                <a href="mailto:your-email@example.com">Email</a>
+                <a href="https://ditom.art.blog" target="_blank">DitomXTechnical (Blog)</a>
+                <a href="mailto:ditombaroi@gmail.com">Email Me</a>
             </div>
         </header>
 
@@ -93,10 +100,15 @@
             <div class="card">
                 <div class="card-header">
                     <span class="project-name">Your Dynamic Dashboard</span>
-                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">JavaScript Extension</span>
                 </div>
-                <p>A browser extension featuring dynamic backgrounds, weather updates, and custom shortcuts. Currently published on Edge Store and Firefox Add-ons.</p>
-                <a href="https://github.com/xtditom/YourDynamicDashboard" class="btn" target="_blank">View Source</a>
+                <p>A customizable browser new tab extension featuring dynamic backgrounds, weather updates, and shortcuts. Published on Edge Store and Firefox Add-ons.</p>
+                
+                <div class="btn-group">
+                    <a href="https://microsoftedge.microsoft.com/addons/detail/yourdynamicdashboard/phhofebhbmicnfhmmdgikiddaboljnec" class="btn btn-edge" target="_blank">Edge Store</a>
+                    <a href="https://addons.mozilla.org/en-US/firefox/addon/yourdynamicdashboard/" class="btn btn-firefox" target="_blank">Firefox</a>
+                    <a href="https://github.com/xtditom/YourDynamicDashboard" class="btn btn-github" target="_blank">GitHub Source</a>
+                </div>
             </div>
 
             <div class="card">
@@ -104,22 +116,27 @@
                     <span class="project-name">Portfolio Website</span>
                     <span class="tech-badge">HTML/CSS</span>
                 </div>
-                <p>You are looking at it. A minimal, responsive portfolio hosted on GitHub Pages to showcase development work.</p>
+                <p>A minimal, responsive portfolio hosted directly on GitHub Pages. No frameworks, just raw code.</p>
+                <div class="btn-group">
+                    <a href="#" class="btn btn-github">You are looking at it</a>
+                </div>
             </div>
         </section>
 
         <section>
             <h2>My Rig</h2>
             <ul class="specs-list">
-                <li><strong>CPU</strong> Ryzen 5 5600GT</li>
+                <li><strong>CPU</strong> Ryzen 5 5600GT (3.6GHz - 4.4GHz)</li>
                 <li><strong>GPU</strong> Radeon Vega 7 i-GPU</li>
-                <li><strong>RAM</strong> 16GB Kingston Fury Beast</li>
+                <li><strong>RAM</strong> 16GB Kingston Fury Beast (Dual Channel)</li>
                 <li><strong>Storage</strong> HP EX900 PLUS 512 NVME</li>
+                <li><strong>Case</strong> Maxcool Inferno MC5</li>
+                <li><strong>Monitor</strong> 100Hz Display</li>
             </ul>
         </section>
 
         <footer>
-            <p>&copy; 2025 Ditom Baroi. Built with code.</p>
+            <p>&copy; 2025 Ditom Baroi. Built with code & logic.</p>
         </footer>
 
     </div>
