@@ -17,7 +17,7 @@ body {
     color: var(--text-main); 
     line-height: 1.6; 
     padding: 20px; 
-    font-family: 'Inter', sans-serif; /* Clean UI Font */
+    font-family: 'Inter', sans-serif; /* Professional Font */
 }
 
 /* Use Monospace for Code-like elements */
@@ -26,7 +26,6 @@ body {
 }
 
 h1, h2, h3 { font-weight: 800; letter-spacing: -0.5px; }
-body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; }
 
 /* --- LAYOUT --- */
 .container { max-width: 800px; margin: 0 auto; padding-bottom: 50px; }
@@ -34,10 +33,26 @@ body { background-color: var(--bg-color); color: var(--text-main); line-height: 
 /* --- HEADER --- */
 header { margin-top: 60px; margin-bottom: 60px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
 h1 { color: #ffffff; font-size: 2.5rem; letter-spacing: -1px; }
-.tagline { color: var(--text-muted); font-size: 1.1rem; margin-top: 5px; }
+.tagline { color: var(--text-muted); font-size: 1.1rem; margin-top: 5px; min-height: 1.6em; } /* Fixed height to prevent jumping */
+
 .social-nav { margin-top: 20px; display: flex; gap: 15px; }
 .social-nav a { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.95rem; }
 .social-nav a:hover { text-decoration: underline; }
+
+/* --- TYPING CURSOR --- */
+.cursor {
+    display: inline-block;
+    width: 2px;
+    background-color: var(--accent);
+    animation: blink 1s infinite;
+    margin-left: 2px;
+    vertical-align: middle;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
 
 /* --- STATUS BADGE --- */
 .status-badge { 
@@ -64,43 +79,11 @@ section { margin-bottom: 50px; }
 h2 { color: #ffffff; font-size: 1.5rem; margin-bottom: 20px; display: flex; align-items: center; }
 h2::after { content: ""; flex: 1; height: 1px; background: var(--border); margin-left: 15px; }
 
-/* --- CARDS --- */
+/* --- CARDS (With Glow) --- */
 .card {
     background: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 20px;
-    margin-bottom: 15px;
-    transition: transform 0.15s ease-in-out;
-}
-.card:hover { border-color: var(--text-muted); transform: translateY(-2px); }
-.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-.project-name { font-weight: bold; color: #ffffff; font-size: 1.1rem; }
-.tech-badge { font-size: 0.75rem; color: var(--text-muted); border: 1px solid var(--border); padding: 2px 8px; border-radius: 12px; }
-
-/* --- BUTTONS --- */
-.btn-group { margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
-.btn {
-    display: inline-block;
-    background-color: var(--btn-bg);
-    color: #fff;
-    padding: 6px 12px;
-    font-size: 0.85rem;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 600;
-    border: 1px solid transparent;
-}
-.btn:hover { opacity: 0.9; }
-.btn-edge { background-color: #0078D7; }
-.btn-firefox { background-color: #ff7139; }
-.btn-github { background-color: #24292e; border: 1px solid #30363d; }
-
-/* --- UPGRADED CARDS --- */
-.card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 8px; /* Slightly more rounded */
+    border-radius: 8px;
     padding: 25px;
     margin-bottom: 20px;
     transition: all 0.3s ease;
@@ -108,31 +91,36 @@ h2::after { content: ""; flex: 1; height: 1px; background: var(--border); margin
     overflow: hidden;
 }
 
-/* The Glow Effect on Hover */
 .card:hover { 
     border-color: var(--accent); 
     transform: translateY(-5px); 
-    box-shadow: 0 10px 30px -10px rgba(88, 166, 255, 0.2);
+    box-shadow: 0 10px 30px -10px rgba(88, 166, 255, 0.15);
 }
 
-/* --- UPGRADED BUTTONS --- */
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.project-name { font-weight: bold; color: #ffffff; font-size: 1.1rem; }
+.tech-badge { font-size: 0.75rem; color: var(--text-muted); border: 1px solid var(--border); padding: 2px 8px; border-radius: 12px; }
+
+/* --- BUTTONS --- */
+.btn-group { margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--btn-bg);
+    color: #fff;
     padding: 8px 16px;
     font-size: 0.85rem;
     border-radius: 6px;
     text-decoration: none;
     font-weight: 600;
     transition: all 0.2s;
-    font-family: 'Inter', sans-serif;
+    border: 1px solid transparent;
 }
-
-.btn:hover { 
-    transform: scale(1.05); 
-    filter: brightness(1.1);
-}
+.btn:hover { transform: scale(1.05); filter: brightness(1.1); }
+.btn-edge { background-color: #0078D7; }
+.btn-firefox { background-color: #ff7139; }
+.btn-github { background-color: #24292e; border: 1px solid #30363d; }
 
 /* --- SPECS LIST --- */
 .specs-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
