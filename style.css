@@ -186,10 +186,10 @@ body {
 /* BUTTONS */
 .btn-group { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
 .btn { padding: 8px 16px; font-size: 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; color: #fff; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease; }
-.btn-edge:hover { background: #0078d7; border-color: #0078d7; }
+.btn-chrome:hover { background: #4285F4; border-color: #4285F4; }
+.btn-edge:hover { background: #629c2b; border-color: #0078d7; }
 .btn-firefox:hover { background: #ff7139; border-color: #ff7139; }
 .btn-github:hover { background: #ffffff; color: #000; border-color: #fff; }
-.btn-chrome:hover { background: #4285F4; border-color: #4285F4; color: #fff;box-shadow: 0 0 15px rgba(66, 133, 244, 0.4); }
 
 
 footer { text-align: right; margin-top: 50px; font-size: 0.85rem; color: var(--text-muted); opacity: 0.7; }
