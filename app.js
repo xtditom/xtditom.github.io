@@ -87,7 +87,33 @@ document.addEventListener("DOMContentLoaded", (event) => {
         onLeaveBack: elements => gsap.set(elements, { opacity: 0, y: 16, overwrite: true })
     });
     animateOnScroll(".gsap-graph", ".gsap-graph");
+    animateOnScroll(".gsap-rig", "#rigs", 0.2);
+    animateOnScroll(".gsap-rig-item", "#rigs", 0.08);
     animateOnScroll(".gsap-contact", "#contact", 0.15);
+    
+    // Terminal Entrance Animation Logic
+    gsap.fromTo(".gsap-terminal", {
+        opacity: 0,
+        y: 60,
+        scaleY: 0.5,
+        scaleX: 0.9,
+        rotateX: 15,
+        transformOrigin: "top center",
+        perspective: 1000
+    }, {
+        scrollTrigger: {
+            trigger: "#terminal",
+            start: "top 75%",
+            toggleActions: "play none none reverse"
+        },
+        opacity: 1,
+        y: 0,
+        scaleY: 1,
+        scaleX: 1,
+        rotateX: 0,
+        duration: 1.6,
+        ease: "expo.out"
+    });
 
     // Mobile Menu Toggle
     const mobileMenuBtn = document.getElementById("mobile-menu-btn");
@@ -235,4 +261,298 @@ document.addEventListener("DOMContentLoaded", (event) => {
             }
         }
     });
+
+    // Interactive CLI Logic
+    const cliInput = document.getElementById('cli-input');
+    const cliOutput = document.getElementById('cli-output');
+    
+    if (cliInput && cliOutput) {
+        let mailState = 'idle'; // tracks: idle, awaiting_email, awaiting_message
+        let mailData = { email: '', message: '' };
+
+        const commands = {
+            'help': 'Available commands: <br> - <strong>whoami</strong>: Displays my brief bio <br> - <strong>skills</strong>: Lists core engineering skills <br> - <strong>start</strong>: Restarts the boot interface <br> - <strong>neofetch</strong>: Displays system architecture <br> - <strong>theme [light/dark]</strong>: Toggles system colors <br> - <strong>mail</strong>: Send a direct message to my inbox <br> - <strong>matrix</strong>: Execute visual protocol <br> - <strong>clear</strong>: Clears the terminal output <br> - <strong>exit</strong>: Terminates the session',
+            'whoami': 'Ditom Baroi Antu. 18-year-old student developer from Dhaka, Bangladesh. Currently obsessing over JavaScript and local-first browser architectures.',
+            'skills': 'Vanilla JS, IndexedDB, GSAP, Tailwind CSS v4, Next.js, Python.',
+            'sudo': 'Access denied. This incident will be reported.'
+        };
+
+        cliOutput.parentElement.addEventListener('click', () => cliInput.focus());
+
+        cliInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const rawInput = this.value.trim();
+                if (rawInput === '') return;
+
+                const args = rawInput.split(' ').filter(Boolean);
+                const cmd = args[0].toLowerCase();
+
+                // --- STATE MACHINE: MAIL COMMAND INTERCEPTION ---
+                if (mailState !== 'idle') {
+                    // Escape Hatches: Kill state if user types these specific commands
+                    if (cmd === 'cancel' || cmd === 'exit' || cmd === 'clear') {
+                        mailState = 'idle';
+                        if (cmd === 'cancel') {
+                            cliOutput.innerHTML += `<div class="mt-2"><span class="text-white">${rawInput}</span></div><div class="text-yellow-400 mt-1 ml-4">[ABORTED] Mail protocol terminated.</div>`;
+                            this.value = '';
+                            setTimeout(() => { cliOutput.scrollTop = cliOutput.scrollHeight; }, 50);
+                            return;
+                        }
+                        // If 'clear' or 'exit', fall through to normal command processor
+                    } else {
+                        // Standard Mail State Processing
+                        cliOutput.innerHTML += `<div class="mt-2"><span class="text-white">${rawInput}</span></div>`;
+
+                        if (mailState === 'awaiting_email') {
+                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                            if (!emailRegex.test(rawInput)) {
+                                cliOutput.innerHTML += `<div class="text-red-400 mt-1 ml-4">Invalid email format. Try again or type 'cancel':</div><div class="mt-1"><span class="text-emerald-400 font-bold mr-2">Email:</span></div>`;
+                                this.value = '';
+                                cliOutput.scrollTop = cliOutput.scrollHeight;
+                                return;
+                            }
+                            mailData.email = rawInput;
+                            mailState = 'awaiting_message';
+                            cliOutput.innerHTML += `<div class="text-lime-400 mt-1 ml-4">Email accepted.</div><div class="mt-2"><span class="text-emerald-400 font-bold mr-2">Message:</span></div>`;
+                        } else if (mailState === 'awaiting_message') {
+                            mailData.message = rawInput;
+                            cliOutput.innerHTML += `<div class="text-yellow-400 mt-1 ml-4">Transmitting payload to server...</div>`;
+                            this.disabled = true;
+
+                            fetch("https://formspree.io/f/xpqyjoyj", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ email: mailData.email, message: mailData.message, _subject: "CLI Terminal Contact" })
+                            }).then(response => {
+                                if (response.ok) {
+                                    cliOutput.innerHTML += `<div class="text-emerald-400 font-bold mt-1 ml-4">[OK] Message delivered successfully.</div>`;
+                                } else {
+                                    cliOutput.innerHTML += `<div class="text-red-400 mt-1 ml-4">[ERROR] Server rejected the payload.</div>`;
+                                }
+                            }).catch(error => {
+                                cliOutput.innerHTML += `<div class="text-red-400 mt-1 ml-4">[ERROR] Network failure.</div>`;
+                            }).finally(() => {
+                                mailState = 'idle';
+                                this.disabled = false;
+                                this.focus();
+                                cliOutput.scrollTop = cliOutput.scrollHeight;
+                            });
+                        }
+                        this.value = '';
+                        setTimeout(() => { cliOutput.scrollTop = cliOutput.scrollHeight; }, 50);
+                        return; // Halt standard command processing
+                    }
+                }
+                // --- END STATE MACHINE ---
+
+                const promptPrefix = window.innerWidth > 768 ? 'guest@xtditom:~$' : '~$';
+                cliOutput.innerHTML += `<div class="mt-2"><span class="text-emerald-400 font-bold mr-2">${promptPrefix}</span><span class="text-white">${rawInput}</span></div>`;
+
+                // Process Standard & Advanced Commands
+                if (cmd === 'clear') {
+                    cliOutput.innerHTML = '';
+                } else if (cmd === 'start') {
+                    cliOutput.innerHTML += `<div class="mt-2"><span class="text-zinc-500">XTDITOM OS [Version 0.0.0]</span></div><div><span class="text-zinc-500">(c) 2026 Ditom Baroi Antu. All rights reserved.</span></div><br><div>Type <span class="text-white font-bold">'help'</span> to see a list of available commands.</div>`;
+                } else if (cmd === 'theme') {
+                    const mode = args[1]?.toLowerCase();
+                    const lightIcon = document.getElementById("theme-toggle-light-icon");
+                    const darkIcon = document.getElementById("theme-toggle-dark-icon");
+                    
+                    if (mode === 'dark') {
+                        document.documentElement.classList.add("dark");
+                        localStorage.setItem("theme", "dark");
+                        if(lightIcon) lightIcon.classList.remove("hidden");
+                        if(darkIcon) darkIcon.classList.add("hidden");
+                        cliOutput.innerHTML += `<div class="text-lime-400 mt-1 ml-4">System theme updated to: DARK.</div>`;
+                    } else if (mode === 'light') {
+                        document.documentElement.classList.remove("dark");
+                        localStorage.setItem("theme", "light");
+                        if(lightIcon) lightIcon.classList.add("hidden");
+                        if(darkIcon) darkIcon.classList.remove("hidden");
+                        cliOutput.innerHTML += `<div class="text-lime-400 mt-1 ml-4">System theme updated to: LIGHT.</div>`;
+                    } else if (mode) {
+                        cliOutput.innerHTML += `<div class="text-red-400 mt-1 ml-4">Invalid theme mode: ${mode}. Usage: theme [light/dark]</div>`;
+                    } else {
+                        cliOutput.innerHTML += `<div class="text-red-400 mt-1 ml-4">Usage: theme [light/dark]</div>`;
+                    }
+                } else if (cmd === 'neofetch') {
+                    cliOutput.innerHTML += `<div class="text-lime-400 mt-4 ml-4 flex flex-col md:flex-row gap-6 items-start"><pre class="text-emerald-500 leading-tight font-bold hidden md:block">\n     \\\\\\\\\n      \\\\\\\\\\\\\n       \\\\\\\\\\\\\n       //\\\\\\\\\\\\\n      //  \\\\\\\\\\\\\n     //    \\\\\\\\\\\\\n                    </pre><div><span class="text-white font-bold">ditom@sys_00</span><br><span class="text-zinc-600">-------------------------</span><br><span class="text-emerald-400 font-bold">OS:</span> XTDITOM OS v1.0<br><span class="text-emerald-400 font-bold">Host:</span> Workstation // SYS_00<br><span class="text-emerald-400 font-bold">CPU:</span> Ryzen 5 5600GT (3.6GHz - 4.4GHz)<br><span class="text-emerald-400 font-bold">GPU:</span> Radeon Vega 7 i-GPU<br><span class="text-emerald-400 font-bold">Memory:</span> 16GB Dual Channel<br><span class="text-emerald-400 font-bold">Uptime:</span> 18 Years</div></div>`;
+                } else if (cmd === 'mail') {
+                    mailState = 'awaiting_email';
+                    cliOutput.innerHTML += `<div class="text-lime-400 mt-1 ml-4">Initializing direct message protocol...</div><div class="mt-2"><span class="text-emerald-400 font-bold mr-2">Email:</span></div>`;
+                } else if (cmd === 'matrix') {
+                    cliOutput.innerHTML += `<div class="text-lime-400 mt-1 ml-4">Initializing visual protocol...</div>`;
+                    const terminalUI = document.querySelector('.gsap-terminal');
+                    const cvs = document.createElement('canvas');
+                    cvs.style.position = 'absolute';
+                    cvs.style.top = '0'; cvs.style.left = '0';
+                    cvs.style.width = '100%'; cvs.style.height = '100%';
+                    cvs.style.zIndex = '50';
+                    cvs.style.pointerEvents = 'none';
+                    terminalUI.appendChild(cvs);
+
+                    const ctx = cvs.getContext('2d');
+                    cvs.width = terminalUI.offsetWidth;
+                    cvs.height = terminalUI.offsetHeight;
+                    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*'.split('');
+                    const fontSize = 14;
+                    const columns = cvs.width / fontSize;
+                    const drops = Array(Math.floor(columns)).fill(1);
+
+                    const draw = () => {
+                        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                        ctx.fillRect(0, 0, cvs.width, cvs.height);
+                        ctx.fillStyle = '#4ade80';
+                        ctx.font = fontSize + 'px monospace';
+                        for(let i = 0; i < drops.length; i++) {
+                            const text = chars[Math.floor(Math.random() * chars.length)];
+                            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                            if(drops[i] * fontSize > cvs.height && Math.random() > 0.975) drops[i] = 0;
+                            drops[i]++;
+                        }
+                    };
+                    const interval = setInterval(draw, 33);
+                    this.disabled = true;
+                    
+                    setTimeout(() => {
+                        clearInterval(interval);
+                        cvs.remove();
+                        this.disabled = false;
+                        this.focus();
+                        cliOutput.innerHTML += `<div class="text-emerald-400 mt-1 ml-4">[OK] Protocol terminated. System restored.</div>`;
+                        cliOutput.scrollTop = cliOutput.scrollHeight;
+                    }, 5000);
+                } else if (cmd === 'exit') {
+                    cliOutput.innerHTML += `<div class="text-red-400 mt-1 ml-4">Terminating session interface...</div>`;
+                    this.disabled = true;
+                    setTimeout(() => {
+                        const terminalBlock = document.querySelector('.gsap-terminal');
+                        const startContainer = document.getElementById('terminal-start-container');
+                        gsap.to(terminalBlock, { 
+                            height: 0, padding: 0, opacity: 0, duration: 0.6, border: 0, ease: "power3.inOut", 
+                            onComplete: () => { 
+                                terminalBlock.style.display = 'none';
+                                if (startContainer) {
+                                    startContainer.classList.remove('hidden');
+                                    gsap.fromTo(startContainer, {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.5});
+                                }
+                            } 
+                        });
+                    }, 800);
+                } else if (commands[cmd]) {
+                    cliOutput.innerHTML += `<div class="text-lime-400 mt-1 ml-4">${commands[cmd]}</div>`;
+                } else {
+                    cliOutput.innerHTML += `<div class="text-red-400 mt-1 ml-4">bash: ${cmd}: command not found. Type 'help'.</div>`;
+                }
+
+                this.value = ''; 
+                setTimeout(() => { cliOutput.scrollTop = cliOutput.scrollHeight; }, 50); 
+            }
+        });
+        
+        // Start Terminal Button Logic
+        const startBtn = document.getElementById('start-terminal-btn');
+        if (startBtn) {
+            startBtn.addEventListener('click', () => {
+                const terminalBlock = document.querySelector('.gsap-terminal');
+                const startContainer = document.getElementById('terminal-start-container');
+                
+                if (startContainer) {
+                    startContainer.classList.add('hidden');
+                }
+                
+                if (terminalBlock) {
+                    // Reset CLI output
+                    cliOutput.innerHTML = `<div><span class="text-zinc-500">XTDITOM OS [Version 0.0.0]</span></div><div><span class="text-zinc-500">(c) 2026 Ditom Baroi Antu. All rights reserved.</span></div><br><div>Type <span class="text-white font-bold">'help'</span> to see a list of available commands.</div>`;
+                    
+                    // Enable Input and reset styles
+                    cliInput.disabled = false;
+                    cliInput.value = '';
+                    
+                    // Animate it back
+                    terminalBlock.style.display = 'flex';
+                    
+                    gsap.fromTo(terminalBlock, {
+                        opacity: 0,
+                        y: 60,
+                        scaleY: 0.5,
+                        scaleX: 0.9,
+                        rotateX: 15,
+                        height: "400px",
+                        transformOrigin: "top center",
+                        perspective: 1000,
+                        border: "",
+                        padding: ""
+                    }, {
+                        opacity: 1,
+                        y: 0,
+                        scaleY: 1,
+                        scaleX: 1,
+                        rotateX: 0,
+                        duration: 1.6,
+                        ease: "expo.out",
+                        onComplete: () => {
+                            cliInput.focus();
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    // Contact Form AJAX Submission
+    const contactForm = document.getElementById("contact-form");
+    const formSuccess = document.getElementById("form-success");
+    const submitBtn = contactForm ? contactForm.querySelector("button[type='submit']") : null;
+
+    if (contactForm && formSuccess && submitBtn) {
+        contactForm.addEventListener("submit", async (e) => {
+            e.preventDefault(); // Stop the native redirect
+            
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.innerText = "Transmitting...";
+            submitBtn.disabled = true;
+            submitBtn.classList.add("opacity-50", "cursor-not-allowed");
+
+            const formData = new FormData(contactForm);
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: contactForm.method,
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Hide form and show success message
+                    contactForm.style.display = 'none';
+                    formSuccess.classList.remove("hidden");
+                    
+                    // Reset form and UI after 5 seconds
+                    setTimeout(() => {
+                        formSuccess.classList.add("hidden");
+                        contactForm.style.display = 'block'; // Or '' to let CSS classes decide
+                        contactForm.reset();
+                        
+                        // Restore button state
+                        submitBtn.innerText = originalBtnText;
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+                    }, 3000);
+                } else {
+                    alert("[ERROR] Server rejected the payload. Please try again.");
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+                }
+            } catch (error) {
+                alert("[ERROR] Network failure. Please check your connection.");
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
+                submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+            }
+        });
+    }
 });
