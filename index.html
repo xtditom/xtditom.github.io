@@ -27,6 +27,10 @@
     <style type="text/tailwindcss">
       @custom-variant dark (&:where(.dark, .dark *));
 
+      html {
+        scrollbar-gutter: stable;
+      }
+
       /* Local Font Hosting */
       /* Inter Font Family */
       @font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url("./fonts/inter-regular.woff2") format("woff2"); }
@@ -72,8 +76,27 @@
       html.dark ::-webkit-scrollbar-thumb:hover { background: #bef264; }
 
       /* Firefox */
-      * { scrollbar-width: thin; scrollbar-color: #456b0c #ffffff; }
+      * { scrollbar-width: thin; scrollbar-color: #456b0c #000000; }
       html.dark * { scrollbar-color: #567e17 #000000; }
+
+      /* Hamburger Animation */
+      .hamburger-line {
+        display: block;
+        width: 1.5rem;
+        height: 2px;
+        background-color: currentColor;
+        transition: all 0.3s ease-in-out;
+      }
+      .menu-open .line-1 {
+        transform: translateY(8px) rotate(45deg);
+      }
+      .menu-open .line-2 {
+        opacity: 0;
+        transform: translateX(10px);
+      }
+      .menu-open .line-3 {
+        transform: translateY(-8px) rotate(-45deg);
+      }
     </style>
 
     <!-- GSAP & ScrollTrigger CDN -->
@@ -94,7 +117,7 @@
     >
       <div class="max-w-3xl w-full">
         <h2
-          class="gsap-step opacity-0 text-2xl md:text-3xl font-black text-black dark:text-white mb-2 tracking-widest"
+          class="gsap-step opacity-0 text-xl md:text-3xl font-black text-black dark:text-white mb-2 tracking-wider md:tracking-widest"
         >
           SYSTEM BOOTUP
         </h2>
@@ -127,7 +150,7 @@
         <!-- Logo -->
         <a
           href="#"
-          class="text-lime-700 dark:text-lime-400 font-bold text-lg md:text-xl tracking-widest hover:text-black dark:hover:text-white transition-colors focus:outline-none z-50 relative"
+          class="text-lime-700 dark:text-lime-400 font-bold text-base md:text-xl tracking-wider md:tracking-widest hover:text-black dark:hover:text-white transition-colors focus:outline-none z-50 relative uppercase"
           aria-label="Home"
         >
           XTDITOM // SYS
@@ -153,22 +176,14 @@
           <!-- Mobile Menu Toggle -->
           <button
             id="mobile-menu-btn"
-            class="md:hidden text-lime-700 dark:text-lime-400 hover:text-black dark:hover:text-white transition-colors focus:outline-none focus:text-black dark:focus:text-white z-50 relative"
+            class="md:hidden text-lime-700 dark:text-lime-400 hover:text-black dark:hover:text-white transition-colors focus:outline-none focus:text-black dark:focus:text-white z-50 relative p-2"
             aria-label="Toggle Menu"
           >
-            <svg
-              class="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg>
+            <div class="space-y-1.5">
+              <span class="hamburger-line line-1"></span>
+              <span class="hamburger-line line-2"></span>
+              <span class="hamburger-line line-3"></span>
+            </div>
           </button>
 
           <!-- Desktop Links -->
@@ -201,6 +216,11 @@
     >
       <div class="flex flex-col items-center gap-8 w-full px-6">
         <a
+          href="#"
+          class="mobile-link text-2xl text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400 w-full text-center py-4 border-b border-black/50 dark:border-zinc-800/50"
+          >00. Home</a
+        >
+        <a
           href="#featured"
           class="mobile-link text-2xl text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400 w-full text-center py-4 border-b border-black/50 dark:border-zinc-800/50"
           >01. Work</a
@@ -212,7 +232,7 @@
         >
         <a
           href="#contact"
-          class="btn-glitch inline-flex items-center justify-center px-6 py-2 border-2 border-black dark:border-lime-400 text-black dark:text-lime-400 bg-white dark:bg-transparent shadow-[4px_4px_0px_0px_#000] dark:shadow-none font-bold rounded-none hover:bg-lime-400 hover:text-black dark:hover:text-black transition-all duration-300 focus:outline-none"
+          class="mobile-link btn-glitch inline-flex items-center justify-center px-6 py-2 border-2 border-black dark:border-lime-400 text-black dark:text-lime-400 bg-white dark:bg-transparent shadow-[4px_4px_0px_0px_#000] dark:shadow-none font-bold rounded-none hover:bg-lime-400 hover:text-black dark:hover:text-black transition-all duration-300 focus:outline-none"
         >
           CONTACT
         </a>
@@ -221,7 +241,7 @@
 
     <!-- Main Portfolio Wrapper -->
     <main
-      class="relative w-full min-h-screen flex flex-col items-center px-6 md:px-12 lg:px-24 pt-20"
+      class="relative w-full min-h-screen flex flex-col items-center px-6 md:px-12 lg:px-24 pt-20 overflow-x-hidden"
     >
       <!-- Hero Section -->
       <section
@@ -235,14 +255,14 @@
             Hi, my name is
           </p>
           <h1
-            class="gsap-hero opacity-0 translate-y-8 text-4xl md:text-7xl lg:text-8xl font-black text-black dark:text-white leading-tight whitespace-nowrap"
+            class="gsap-hero opacity-0 translate-y-8 text-4xl md:text-7xl lg:text-8xl font-black text-black dark:text-white leading-tight md:whitespace-nowrap"
           >
             Ditom Baroi Antu.
           </h1>
           <h3
             class="gsap-hero opacity-0 translate-y-8 text-2xl md:text-4xl lg:text-5xl font-bold text-zinc-600 dark:text-zinc-400 leading-tight"
           >
-            Student Developer &<br class="hidden md:block" />
+            Student Developer &<br />
             Open-Source Contributor.
           </h3>
           <div class="gsap-hero opacity-0 translate-y-8">
@@ -296,7 +316,7 @@
             class="text-3xl md:text-5xl font-black text-black dark:text-white"
           >
             <span
-              class="text-lime-700 dark:text-lime-400 font-mono text-xl md:text-2xl mr-4 tracking-widest"
+              class="text-lime-700 dark:text-lime-400 font-mono text-lg md:text-2xl mr-4 tracking-widest"
               >01.</span
             >Featured Work
           </h2>
@@ -360,7 +380,7 @@
               </h3>
 
               <div
-                class="bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-6 md:p-8 text-zinc-800 dark:text-zinc-300 text-sm md:text-base leading-relaxed shadow-[8px_8px_0px_0px_#000] dark:shadow-2xl dark:shadow-black/50 transition-colors"
+                class="bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-6 md:p-8 text-zinc-800 dark:text-zinc-300 text-sm md:text-base leading-relaxed shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] dark:shadow-2xl dark:shadow-black/50 transition-colors"
               >
                 <p>
                   A high-performance new tab browser extension engineered
@@ -503,7 +523,7 @@
             class="text-3xl md:text-5xl font-black text-black dark:text-white"
           >
             <span
-              class="text-lime-700 dark:text-lime-400 font-mono text-xl md:text-2xl mr-4 tracking-widest"
+              class="text-lime-700 dark:text-lime-400 font-mono text-lg md:text-2xl mr-4 tracking-widest"
               >02.</span
             >Tech Explorer
           </h2>
@@ -566,7 +586,7 @@
           <!-- Column 2: Currently Exploring -->
           <div class="space-y-6">
             <h3
-              class="gsap-tech opacity-0 translate-y-4 text-xl font-bold text-black dark:text-white border-b border-black dark:border-zinc-800 pb-4"
+              class="gsap-tech opacity-0 translate-y-4 text-lg md:text-xl font-bold text-black dark:text-white border-b border-black dark:border-zinc-800 pb-4"
             >
               <span class="text-lime-700 dark:text-lime-400 font-mono mr-2"
                 >&gt;</span
@@ -610,7 +630,7 @@
               >&gt;</span
             >Open-Source Contributions
           </h3>
-          <div class="w-full bg-zinc-100 dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-4 md:p-6 shadow-[8px_8px_0px_0px_#000] dark:shadow-none mt-6 brightness-88 dark:brightness-100">
+          <div class="w-full bg-zinc-100 dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-4 md:p-6 shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] dark:shadow-none mt-6 brightness-88 dark:brightness-100">
               <img src="https://ghchart.rshah.org/4d7c0f/xtditom" alt="GitHub Contributions" class="w-full block dark:hidden" />
               <img src="https://ghchart.rshah.org/a3e635/xtditom" alt="GitHub Contributions" class="w-full hidden dark:block" />
           </div>
@@ -764,7 +784,7 @@
             </svg>
           </a>
         </div>
-        <p class="font-mono text-xs text-zinc-600 tracking-widest mt-2">
+        <p class="font-mono text-xs text-zinc-600 tracking-wider md:tracking-widest mt-2 px-4">
           &copy; 2026 - DITOM BAROI ANTU
         </p>
       </footer>
