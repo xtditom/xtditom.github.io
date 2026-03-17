@@ -671,22 +671,30 @@ document.addEventListener("DOMContentLoaded", (event) => {
   // Interactive Grid Spotlight Logic
   const gridGlow = document.getElementById("os-grid-glow");
   if (gridGlow) {
+    let mouseTimeout;
+
     window.addEventListener("mousemove", (e) => {
+      // Update position
       gridGlow.style.setProperty("--x", `${e.clientX}px`);
       gridGlow.style.setProperty("--y", `${e.clientY}px`);
 
-      // Fade in on first movement
-      if (gridGlow.style.opacity === "0" || gridGlow.style.opacity === "") {
-        gridGlow.style.opacity = "1";
-      }
+      // Always ensure it's visible while moving
+      gridGlow.style.opacity = "1";
+
+      // Clear existing timeout and set a new one for 3 seconds of idleness
+      clearTimeout(mouseTimeout);
+      mouseTimeout = setTimeout(() => {
+        gridGlow.style.opacity = "0";
+      }, 1000);
     });
 
     // Fade out when mouse leaves the window
     document.addEventListener("mouseleave", () => {
       gridGlow.style.opacity = "0";
+      clearTimeout(mouseTimeout);
     });
     document.addEventListener("mouseenter", () => {
-      gridGlow.style.opacity = "1";
+      // Will become visible again on first move
     });
   }
 });
