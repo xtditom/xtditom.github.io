@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         "Ditom Baroi Antu. 18-year-old student developer from Dhaka, Bangladesh. Currently exploring the Tech World & Planning my future in it.",
       skills:
         "HTML5, CSS3, JavaScript, GSAP, Tailwind CSS v4, Next.js, Python, C++",
-      sudo: "Access denied. This incident will be reported.",
+      sudo: "Access denied. Nice Try. This incident will be reported.",
     };
 
     cliOutput.parentElement.addEventListener("click", () => cliInput.focus());
@@ -447,17 +447,25 @@ document.addEventListener("DOMContentLoaded", (event) => {
           const darkIcon = document.getElementById("theme-toggle-dark-icon");
 
           if (mode === "dark") {
-            document.documentElement.classList.add("dark");
-            localStorage.setItem("theme", "dark");
-            if (lightIcon) lightIcon.classList.remove("hidden");
-            if (darkIcon) darkIcon.classList.add("hidden");
-            cliOutput.innerHTML += `<div class="text-lime-400 mt-1 ml-4">System theme updated to: DARK.</div>`;
+            if (document.documentElement.classList.contains("dark")) {
+              cliOutput.innerHTML += `<div class="text-yellow-400 mt-1 ml-4">System is already in Dark theme.</div>`;
+            } else {
+              document.documentElement.classList.add("dark");
+              localStorage.setItem("theme", "dark");
+              if (lightIcon) lightIcon.classList.remove("hidden");
+              if (darkIcon) darkIcon.classList.add("hidden");
+              cliOutput.innerHTML += `<div class="text-lime-400 mt-1 ml-4">System theme updated to: DARK.</div>`;
+            }
           } else if (mode === "light") {
-            document.documentElement.classList.remove("dark");
-            localStorage.setItem("theme", "light");
-            if (lightIcon) lightIcon.classList.add("hidden");
-            if (darkIcon) darkIcon.classList.remove("hidden");
-            cliOutput.innerHTML += `<div class="text-lime-400 mt-1 ml-4">System theme updated to: LIGHT.</div>`;
+            if (!document.documentElement.classList.contains("dark")) {
+              cliOutput.innerHTML += `<div class="text-yellow-400 mt-1 ml-4">System is already in Light theme.</div>`;
+            } else {
+              document.documentElement.classList.remove("dark");
+              localStorage.setItem("theme", "light");
+              if (lightIcon) lightIcon.classList.add("hidden");
+              if (darkIcon) darkIcon.classList.remove("hidden");
+              cliOutput.innerHTML += `<div class="text-lime-400 mt-1 ml-4">System theme updated to: LIGHT.</div>`;
+            }
           } else if (mode) {
             cliOutput.innerHTML += `<div class="text-red-400 mt-1 ml-4">Invalid theme mode: ${mode}. Usage: theme [light/dark]</div>`;
           } else {
@@ -697,4 +705,59 @@ document.addEventListener("DOMContentLoaded", (event) => {
       // Will become visible again on first move
     });
   }
+
+  // Magnetic UI Button Physics
+  const magneticButtons = document.querySelectorAll(".magnetic-btn");
+
+  // Only apply on devices with a physical mouse (ignore touch screens)
+  if (window.matchMedia("(hover: hover)").matches) {
+    magneticButtons.forEach((btn) => {
+      const xTo = gsap.quickTo(btn, "x", {
+        duration: 1,
+        ease: "elastic.out(1, 0.3)",
+      });
+      const yTo = gsap.quickTo(btn, "y", {
+        duration: 1,
+        ease: "elastic.out(1, 0.3)",
+      });
+
+      btn.addEventListener("mousemove", (e) => {
+        const rect = btn.getBoundingClientRect();
+        const relX = e.clientX - rect.left;
+        const relY = e.clientY - rect.top;
+
+        // Calculate pull strength (closer to center = stronger pull)
+        const x = (relX - rect.width / 4) * 0.4;
+        const y = (relY - rect.height / 4) * 0.4;
+
+        xTo(x);
+        yTo(y);
+      });
+
+      btn.addEventListener("mouseleave", () => {
+        // Snap back to origin
+        xTo(0);
+        yTo(0);
+      });
+    });
+  }
+
+  // Dynamic Document Meta (Tab Visibility)
+  const originalTitle = document.title;
+  const favicon = document.getElementById("dynamic-favicon");
+  const originalFavicon = favicon ? favicon.href : "";
+
+  // Create a warning/paused favicon
+  const pausedFavicon =
+    "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚠️</text></svg>";
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      document.title = "[System Paused] // XTDITOM";
+      if (favicon) favicon.href = pausedFavicon;
+    } else {
+      document.title = originalTitle;
+      if (favicon) favicon.href = originalFavicon;
+    }
+  });
 });
