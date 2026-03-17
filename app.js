@@ -669,24 +669,24 @@ document.addEventListener("DOMContentLoaded", (event) => {
   }
 
   // Interactive Grid Spotlight Logic
-  const gridGlow = document.getElementById('os-grid-glow');
+  const gridGlow = document.getElementById("os-grid-glow");
   if (gridGlow) {
-      window.addEventListener('mousemove', (e) => {
-          gridGlow.style.setProperty('--x', `${e.clientX}px`);
-          gridGlow.style.setProperty('--y', `${e.clientY}px`);
-          
-          // Fade in on first movement
-          if (gridGlow.style.opacity === '0' || gridGlow.style.opacity === '') {
-              gridGlow.style.opacity = '1';
-          }
-      });
+    window.addEventListener("mousemove", (e) => {
+      gridGlow.style.setProperty("--x", `${e.clientX}px`);
+      gridGlow.style.setProperty("--y", `${e.clientY}px`);
 
-      // Fade out when mouse leaves the window
-      document.addEventListener('mouseleave', () => {
-          gridGlow.style.opacity = '0';
-      });
-      document.addEventListener('mouseenter', () => {
-          gridGlow.style.opacity = '1';
-      });
+      // Fade in on first movement
+      if (gridGlow.style.opacity === "0" || gridGlow.style.opacity === "") {
+        gridGlow.style.opacity = "1";
+      }
+    });
+
+    // Fade out when mouse leaves the window
+    document.addEventListener("mouseleave", () => {
+      gridGlow.style.opacity = "0";
+    });
+    document.addEventListener("mouseenter", () => {
+      gridGlow.style.opacity = "1";
+    });
   }
 });
