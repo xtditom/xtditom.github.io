@@ -33,16 +33,64 @@
 
       /* Local Font Hosting */
       /* Inter Font Family */
-      @font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url("./fonts/inter-regular.woff2") format("woff2"); }
-      @font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap; src: url("./fonts/inter-500.woff2") format("woff2"); }
-      @font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap; src: url("./fonts/inter-600.woff2") format("woff2"); }
-      @font-face { font-family: "Inter"; font-style: normal; font-weight: 700; font-display: swap; src: url("./fonts/inter-700.woff2") format("woff2"); }
-      @font-face { font-family: "Inter"; font-style: normal; font-weight: 800; font-display: swap; src: url("./fonts/inter-800.woff2") format("woff2"); }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("./fonts/inter-regular.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("./fonts/inter-500.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url("./fonts/inter-600.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("./fonts/inter-700.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 800;
+        font-display: swap;
+        src: url("./fonts/inter-800.woff2") format("woff2");
+      }
 
       /* JetBrains Mono Font Family */
-      @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("./fonts/jetbrains-mono-regular.woff2") format("woff2"); }
-      @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 700; font-display: swap; src: url("./fonts/jetbrains-mono-700.woff2") format("woff2"); }
-      @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 800; font-display: swap; src: url("./fonts/jetbrains-mono-800.woff2") format("woff2"); }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("./fonts/jetbrains-mono-regular.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("./fonts/jetbrains-mono-700.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 800;
+        font-display: swap;
+        src: url("./fonts/jetbrains-mono-800.woff2") format("woff2");
+      }
 
       @theme {
         --font-sans: "Inter", sans-serif;
@@ -50,8 +98,8 @@
       }
 
       body {
-        @apply bg-white dark:bg-black text-zinc-800 dark:text-zinc-400 font-sans antialiased overflow-x-hidden selection:bg-lime-300 dark:selection:bg-lime-400/30 selection:text-black dark:selection:text-lime-200;
-        text-shadow: 0.5px 0.5px 0px rgba(0,0,0,0.15);
+        @apply bg-white dark:bg-black text-zinc-800 dark:text-zinc-400 font-sans antialiased overflow-x-hidden selection:bg-lime-400 selection:text-black;
+        text-shadow: 0.5px 0.5px 0px rgba(0, 0, 0, 0.15);
       }
       .dark body {
         text-shadow: none;
@@ -66,18 +114,40 @@
       }
 
       /* Custom Neo-Brutalist Scrollbar (Light & Dark) */
-      ::-webkit-scrollbar { width: 8px; }
-      ::-webkit-scrollbar-track { background: #ffffff; border-left: 1px solid #e4e4e7; }
-      ::-webkit-scrollbar-thumb { background: #669c16; border-radius: 0px; }
-      ::-webkit-scrollbar-thumb:hover { background: #5f9613; }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #ffffff;
+        border-left: 1px solid #e4e4e7;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #669c16;
+        border-radius: 0px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #5f9613;
+      }
 
-      html.dark ::-webkit-scrollbar-track { background: #000000; border-left: 1px solid #27272a; }
-      html.dark ::-webkit-scrollbar-thumb { background: #a3e635; }
-      html.dark ::-webkit-scrollbar-thumb:hover { background: #bef264; }
+      html.dark ::-webkit-scrollbar-track {
+        background: #000000;
+        border-left: 1px solid #27272a;
+      }
+      html.dark ::-webkit-scrollbar-thumb {
+        background: #a3e635;
+      }
+      html.dark ::-webkit-scrollbar-thumb:hover {
+        background: #bef264;
+      }
 
       /* Firefox */
-      * { scrollbar-width: thin; scrollbar-color: #456b0c #000000; }
-      html.dark * { scrollbar-color: #567e17 #000000; }
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: #456b0c #000000;
+      }
+      html.dark * {
+        scrollbar-color: #567e17 #000000;
+      }
 
       /* Hamburger Animation */
       .hamburger-line {
@@ -97,6 +167,17 @@
       .menu-open .line-3 {
         transform: translateY(-8px) rotate(-45deg);
       }
+      /* Fix for buttons staying white after click */
+      #theme-toggle:focus,
+      #theme-toggle:active,
+      #mobile-menu-btn:focus,
+      #mobile-menu-btn:active {
+        @apply text-lime-700 dark:text-lime-400;
+      }
+      #theme-toggle:hover,
+      #mobile-menu-btn:hover {
+        @apply text-black dark:text-white;
+      }
     </style>
 
     <!-- GSAP & ScrollTrigger CDN -->
@@ -110,6 +191,29 @@
     ></script>
   </head>
   <body>
+    <!-- Interactive OS Grid Background -->
+    <div id="os-grid-bg" class="fixed inset-0 pointer-events-none z-0">
+      <div
+        class="absolute inset-0 bg-[linear-gradient(to_right,#00000027_1px,transparent_1px),linear-gradient(to_bottom,#00000027_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] transition-colors duration-500"
+      ></div>
+      <div
+        id="os-grid-glow"
+        class="absolute inset-0 bg-[linear-gradient(to_right,#4d7c0f6e_1px,transparent_1px),linear-gradient(to_bottom,#4d7c0f6e_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#a3e63515_1px,transparent_1px),linear-gradient(to_bottom,#a3e63515_1px,transparent_1px)] bg-[size:32px_32px] opacity-0 transition-opacity duration-500"
+        style="
+          -webkit-mask-image: radial-gradient(
+            250px circle at var(--x, 50%) var(--y, 50%),
+            black,
+            transparent
+          );
+          mask-image: radial-gradient(
+            250px circle at var(--x, 50%) var(--y, 50%),
+            black,
+            transparent
+          );
+        "
+      ></div>
+    </div>
+
     <!-- Terminal Preloader -->
     <div
       id="preloader"
@@ -121,7 +225,9 @@
         >
           SYSTEM BOOTUP
         </h2>
-        <p class="gsap-step opacity-0 text-green-700 dark:text-green-500 font-bold mb-8">
+        <p
+          class="gsap-step opacity-0 text-green-700 dark:text-green-500 font-bold mb-8"
+        >
           [OS] XTDITOM OS
         </p>
         <p class="gsap-step opacity-0 mb-2">[OK] Initializing environment...</p>
@@ -156,27 +262,51 @@
           XTDITOM // SYS
         </a>
 
-        <div class="flex items-center gap-4 md:gap-8">
+        <div class="flex items-center gap-1 md:gap-8">
           <!-- Theme Toggle -->
           <button
             id="theme-toggle"
-            class="text-lime-700 dark:text-lime-400 hover:text-black dark:hover:text-white transition-colors focus:outline-none focus:text-black dark:focus:text-white z-50 relative"
+            class="text-lime-700 dark:text-lime-400 hover:text-black dark:hover:text-white transition-colors focus:outline-none z-50 relative"
             aria-label="Toggle Theme"
           >
             <!-- Sun Icon (Hidden in Light Mode, Visible in Dark Mode to switch back to Light) -->
-            <svg id="theme-toggle-light-icon" class="hidden w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            <svg
+              id="theme-toggle-light-icon"
+              class="hidden w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+              ></path>
             </svg>
             <!-- Moon Icon (Visible in Light Mode, Hidden in Dark Mode to switch back to Dark) -->
-            <svg id="theme-toggle-dark-icon" class="hidden w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            <svg
+              id="theme-toggle-dark-icon"
+              class="hidden w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+              ></path>
             </svg>
           </button>
 
           <!-- Mobile Menu Toggle -->
           <button
             id="mobile-menu-btn"
-            class="md:hidden text-lime-700 dark:text-lime-400 hover:text-black dark:hover:text-white transition-colors focus:outline-none focus:text-black dark:focus:text-white z-50 relative p-2"
+            class="md:hidden text-lime-700 dark:text-lime-400 hover:text-black dark:hover:text-white transition-colors focus:outline-none z-50 relative p-2"
             aria-label="Toggle Menu"
           >
             <div class="space-y-1.5">
@@ -198,11 +328,19 @@
               class="text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
               >02. Tech</a
             >
-            <a href="#rigs" class="text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400">03. Rigs</a>
-            <a href="#terminal" class="text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400">04. Terminal</a>
+            <a
+              href="#rigs"
+              class="text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
+              >03. Rigs</a
+            >
+            <a
+              href="#terminal"
+              class="text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
+              >04. Terminal</a
+            >
             <a
               href="#contact"
-              class="btn-glitch inline-flex items-center justify-center px-6 py-2 border-2 border-black dark:border-lime-400 text-black dark:text-lime-400 bg-white dark:bg-transparent shadow-[4px_4px_0px_0px_#000] dark:shadow-none font-bold rounded-none hover:bg-lime-400 hover:text-black dark:hover:text-black transition-all duration-300 focus:outline-none"
+              class="btn-glitch inline-flex items-center justify-center px-6 py-2 border-2 border-black dark:border-lime-400 text-black dark:text-lime-400 bg-white dark:bg-transparent shadow-[4px_4px_0px_0px_#000] dark:shadow-none font-bold rounded-none hover:bg-lime-400 hover:text-black dark:hover:text-black transition-all duration-300 active:translate-y-1 active:shadow-none focus:outline-none"
             >
               CONTACT
             </a>
@@ -232,11 +370,19 @@
           class="mobile-link text-2xl text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400 w-full text-center py-4 border-b border-black/50 dark:border-zinc-800/50"
           >02. Tech</a
         >
-        <a href="#rigs" class="mobile-link text-2xl text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400 w-full text-center py-4 border-b border-black/50 dark:border-zinc-800/50">03. Rigs</a>
-        <a href="#terminal" class="mobile-link text-2xl text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400 w-full text-center py-4 border-b border-black/50 dark:border-zinc-800/50">04. Terminal</a>
+        <a
+          href="#rigs"
+          class="mobile-link text-2xl text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400 w-full text-center py-4 border-b border-black/50 dark:border-zinc-800/50"
+          >03. Rigs</a
+        >
+        <a
+          href="#terminal"
+          class="mobile-link text-2xl text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400 w-full text-center py-4 border-b border-black/50 dark:border-zinc-800/50"
+          >04. Terminal</a
+        >
         <a
           href="#contact"
-          class="mobile-link btn-glitch inline-flex items-center justify-center px-6 py-2 border-2 border-black dark:border-lime-400 text-black dark:text-lime-400 bg-white dark:bg-transparent shadow-[4px_4px_0px_0px_#000] dark:shadow-none font-bold rounded-none hover:bg-lime-400 hover:text-black dark:hover:text-black transition-all duration-300 focus:outline-none"
+          class="mobile-link btn-glitch inline-flex items-center justify-center px-6 py-2 border-2 border-black dark:border-lime-400 text-black dark:text-lime-400 bg-white dark:bg-transparent shadow-[4px_4px_0px_0px_#000] dark:shadow-none font-bold rounded-none hover:bg-lime-400 hover:text-black dark:hover:text-black transition-all duration-300 active:translate-y-1 active:shadow-none focus:outline-none"
         >
           CONTACT
         </a>
@@ -261,7 +407,10 @@
           <h1
             class="gsap-hero opacity-0 translate-y-8 text-4xl md:text-7xl lg:text-8xl font-black text-black dark:text-white leading-tight md:whitespace-nowrap"
           >
-            Ditom Baroi Antu.
+            <span
+              class="bg-lime-300 dark:bg-lime-500 dark:text-black px-2 md:px-4 -ml-2 md:-ml-4"
+              >Ditom Baroi Antu.</span
+            >
           </h1>
           <h3
             class="gsap-hero opacity-0 translate-y-8 text-2xl md:text-4xl lg:text-5xl font-bold text-zinc-600 dark:text-zinc-400 leading-tight"
@@ -288,10 +437,10 @@
 
         <div class="gsap-hero opacity-0 translate-y-8 mt-10">
           <a
-            href="#featured"
-            class="inline-flex items-center justify-center px-8 py-4 text-sm md:text-base font-mono font-bold text-black dark:text-lime-400 bg-white dark:bg-transparent border-2 border-black dark:border-lime-400 shadow-[4px_4px_0px_0px_#000] dark:shadow-none hover:bg-lime-400 dark:hover:bg-lime-400/10 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] dark:hover:shadow-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black group"
+            href="#terminal"
+            class="inline-flex items-center justify-center px-8 py-4 text-sm md:text-base font-mono font-bold text-black dark:text-lime-400 bg-white dark:bg-transparent border-2 border-black dark:border-lime-400 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400/10 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] dark:hover:shadow-[6px_6px_0px_0px_#a3e635] active:translate-y-1 active:shadow-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black group"
           >
-            Explore My Code
+            Terminal
             <svg
               class="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
               fill="none"
@@ -384,7 +533,7 @@
               </h3>
 
               <div
-                class="bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-6 md:p-8 text-zinc-800 dark:text-zinc-300 text-sm md:text-base leading-relaxed shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] dark:shadow-2xl dark:shadow-black/50 transition-colors"
+                class="bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-6 md:p-8 text-zinc-800 dark:text-zinc-300 text-sm md:text-base leading-relaxed shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] dark:shadow-none transition-colors"
               >
                 <p>
                   A high-performance new tab browser extension engineered
@@ -551,39 +700,12 @@
                 >&gt;</span
               >Current Arsenal
             </h3>
-            <ul
-              class="grid grid-cols-2 gap-4 text-zinc-600 dark:text-white font-mono text-sm"
-            >
-              <li
-                class="gsap-tech opacity-0 translate-y-4 flex items-center gap-2 hover:text-green-700 dark:hover:text-lime-400 transition-colors"
-              >
-                <span class="text-lime-700/50 dark:text-lime-400/50">::</span>
-                HTML5 / Semantic
-              </li>
-              <li
-                class="gsap-tech opacity-0 translate-y-4 flex items-center gap-2 hover:text-green-700 dark:hover:text-lime-400 transition-colors"
-              >
-                <span class="text-lime-700/50 dark:text-lime-400/50">::</span>
-                CSS3 / Tailwind
-              </li>
-              <li
-                class="gsap-tech opacity-0 translate-y-4 flex items-center gap-2 hover:text-green-700 dark:hover:text-lime-400 transition-colors"
-              >
-                <span class="text-lime-700/50 dark:text-lime-400/50">::</span>
-                Vanilla JS (ES6+)
-              </li>
-              <li
-                class="gsap-tech opacity-0 translate-y-4 flex items-center gap-2 hover:text-green-700 dark:hover:text-lime-400 transition-colors"
-              >
-                <span class="text-lime-700/50 dark:text-lime-400/50">::</span>
-                Git / GitHub
-              </li>
-              <li
-                class="gsap-tech opacity-0 translate-y-4 flex items-center gap-2 hover:text-green-700 dark:hover:text-lime-400 transition-colors"
-              >
-                <span class="text-lime-700/50 dark:text-lime-400/50">::</span>
-                Browser APIs
-              </li>
+            <ul class="flex flex-wrap gap-3 text-black dark:text-zinc-300 font-mono text-xs font-bold uppercase tracking-widest">
+              <li class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default">HTML5 / Semantic</li>
+              <li class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default">CSS3 / Tailwind</li>
+              <li class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default">Vanilla JS (ES6+)</li>
+              <li class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default">Git / GitHub</li>
+              <li class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default">Browser APIs</li>
             </ul>
           </div>
 
@@ -596,29 +718,11 @@
                 >&gt;</span
               >Actively Exploring
             </h3>
-            <ul
-              class="grid grid-cols-2 gap-4 text-zinc-600 dark:text-white font-mono text-sm"
-            >
-              <li
-                class="gsap-tech opacity-0 translate-y-4 flex items-center gap-2 hover:text-black dark:hover:text-green-500 transition-colors"
-              >
-                <span class="text-zinc-600">::</span> Next.js / React
-              </li>
-              <li
-                class="gsap-tech opacity-0 translate-y-4 flex items-center gap-2 hover:text-black dark:hover:text-green-500 transition-colors"
-              >
-                <span class="text-zinc-600">::</span> TypeScript
-              </li>
-              <li
-                class="gsap-tech opacity-0 translate-y-4 flex items-center gap-2 hover:text-black dark:hover:text-green-500 transition-colors"
-              >
-                <span class="text-zinc-600">::</span> Python
-              </li>
-              <li
-                class="gsap-tech opacity-0 translate-y-4 flex items-center gap-2 hover:text-black dark:hover:text-green-500 transition-colors"
-              >
-                <span class="text-zinc-600">::</span> Node.js
-              </li>
+            <ul class="flex flex-wrap gap-3 text-black dark:text-zinc-300 font-mono text-xs font-bold uppercase tracking-widest">
+              <li class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-emerald-400 dark:hover:bg-emerald-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default">Next.js / React</li>
+              <li class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-emerald-400 dark:hover:bg-emerald-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default">TypeScript</li>
+              <li class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-emerald-400 dark:hover:bg-emerald-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default">Python</li>
+              <li class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-emerald-400 dark:hover:bg-emerald-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default">Node.js</li>
             </ul>
           </div>
         </div>
@@ -634,95 +738,277 @@
               >&gt;</span
             >Open-Source Contributions
           </h3>
-          <div class="w-full bg-zinc-100 dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-4 md:p-6 shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] dark:shadow-none mt-6 brightness-88 dark:brightness-100">
-              <img src="https://ghchart.rshah.org/4d7c0f/xtditom" alt="GitHub Contributions" class="w-full block dark:hidden" />
-              <img src="https://ghchart.rshah.org/a3e635/xtditom" alt="GitHub Contributions" class="w-full hidden dark:block" />
+          <div
+            class="w-full bg-zinc-100 dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-4 md:p-6 shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#27272a] mt-6 brightness-88 dark:brightness-100"
+          >
+            <img
+              src="https://ghchart.rshah.org/4d7c0f/xtditom"
+              alt="GitHub Contributions"
+              class="w-full block dark:hidden"
+            />
+            <img
+              src="https://ghchart.rshah.org/a3e635/xtditom"
+              alt="GitHub Contributions"
+              class="w-full hidden dark:block"
+            />
           </div>
         </div>
       </section>
 
-      <section id="rigs" class="w-full max-w-5xl mx-auto flex flex-col justify-center min-h-screen py-24 gap-12 border-t border-black dark:border-zinc-800">
+      <section
+        id="rigs"
+        class="w-full max-w-5xl mx-auto flex flex-col justify-center min-h-screen py-24 gap-12 border-t border-black dark:border-zinc-800"
+      >
         <div class="space-y-4 w-full">
-          <h2 class="text-3xl md:text-5xl font-black text-black dark:text-white">
-            <span class="text-lime-700 dark:text-lime-400 font-mono text-xl md:text-2xl mr-4 tracking-widest">03.</span>My Rigs
+          <h2
+            class="text-3xl md:text-5xl font-black text-black dark:text-white"
+          >
+            <span
+              class="text-lime-700 dark:text-lime-400 font-mono text-xl md:text-2xl mr-4 tracking-widest"
+              >03.</span
+            >My Rigs
           </h2>
-          <p class="text-zinc-600 dark:text-zinc-400 max-w-2xl text-base md:text-lg">
-            The hardware environments I use to engineer, compile, and test my local-first applications.
+          <p
+            class="text-zinc-600 dark:text-zinc-400 max-w-2xl text-base md:text-lg"
+          >
+            The hardware environments I use to engineer, compile, and test my
+            local-first applications.
           </p>
         </div>
 
         <div class="w-full mt-4">
-          <div class="gsap-rig opacity-0 translate-y-12 bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-6 md:p-8 md:p-10 shadow-[8px_8px_0px_0px_#000] lg:shadow-[12px_12px_0px_0px_#000] dark:shadow-none font-mono transition-colors">
-            <div class="flex items-center gap-3 mb-8 border-b-2 border-black dark:border-zinc-800 pb-4">
-               <div class="w-3 h-3 bg-emerald-400 rounded-full animate-ping absolute opacity-75"></div>
-               <div class="w-3 h-3 bg-lime-500 rounded-full relative z-10"></div>
-               <h3 class="text-xl md:text-2xl font-bold text-black dark:text-white uppercase tracking-widest">Workstation // SYS_00</h3>
+          <div
+            class="gsap-rig opacity-0 translate-y-12 bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-6 md:p-8 md:p-10 shadow-[8px_8px_0px_0px_#000] lg:shadow-[12px_12px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#27272a] font-mono transition-colors"
+          >
+            <div
+              class="flex items-center gap-3 mb-8 border-b-2 border-black dark:border-zinc-800 pb-4"
+            >
+              <div
+                class="w-3 h-3 bg-emerald-400 rounded-full animate-ping absolute opacity-75"
+              ></div>
+              <div class="w-3 h-3 bg-lime-500 rounded-full relative z-10"></div>
+              <h3
+                class="text-xl md:text-2xl font-bold text-black dark:text-white uppercase tracking-widest"
+              >
+                Workstation // SYS_00
+              </h3>
             </div>
-            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm md:text-base text-zinc-800 dark:text-zinc-300">
-               <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col"><span class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1">CPU</span> Ryzen 5 5600GT <span class="text-xs opacity-75 block mt-0.5">(3.6GHz - 4.4GHz)</span></li>
-               <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col"><span class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1">GPU</span> Radeon Vega 7 i-GPU</li>
-               <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col"><span class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1">RAM</span> <span>16GB Kingston Fury Beast <span class="text-xs opacity-75 block mt-0.5">(8x2 Dual Channel)</span></span></li>
-               <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col"><span class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1">Motherboard</span> GIGABYTE B450M K</li>
-               <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col"><span class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1">Storage</span> HP EX900 PLUS 512GB NVMe SSD</li>
-               <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col"><span class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1">Power</span> AULA 350W PSU</li>
-               <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col"><span class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1">Chassis</span> Maxcool Inferno MC5 mATX</li>
-               <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col"><span class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1">Display</span> 100Hz Primary Monitor <span class="text-xs opacity-75 block mt-0.5">(Dahua DHI-LM22-Y201YF)</span></li>
+            <ul
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm md:text-base text-zinc-800 dark:text-zinc-300"
+            >
+              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
+                <span
+                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
+                  >CPU</span
+                >
+                Ryzen 5 5600GT
+                <span class="text-xs opacity-75 block mt-0.5"
+                  >(3.6GHz - 4.4GHz)</span
+                >
+              </li>
+              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
+                <span
+                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
+                  >GPU</span
+                >
+                Radeon Vega 7 i-GPU
+              </li>
+              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
+                <span
+                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
+                  >RAM</span
+                >
+                <span
+                  >16GB Kingston Fury Beast
+                  <span class="text-xs opacity-75 block mt-0.5"
+                    >(8x2 Dual Channel)</span
+                  ></span
+                >
+              </li>
+              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
+                <span
+                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
+                  >Motherboard</span
+                >
+                GIGABYTE B450M K
+              </li>
+              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
+                <span
+                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
+                  >Storage</span
+                >
+                HP EX900 PLUS 512GB NVMe SSD
+              </li>
+              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
+                <span
+                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
+                  >Power</span
+                >
+                AULA 350W PSU
+              </li>
+              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
+                <span
+                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
+                  >Chassis</span
+                >
+                Maxcool Inferno MC5 mATX
+              </li>
+              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
+                <span
+                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
+                  >Display</span
+                >
+                100Hz Primary Monitor
+                <span class="text-xs opacity-75 block mt-0.5"
+                  >(Dahua DHI-LM22-Y201YF)</span
+                >
+              </li>
             </ul>
           </div>
 
-          <div class="gsap-rig opacity-0 translate-y-12 bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-6 md:p-8 md:p-10 shadow-[8px_8px_0px_0px_#000] lg:shadow-[12px_12px_0px_0px_#000] dark:shadow-none font-mono transition-colors mt-8">
-            <div class="flex items-center gap-3 mb-8 border-b-2 border-black dark:border-zinc-800 pb-4">
-               <div class="w-3 h-3 bg-lime-500 rounded-full animate-ping absolute opacity-75"></div>
-               <div class="w-3 h-3 bg-emerald-400 rounded-full relative z-10"></div>
-               <h3 class="text-xl md:text-2xl font-bold text-black dark:text-white uppercase tracking-widest">
-                 Mobile // SYS_01 <span class="text-sm md:text-base font-normal text-zinc-500 dark:text-zinc-400 normal-case tracking-normal lg:ml-2 block lg:inline-block mt-1 lg:mt-0">- Infinix Hot 40 Pro</span>
-               </h3>
+          <div
+            class="gsap-rig opacity-0 translate-y-12 bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-6 md:p-8 md:p-10 shadow-[8px_8px_0px_0px_#000] lg:shadow-[12px_12px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#27272a] font-mono transition-colors mt-8"
+          >
+            <div
+              class="flex items-center gap-3 mb-8 border-b-2 border-black dark:border-zinc-800 pb-4"
+            >
+              <div
+                class="w-3 h-3 bg-lime-500 rounded-full animate-ping absolute opacity-75"
+              ></div>
+              <div
+                class="w-3 h-3 bg-emerald-400 rounded-full relative z-10"
+              ></div>
+              <h3
+                class="text-xl md:text-2xl font-bold text-black dark:text-white uppercase tracking-widest"
+              >
+                Mobile // SYS_01
+                <span
+                  class="text-sm md:text-base font-normal text-zinc-500 dark:text-zinc-400 normal-case tracking-normal lg:ml-2 block lg:inline-block mt-1 lg:mt-0"
+                  >- Infinix Hot 40 Pro</span
+                >
+              </h3>
             </div>
-            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm md:text-base text-zinc-800 dark:text-zinc-300">
-               <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col"><span class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1">Chipset</span> Mediatek Helio G99</li>
-               <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col"><span class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1">Display</span> IPS LCD, 120Hz</li>
-               <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col"><span class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1">Camera</span> 108MP Triple Camera</li>
-               <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col"><span class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1">Memory</span> <span>128 GB Storage <span class="text-xs opacity-75 block mt-0.5">(8GB RAM)</span></span></li>
+            <ul
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm md:text-base text-zinc-800 dark:text-zinc-300"
+            >
+              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
+                <span
+                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
+                  >Chipset</span
+                >
+                Mediatek Helio G99
+              </li>
+              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
+                <span
+                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
+                  >Display</span
+                >
+                IPS LCD, 120Hz
+              </li>
+              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
+                <span
+                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
+                  >Camera</span
+                >
+                108MP Triple Camera
+              </li>
+              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
+                <span
+                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
+                  >Memory</span
+                >
+                <span
+                  >128 GB Storage
+                  <span class="text-xs opacity-75 block mt-0.5"
+                    >(8GB RAM)</span
+                  ></span
+                >
+              </li>
             </ul>
           </div>
         </div>
       </section>
 
-      <section id="terminal" class="w-full max-w-5xl mx-auto flex flex-col justify-center min-h-screen py-24 gap-12 border-t border-black dark:border-zinc-800">
+      <section
+        id="terminal"
+        class="w-full max-w-5xl mx-auto flex flex-col justify-center min-h-screen py-24 gap-12 border-t border-black dark:border-zinc-800"
+      >
         <div class="space-y-4 w-full">
-          <h2 class="text-3xl md:text-5xl font-black text-black dark:text-white">
-            <span class="text-lime-700 dark:text-lime-400 font-mono text-xl md:text-2xl mr-4 tracking-widest">04.</span>System Terminal
+          <h2
+            class="text-3xl md:text-5xl font-black text-black dark:text-white"
+          >
+            <span
+              class="text-lime-700 dark:text-lime-400 font-mono text-xl md:text-2xl mr-4 tracking-widest"
+              >04.</span
+            >System Terminal
           </h2>
-          <p class="text-zinc-600 dark:text-zinc-400 max-w-2xl text-base md:text-lg">
-            Interact directly with the DOM. Type 'help' to see available commands.
+          <p
+            class="text-zinc-600 dark:text-zinc-400 max-w-2xl text-base md:text-lg"
+          >
+            Interact directly with the DOM. Type 'help' to see available
+            commands.
           </p>
         </div>
 
-        <div id="terminal-start-container" class="w-full flex justify-center py-12 hidden">
-            <button id="start-terminal-btn" class="inline-flex items-center justify-center px-8 py-3 text-sm font-mono font-bold text-black dark:text-lime-400 bg-white dark:bg-transparent border-2 border-black dark:border-lime-400 shadow-[4px_4px_0px_0px_#000] dark:shadow-none hover:bg-lime-400 dark:hover:bg-lime-400/10 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] dark:hover:shadow-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black">
-                ▶ Start Terminal Session
-            </button>
+        <div
+          id="terminal-start-container"
+          class="w-full flex justify-center py-12 hidden"
+        >
+          <button
+            id="start-terminal-btn"
+            class="inline-flex items-center justify-center px-8 py-3 text-sm font-mono font-bold text-black dark:text-lime-400 bg-white dark:bg-transparent border-2 border-black dark:border-lime-400 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400/10 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] dark:hover:shadow-[6px_6px_0px_0px_#a3e635] active:translate-y-1 active:shadow-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black"
+          >
+            ▶ Start Terminal Session
+          </button>
         </div>
 
-        <div class="gsap-terminal w-full bg-zinc-950 border-2 border-black dark:border-zinc-800 p-4 md:p-6 shadow-[8px_8px_0px_0px_#000] lg:shadow-[12px_12px_0px_0px_#000] dark:shadow-none font-mono text-sm md:text-base h-[400px] flex flex-col relative group opacity-0 translate-y-8">
-          <div class="absolute top-0 left-0 w-full h-8 bg-zinc-900 border-b-2 border-black dark:border-zinc-800 flex items-center px-4 gap-2">
+        <div
+          class="gsap-terminal w-full bg-zinc-950 border-2 border-black dark:border-zinc-800 p-4 md:p-6 shadow-[8px_8px_0px_0px_#000] lg:shadow-[12px_12px_0px_0px_#000] dark:shadow-none font-mono text-sm md:text-base h-[400px] flex flex-col relative group opacity-0 translate-y-8"
+        >
+          <div
+            class="absolute top-0 left-0 w-full h-8 bg-zinc-900 border-b-2 border-black dark:border-zinc-800 flex items-center px-4 gap-2"
+          >
             <div class="w-3 h-3 rounded-full bg-red-500"></div>
             <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
             <div class="w-3 h-3 rounded-full bg-green-500"></div>
-            <span class="ml-4 text-xs text-zinc-500 uppercase tracking-widest font-bold">bash // xtditom.exe</span>
+            <span
+              class="ml-4 text-xs text-zinc-500 uppercase tracking-widest font-bold"
+              >bash // xtditom.exe</span
+            >
           </div>
-          
-          <div id="cli-output" class="flex-1 w-full mt-8 overflow-y-auto overflow-x-hidden text-lime-400 space-y-2 pr-2 custom-scrollbar pb-4">
-            <div><span class="text-zinc-500">XTDITOM OS [Version 0.0.0]</span></div>
-            <div><span class="text-zinc-500">(c) 2026 Ditom Baroi Antu. All rights reserved.</span></div>
-            <br>
-            <div>Type <span class="text-white font-bold">'help'</span> to see a list of available commands.</div>
+
+          <div
+            id="cli-output"
+            class="flex-1 w-full mt-8 overflow-y-auto overflow-x-hidden text-lime-400 space-y-2 pr-2 custom-scrollbar pb-4"
+          >
+            <div>
+              <span class="text-zinc-500">XTDITOM OS [Version 0.0.0]</span>
+            </div>
+            <div>
+              <span class="text-zinc-500"
+                >(c) 2026 Ditom Baroi Antu. All rights reserved.</span
+              >
+            </div>
+            <br />
+            <div>
+              Type <span class="text-white font-bold">'help'</span> to see a
+              list of available commands.
+            </div>
           </div>
 
           <div class="w-full flex items-center text-lime-400 mt-2 shrink-0">
-            <span class="mr-2 text-emerald-400 font-bold hidden md:inline">guest@xtditom:~$</span>
+            <span class="mr-2 text-emerald-400 font-bold hidden md:inline"
+              >guest@xtditom:~$</span
+            >
             <span class="mr-2 text-emerald-400 font-bold md:hidden">~$</span>
-            <input type="text" id="cli-input" class="flex-1 bg-transparent border-none outline-none text-lime-400 font-mono placeholder-zinc-700 caret-lime-400" autocomplete="off" spellcheck="false" autofocus>
+            <input
+              type="text"
+              id="cli-input"
+              class="flex-1 bg-transparent border-none outline-none text-lime-400 font-mono placeholder-zinc-700 caret-lime-400"
+              autocomplete="off"
+              spellcheck="false"
+              autofocus
+            />
           </div>
         </div>
       </section>
@@ -751,58 +1037,80 @@
         </p>
 
         <!-- Minimal Formspree Layout -->
-        <form
-          id="contact-form"
-          action="https://formspree.io/f/xpqyjoyj"
-          method="POST"
-          class="w-full mt-8 space-y-4 gsap-contact opacity-0 translate-y-8 text-left"
+        <div
+          class="w-full max-w-3xl mx-auto bg-zinc-950 border-2 border-black dark:border-zinc-800 shadow-[8px_8px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#27272a] flex flex-col relative group transition-colors gsap-contact opacity-0 translate-y-8 mt-8 text-left"
         >
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="flex flex-col">
-              <label for="name" class="sr-only">Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Name"
-                required
-                class="w-full bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 px-4 py-3 text-black dark:text-zinc-300 font-mono text-sm focus:outline-none focus:bg-zinc-50 dark:focus:bg-black focus:ring-0 transition-colors rounded-none placeholder:text-zinc-500"
-              />
-            </div>
-            <div class="flex flex-col">
-              <label for="email" class="sr-only">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Email"
-                required
-                class="w-full bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 px-4 py-3 text-black dark:text-zinc-300 font-mono text-sm focus:outline-none focus:bg-zinc-50 dark:focus:bg-black focus:ring-0 transition-colors rounded-none placeholder:text-zinc-500"
-              />
-            </div>
-          </div>
-          <div class="flex flex-col">
-            <label for="message" class="sr-only">Message</label>
-            <textarea
-              id="message"
-              name="message"
-              rows="5"
-              placeholder="Message"
-              required
-              class="w-full bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 px-4 py-3 text-black dark:text-zinc-300 font-mono text-sm focus:outline-none focus:bg-zinc-50 dark:focus:bg-black focus:ring-0 transition-colors rounded-none resize-none placeholder:text-zinc-500"
-            ></textarea>
-          </div>
-          <div class="flex justify-center md:justify-end pt-2">
-            <button
-              type="submit"
-              class="inline-flex items-center justify-center px-8 py-3 text-sm font-mono font-bold text-black bg-lime-400 border-2 border-black dark:border-lime-400 shadow-[4px_4px_0px_0px_#000] dark:shadow-none hover:bg-lime-300 dark:hover:bg-transparent dark:hover:text-green-700 dark:text-black hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] dark:hover:shadow-none transition-all duration-300 cursor-pointer w-full md:w-auto"
+          <div
+            class="w-full h-8 bg-zinc-900 border-b-2 border-black dark:border-zinc-800 flex items-center px-4 gap-2 shrink-0"
+          >
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            <span
+              class="ml-4 text-xs text-zinc-500 uppercase tracking-widest font-bold"
+              >mail // secure_node</span
             >
-              Send Message
-            </button>
           </div>
-        </form>
-        <div id="form-success" class="hidden w-full mt-8 p-6 bg-lime-400/10 border-2 border-lime-400 text-lime-700 dark:text-lime-400 font-mono text-center shadow-[4px_4px_0px_0px_#000] dark:shadow-none transition-all">
-            [OK] Payload delivered successfully. I will review your message shortly.
+
+          <div class="p-6 md:p-8">
+            <form
+              id="contact-form"
+              action="https://formspree.io/f/xpqyjoyj"
+              method="POST"
+              class="w-full space-y-4"
+            >
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex flex-col">
+                  <label for="name" class="sr-only">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Name"
+                    required
+                    class="w-full bg-white dark:bg-black border-2 border-black dark:border-zinc-800 px-4 py-3 text-black dark:text-zinc-300 font-mono text-sm focus:outline-none focus:bg-zinc-50 dark:focus:bg-zinc-900 focus:border-lime-500 dark:focus:border-lime-500 focus:ring-0 transition-colors rounded-none placeholder:text-zinc-500"
+                  />
+                </div>
+                <div class="flex flex-col">
+                  <label for="email" class="sr-only">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    required
+                    class="w-full bg-white dark:bg-black border-2 border-black dark:border-zinc-800 px-4 py-3 text-black dark:text-zinc-300 font-mono text-sm focus:outline-none focus:bg-zinc-50 dark:focus:bg-zinc-900 focus:border-lime-500 dark:focus:border-lime-500 focus:ring-0 transition-colors rounded-none placeholder:text-zinc-500"
+                  />
+                </div>
+              </div>
+              <div class="flex flex-col">
+                <label for="message" class="sr-only">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  placeholder="Message payload..."
+                  required
+                  class="w-full bg-white dark:bg-black border-2 border-black dark:border-zinc-800 px-4 py-3 text-black dark:text-zinc-300 font-mono text-sm focus:outline-none focus:bg-zinc-50 dark:focus:bg-zinc-900 focus:border-lime-500 dark:focus:border-lime-500 focus:ring-0 transition-colors rounded-none resize-none placeholder:text-zinc-500"
+                ></textarea>
+              </div>
+              <div class="flex justify-end pt-4">
+                <button
+                  type="submit"
+                  class="inline-flex items-center justify-center px-8 py-3 text-sm font-mono font-bold text-black bg-white dark:bg-lime-400 border-2 border-black dark:border-lime-400 shadow-[4px_4px_0px_0px_#000] dark:shadow-none hover:bg-lime-400 dark:hover:bg-transparent dark:hover:text-lime-400 dark:text-black hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] dark:hover:shadow-none active:translate-y-1 active:shadow-none transition-all duration-300 cursor-pointer w-full md:w-auto"
+                >
+                  TRANSMIT
+                </button>
+              </div>
+            </form>
+
+            <div
+              id="form-success"
+              class="hidden w-full mt-4 p-6 bg-lime-400/10 border-2 border-lime-400 text-lime-700 dark:text-lime-400 font-mono text-center shadow-[4px_4px_0px_0px_#000] dark:shadow-none transition-all"
+            >
+              [OK] Payload delivered to secure node. Connection terminated.
+            </div>
+          </div>
         </div>
       </section>
 
@@ -877,8 +1185,26 @@
               ></path>
             </svg>
           </a>
+          <a
+            onclick="window.open('https://linkedin.com/in/xtditom', '_blank')"
+            class="cursor-pointer text-black dark:text-zinc-500 hover:text-[#0A66C2] transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
+            aria-label="LinkedIn"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+              ></path>
+            </svg>
+          </a>
         </div>
-        <p class="font-mono text-xs text-zinc-600 tracking-wider md:tracking-widest mt-2 px-4">
+        <p
+          class="font-mono text-xs text-zinc-600 tracking-wider md:tracking-widest mt-2 px-4"
+        >
           &copy; 2026 - DITOM BAROI ANTU
         </p>
       </footer>
