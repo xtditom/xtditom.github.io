@@ -163,15 +163,8 @@
         background-color: currentColor;
         transition: all 0.3s ease-in-out;
       }
-      .menu-open .line-1 {
-        transform: translateY(8px) rotate(45deg);
-      }
-      .menu-open .line-2 {
-        opacity: 0;
-        transform: translateX(10px);
-      }
-      .menu-open .line-3 {
-        transform: translateY(-8px) rotate(-45deg);
+      .menu-open .hamburger-line {
+        transform: scaleX(0.4);
       }
       /* Fix for buttons staying white after click */
       #theme-toggle:focus,
@@ -183,6 +176,50 @@
       #theme-toggle:hover,
       #mobile-menu-btn:hover {
         @apply text-black dark:text-white;
+      }
+
+      /* Desktop Nav Link Underline */
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: currentColor;
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.3s ease-in-out;
+      }
+      .nav-link:hover::after,
+      .nav-link:focus::after {
+        transform: scaleX(1);
+      }
+
+      /* Tech Fill Animation */
+      .tech-fill-left {
+        @apply relative isolate overflow-hidden;
+      }
+      .tech-fill-left::before {
+        content: "";
+        @apply absolute inset-0 bg-lime-400 origin-left scale-x-0 transition-transform duration-300 -z-10;
+      }
+      .tech-fill-left:hover::before {
+        @apply scale-x-100;
+      }
+
+      .tech-fill-right {
+        @apply relative isolate overflow-hidden;
+      }
+      .tech-fill-right::before {
+        content: "";
+        @apply absolute inset-0 bg-emerald-400 origin-right scale-x-0 transition-transform duration-300 -z-10;
+      }
+      .tech-fill-right:hover::before {
+        @apply scale-x-100;
       }
     </style>
 
@@ -262,7 +299,7 @@
         <!-- Logo -->
         <a
           href="#"
-          class="text-lime-700 dark:text-lime-400 font-bold text-base md:text-xl tracking-wider md:tracking-widest hover:text-black dark:hover:text-white transition-colors focus:outline-none z-50 relative uppercase"
+          class="text-lime-700 dark:text-lime-400 font-bold text-base md:text-xl tracking-wider md:tracking-widest hover:text-black dark:hover:text-white hover:[text-shadow:0_0_12px_#000] dark:hover:[text-shadow:0_0_12px_#fff] transition-all duration-300 focus:outline-none z-50 relative uppercase"
           aria-label="Home"
         >
           XTDITOM // SYS
@@ -326,22 +363,22 @@
           <div class="hidden md:flex items-center gap-8 text-sm">
             <a
               href="#featured"
-              class="text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
+              class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
               >01. Work</a
             >
             <a
               href="#tech"
-              class="text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
+              class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
               >02. Tech</a
             >
             <a
               href="#rigs"
-              class="text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
+              class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
               >03. Rigs</a
             >
             <a
               href="#terminal"
-              class="text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
+              class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
               >04. Terminal</a
             >
             <a
@@ -477,7 +514,10 @@
             <span
               class="text-lime-700 dark:text-lime-400 font-mono text-lg md:text-2xl mr-4 tracking-widest"
               >01.</span
-            >Featured Work
+            ><span
+              class="hover:bg-lime-300 dark:hover:bg-lime-500 hover:text-black dark:hover:text-black transition-colors px-2 md:px-4 -ml-2 md:-ml-4"
+              >Featured Work</span
+            >
           </h2>
           <p
             class="text-zinc-600 dark:text-zinc-400 max-w-2xl text-base md:text-lg"
@@ -582,7 +622,7 @@
               <div class="flex gap-4 mt-8 lg:justify-end">
                 <a
                   href="https://chromewebstore.google.com/detail/fckmlnagohleefboaleepppikpdkckjn"
-                  class="text-zinc-600 dark:text-zinc-400 hover:text-blue-500 transition-colors p-2 border border-transparent hover:border-lime-600 dark:hover:border-lime-400 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
+                  class="text-zinc-600 dark:text-zinc-400 hover:text-blue-500 transition-colors p-2 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
                   aria-label="Google Chrome"
                 >
                   <svg
@@ -598,7 +638,7 @@
                 </a>
                 <a
                   href="https://addons.mozilla.org/en-US/firefox/addon/yourdynamicdashboard/"
-                  class="text-zinc-600 dark:text-zinc-400 hover:text-orange-500 transition-colors p-2 border border-transparent hover:border-lime-600 dark:hover:border-lime-400 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
+                  class="text-zinc-600 dark:text-zinc-400 hover:text-orange-500 transition-colors p-2 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
                   aria-label="Mozilla Firefox"
                 >
                   <svg
@@ -614,7 +654,7 @@
                 </a>
                 <a
                   href="https://microsoftedge.microsoft.com/addons/detail/yourdynamicdashboard/phhofebhbmicnfhmmdgikiddaboljnec"
-                  class="text-zinc-600 dark:text-zinc-400 hover:text-emerald-400 transition-colors p-2 border border-transparent hover:border-lime-600 dark:hover:border-lime-400 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
+                  class="text-zinc-600 dark:text-zinc-400 hover:text-emerald-400 transition-colors p-2 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
                   aria-label="Microsoft Edge"
                 >
                   <svg
@@ -630,7 +670,7 @@
                 </a>
                 <a
                   href="https://github.com/xtditom/YourDynamicDashboard"
-                  class="text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors p-2 border border-transparent hover:border-lime-600 dark:hover:border-lime-400 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
+                  class="text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors p-2 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
                   aria-label="GitHub Repository"
                 >
                   <svg
@@ -648,7 +688,7 @@
                 </a>
                 <a
                   href="https://ditom.me/YourDynamicDashboard"
-                  class="text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors p-2 border border-transparent hover:border-lime-600 dark:hover:border-lime-400 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
+                  class="text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors p-2 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
                   aria-label="Live Demo"
                 >
                   <svg
@@ -684,7 +724,10 @@
             <span
               class="text-lime-700 dark:text-lime-400 font-mono text-lg md:text-2xl mr-4 tracking-widest"
               >02.</span
-            >Tech Explorer
+            ><span
+              class="hover:bg-lime-300 dark:hover:bg-lime-500 hover:text-black dark:hover:text-black transition-colors px-2 md:px-4 -ml-2 md:-ml-4"
+              >Tech Explorer</span
+            >
           </h2>
           <p
             class="text-zinc-600 dark:text-zinc-400 max-w-2xl text-base md:text-lg"
@@ -710,27 +753,27 @@
               class="flex flex-wrap gap-3 text-black dark:text-zinc-300 font-mono text-xs font-bold uppercase tracking-widest"
             >
               <li
-                class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
+                class="gsap-tech tech-fill-left opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
               >
                 HTML5 / Semantic
               </li>
               <li
-                class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
+                class="gsap-tech tech-fill-left opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
               >
                 CSS3 / Tailwind
               </li>
               <li
-                class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
+                class="gsap-tech tech-fill-left opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
               >
                 Vanilla JS (ES6+)
               </li>
               <li
-                class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
+                class="gsap-tech tech-fill-left opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
               >
                 Git / GitHub
               </li>
               <li
-                class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
+                class="gsap-tech tech-fill-left opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
               >
                 Browser APIs
               </li>
@@ -750,22 +793,22 @@
               class="flex flex-wrap gap-3 text-black dark:text-zinc-300 font-mono text-xs font-bold uppercase tracking-widest"
             >
               <li
-                class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-emerald-400 dark:hover:bg-emerald-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
+                class="gsap-tech tech-fill-right opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
               >
                 Next.js / React
               </li>
               <li
-                class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-emerald-400 dark:hover:bg-emerald-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
+                class="gsap-tech tech-fill-right opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
               >
                 TypeScript
               </li>
               <li
-                class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-emerald-400 dark:hover:bg-emerald-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
+                class="gsap-tech tech-fill-right opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
               >
                 Python
               </li>
               <li
-                class="gsap-tech opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:bg-emerald-400 dark:hover:bg-emerald-400 hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
+                class="gsap-tech tech-fill-right opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
               >
                 Node.js
               </li>
@@ -812,7 +855,10 @@
             <span
               class="text-lime-700 dark:text-lime-400 font-mono text-xl md:text-2xl mr-4 tracking-widest"
               >03.</span
-            >My Rigs
+            ><span
+              class="hover:bg-lime-300 dark:hover:bg-lime-500 hover:text-black dark:hover:text-black transition-colors px-2 md:px-4 -ml-2 md:-ml-4"
+              >My Rigs</span
+            >
           </h2>
           <p
             class="text-zinc-600 dark:text-zinc-400 max-w-2xl text-base md:text-lg"
@@ -986,7 +1032,10 @@
             <span
               class="text-lime-700 dark:text-lime-400 font-mono text-xl md:text-2xl mr-4 tracking-widest"
               >04.</span
-            >System Terminal
+            ><span
+              class="hover:bg-lime-300 dark:hover:bg-lime-500 hover:text-black dark:hover:text-black transition-colors px-2 md:px-4 -ml-2 md:-ml-4"
+              >System Terminal</span
+            >
           </h2>
           <p
             class="text-zinc-600 dark:text-zinc-400 max-w-2xl text-base md:text-lg"
@@ -1072,7 +1121,10 @@
         <h2
           class="text-4xl md:text-6xl font-black text-black dark:text-white gsap-contact opacity-0 translate-y-8"
         >
-          Get In Touch
+          <span
+            class="hover:bg-lime-300 dark:hover:bg-lime-500 hover:text-black dark:hover:text-black transition-colors px-2 md:px-4 py-1 -mx-2 md:-mx-4"
+            >Get In Touch</span
+          >
         </h2>
         <p
           class="text-zinc-600 dark:text-zinc-400 text-base md:text-lg max-w-xl gsap-contact opacity-0 translate-y-8"
