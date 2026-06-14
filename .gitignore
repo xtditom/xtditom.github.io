@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Production builds
+dist/
+
+# Legacy backups
+.legacy/
+
+# Local env files
+.env*.local
+
+# System/IDE files
+.DS_Store
+.idea/
+.vscode/

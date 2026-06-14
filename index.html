@@ -1,1330 +1,320 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ditom Baroi Antu | xtditom</title>
-    <link
-      rel="icon"
-      id="dynamic-favicon"
-      type="image/png"
-      href="favicons/AlienX-128.png"
-    />
-    <meta
-      name="description"
-      content="Portfolio of Ditom, a Student Developer & Open-Source Contributor."
-    />
+    <link rel="icon" id="dynamic-favicon" type="image/png" href="/favicons/Ben.png" />
+    <meta name="description" content="Interactive 3D portfolio of Ditom — Student Developer & Open-Source Contributor." />
 
-    <!-- Tailwind CSS v4 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="Ditom Baroi Antu | Student Developer & Open-Source Contributor" />
+    <meta property="og:description" content="Immersive 3D OS-themed developer portfolio with a CLI terminal, cyberpunk aesthetics, and Three.js-powered visuals." />
+    <meta property="og:url" content="https://ditom.me" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ditom Baroi Antu | xtditom" />
+    <meta name="twitter:description" content="Student Developer & Open-Source Contributor from Dhaka, Bangladesh." />
 
-    <!-- Theme Initialization -->
+    <!-- Theme Initialization (prevent flash) -->
     <script>
       const savedTheme = localStorage.getItem("theme");
       const osDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       if (savedTheme === "dark" || (savedTheme === null && osDark)) {
         document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
       }
     </script>
-
-    <!-- Custom Tailwind Configuration -->
-    <style type="text/tailwindcss">
-      @custom-variant dark (&:where(.dark, .dark *));
-
-      html {
-        scrollbar-gutter: stable;
-      }
-
-      /* Local Font Hosting */
-      /* Inter Font Family */
-      @font-face {
-        font-family: "Inter";
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url("./fonts/inter-regular.woff2") format("woff2");
-      }
-      @font-face {
-        font-family: "Inter";
-        font-style: normal;
-        font-weight: 500;
-        font-display: swap;
-        src: url("./fonts/inter-500.woff2") format("woff2");
-      }
-      @font-face {
-        font-family: "Inter";
-        font-style: normal;
-        font-weight: 600;
-        font-display: swap;
-        src: url("./fonts/inter-600.woff2") format("woff2");
-      }
-      @font-face {
-        font-family: "Inter";
-        font-style: normal;
-        font-weight: 700;
-        font-display: swap;
-        src: url("./fonts/inter-700.woff2") format("woff2");
-      }
-      @font-face {
-        font-family: "Inter";
-        font-style: normal;
-        font-weight: 800;
-        font-display: swap;
-        src: url("./fonts/inter-800.woff2") format("woff2");
-      }
-
-      /* JetBrains Mono Font Family */
-      @font-face {
-        font-family: "JetBrains Mono";
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url("./fonts/jetbrains-mono-regular.woff2") format("woff2");
-      }
-      @font-face {
-        font-family: "JetBrains Mono";
-        font-style: normal;
-        font-weight: 700;
-        font-display: swap;
-        src: url("./fonts/jetbrains-mono-700.woff2") format("woff2");
-      }
-      @font-face {
-        font-family: "JetBrains Mono";
-        font-style: normal;
-        font-weight: 800;
-        font-display: swap;
-        src: url("./fonts/jetbrains-mono-800.woff2") format("woff2");
-      }
-
-      @theme {
-        --font-sans: "Inter", sans-serif;
-        --font-mono: "JetBrains Mono", monospace;
-      }
-
-      body {
-        @apply bg-white dark:bg-black text-zinc-800 dark:text-zinc-400 font-sans antialiased overflow-x-hidden selection:bg-lime-400 selection:text-black;
-        text-shadow: 0.5px 0.5px 0px rgba(0, 0, 0, 0.15);
-      }
-      .dark body {
-        text-shadow: none;
-      }
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        @apply text-black dark:text-white tracking-tight;
-      }
-
-      /* Custom Neo-Brutalist Scrollbar (Light & Dark) */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #ffffff;
-        border-left: 1px solid #e4e4e7;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #669c16;
-        border-radius: 0px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #5f9613;
-      }
-
-      html.dark ::-webkit-scrollbar-track {
-        background: #000000;
-        border-left: 1px solid #27272a;
-      }
-      html.dark ::-webkit-scrollbar-thumb {
-        background: #a3e635;
-      }
-      html.dark ::-webkit-scrollbar-thumb:hover {
-        background: #bef264;
-      }
-
-      /* Firefox */
-      * {
-        scrollbar-width: thin;
-        scrollbar-color: #456b0c #000000;
-      }
-      html.dark * {
-        scrollbar-color: #567e17 #000000;
-      }
-
-      /* Hamburger Animation */
-      .hamburger-line {
-        display: block;
-        width: 1.5rem;
-        height: 2px;
-        background-color: currentColor;
-        transition: all 0.3s ease-in-out;
-      }
-      .menu-open .hamburger-line {
-        transform: scaleX(0.4);
-      }
-      /* Fix for buttons staying white after click */
-      #theme-toggle:focus,
-      #theme-toggle:active,
-      #mobile-menu-btn:focus,
-      #mobile-menu-btn:active {
-        @apply text-lime-700 dark:text-lime-400;
-      }
-      #theme-toggle:hover,
-      #mobile-menu-btn:hover {
-        @apply text-black dark:text-white;
-      }
-
-      /* Desktop Nav Link Underline */
-      .nav-link {
-        position: relative;
-      }
-      .nav-link::after {
-        content: "";
-        position: absolute;
-        bottom: -4px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: currentColor;
-        transform: scaleX(0);
-        transform-origin: center;
-        transition: transform 0.3s ease-in-out;
-      }
-      .nav-link:hover::after,
-      .nav-link:focus::after {
-        transform: scaleX(1);
-      }
-
-      /* Tech Fill Animation */
-      .tech-fill-left {
-        @apply relative isolate overflow-hidden;
-      }
-      .tech-fill-left::before {
-        content: "";
-        @apply absolute inset-0 bg-lime-400 origin-left scale-x-0 transition-transform duration-300 -z-10;
-      }
-      .tech-fill-left:hover::before {
-        @apply scale-x-100;
-      }
-
-      .tech-fill-right {
-        @apply relative isolate overflow-hidden;
-      }
-      .tech-fill-right::before {
-        content: "";
-        @apply absolute inset-0 bg-emerald-400 origin-right scale-x-0 transition-transform duration-300 -z-10;
-      }
-      .tech-fill-right:hover::before {
-        @apply scale-x-100;
-      }
-    </style>
-
-    <!-- GSAP & ScrollTrigger CDN -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/gsap@3.14/dist/gsap.min.js"
-      defer
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/gsap@3.14/dist/ScrollTrigger.min.js"
-      defer
-    ></script>
   </head>
   <body>
-    <!-- Interactive OS Grid Background -->
-    <div id="os-grid-bg" class="fixed inset-0 pointer-events-none z-0">
-      <div
-        class="absolute inset-0 bg-[linear-gradient(to_right,#00000006_1px,transparent_1px),linear-gradient(to_bottom,#00000006_1px,transparent_1px)] md:bg-[linear-gradient(to_right,#0000000d_1px,transparent_1px),linear-gradient(to_bottom,#0000000d_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] dark:md:bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:32px_32px] transition-colors duration-500"
-      ></div>
-      <div
-        id="os-grid-glow"
-        class="absolute inset-0 bg-[linear-gradient(to_right,#4d7c0f6e_1px,transparent_1px),linear-gradient(to_bottom,#4d7c0f6e_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#a3e63533_1px,transparent_1px),linear-gradient(to_bottom,#a3e63533_1px,transparent_1px)] bg-[size:16px_16px] opacity-0 transition-opacity duration-500"
-        style="
-          -webkit-mask-image: radial-gradient(
-            300px circle at var(--x, 50%) var(--y, 50%),
-            black,
-            transparent
-          );
-          mask-image: radial-gradient(
-            300px circle at var(--x, 50%) var(--y, 50%),
-            black,
-            transparent
-          );
-        "
-      ></div>
-    </div>
+    <!-- Three.js WebGL Canvas (rendered behind everything) -->
+    <canvas id="webgl-canvas"></canvas>
 
-    <!-- Terminal Preloader -->
-    <div
-      id="preloader"
-      class="fixed inset-0 z-[100] bg-white dark:bg-black flex flex-col items-start justify-center p-8 md:p-24 font-mono text-lime-700 dark:text-lime-400 text-sm md:text-base lg:text-lg w-full h-full overflow-hidden"
-    >
-      <div class="max-w-3xl w-full">
-        <h2
-          class="gsap-step opacity-0 text-xl md:text-3xl font-black text-black dark:text-white mb-2 tracking-wider md:tracking-widest"
-        >
-          SYSTEM BOOTUP
-        </h2>
-        <p
-          class="gsap-step opacity-0 text-green-700 dark:text-green-500 font-bold mb-8"
-        >
-          [OS] XTDITOM OS
-        </p>
-        <p class="gsap-step opacity-0 mb-2">[OK] Initializing environment...</p>
-        <p class="gsap-step opacity-0 mb-2">
-          [OK] Loading design system: High-Contrast...
-        </p>
-        <p class="gsap-step opacity-0 mb-2">[OK] Fetching GitHub records...</p>
-        <p class="gsap-step opacity-0 mb-2">
-          [OK] Compiling assets. Boot sequence complete.
-        </p>
-        <p
-          class="gsap-step opacity-0 mt-6 text-black dark:text-white animate-pulse"
-        >
-          _
-        </p>
+    <!-- HTML Overlay Layer (UI on top of 3D scene) -->
+    <div id="app">
+
+      <!-- ═══════════════════ PRELOADER / BOOT SEQUENCE ═══════════════════ -->
+      <div id="preloader" class="preloader">
+        <div class="preloader__content">
+          <h2 class="preloader__title" data-preloader-step>SYSTEM BOOTUP</h2>
+          <p class="preloader__os" data-preloader-step>[OS] XTDITOM OS v2.0</p>
+          <p data-preloader-step>[OK] Initializing 3D environment...</p>
+          <p data-preloader-step>[OK] Loading WebGL pipeline...</p>
+          <p data-preloader-step>[OK] Compiling shaders & assets...</p>
+          <p data-preloader-step>[OK] Boot sequence complete.</p>
+          <div class="preloader__progress">
+            <div class="preloader__progress-bar" id="preloader-bar"></div>
+          </div>
+          <p class="preloader__cursor" data-preloader-step>_</p>
+        </div>
       </div>
-    </div>
 
-    <!-- Sticky Neo-Brutalist HUD Navigation -->
-    <nav
-      class="fixed top-0 w-full z-50 bg-white dark:bg-black border-b border-black dark:border-zinc-800 font-mono transition-transform duration-300"
-    >
-      <div
-        class="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-20"
-      >
-        <!-- Logo -->
-        <a
-          href="#"
-          class="text-lime-700 dark:text-lime-400 font-bold text-base md:text-xl tracking-wider md:tracking-widest hover:text-black dark:hover:text-white hover:[text-shadow:0_0_12px_#000] dark:hover:[text-shadow:0_0_12px_#fff] transition-all duration-300 focus:outline-none z-50 relative uppercase"
-          aria-label="Home"
-        >
-          XTDITOM // SYS
-        </a>
-
-        <div class="flex items-center gap-1 md:gap-8">
-          <!-- Theme Toggle -->
-          <button
-            id="theme-toggle"
-            class="text-lime-700 dark:text-lime-400 hover:text-black dark:hover:text-white transition-colors focus:outline-none z-50 relative"
-            aria-label="Toggle Theme"
-          >
-            <!-- Sun Icon (Hidden in Light Mode, Visible in Dark Mode to switch back to Light) -->
-            <svg
-              id="theme-toggle-light-icon"
-              class="hidden w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-              ></path>
-            </svg>
-            <!-- Moon Icon (Visible in Light Mode, Hidden in Dark Mode to switch back to Dark) -->
-            <svg
-              id="theme-toggle-dark-icon"
-              class="hidden w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-              ></path>
-            </svg>
+      <!-- ═══════════════════ NAVIGATION HUD ═══════════════════ -->
+      <nav id="nav-hud" class="nav-hud">
+        <a href="#hero" class="nav-hud__logo" aria-label="Home">XTDITOM // SYS</a>
+        <div class="nav-hud__controls">
+          <button id="theme-toggle" class="nav-hud__btn" aria-label="Toggle Theme">
+            <svg id="icon-sun" class="icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <svg id="icon-moon" class="icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
           </button>
+
+          <!-- Desktop Nav Links -->
+          <div class="nav-hud__links">
+            <a href="#hero" class="nav-hud__link" data-section="0"><span class="nav-hud__link-num">00</span> Home</a>
+            <a href="#featured" class="nav-hud__link" data-section="1"><span class="nav-hud__link-num">01</span> Work</a>
+            <a href="#tech" class="nav-hud__link" data-section="2"><span class="nav-hud__link-num">02</span> Tech</a>
+            <a href="#rigs" class="nav-hud__link" data-section="3"><span class="nav-hud__link-num">03</span> Rigs</a>
+            <a href="#terminal" class="nav-hud__link" data-section="4"><span class="nav-hud__link-num">04</span> Terminal</a>
+            <a href="#contact" class="nav-hud__cta">CONTACT</a>
+          </div>
 
           <!-- Mobile Menu Toggle -->
-          <button
-            id="mobile-menu-btn"
-            class="md:hidden text-lime-700 dark:text-lime-400 hover:text-black dark:hover:text-white transition-colors focus:outline-none z-50 relative p-2"
-            aria-label="Toggle Menu"
-          >
-            <div class="space-y-1.5">
-              <span class="hamburger-line line-1"></span>
-              <span class="hamburger-line line-2"></span>
-              <span class="hamburger-line line-3"></span>
-            </div>
+          <button id="mobile-menu-btn" class="nav-hud__burger" aria-label="Toggle Menu">
+            <span></span><span></span><span></span>
           </button>
+        </div>
+      </nav>
 
-          <!-- Desktop Links -->
-          <div class="hidden md:flex items-center gap-8 text-sm">
-            <a
-              href="#featured"
-              class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
-              >01. Work</a
-            >
-            <a
-              href="#tech"
-              class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
-              >02. Tech</a
-            >
-            <a
-              href="#rigs"
-              class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
-              >03. Rigs</a
-            >
-            <a
-              href="#terminal"
-              class="nav-link text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
-              >04. Terminal</a
-            >
-            <a
-              href="#contact"
-              class="btn-glitch inline-flex items-center justify-center px-6 py-2 border-2 border-black dark:border-lime-400 text-black dark:text-lime-400 bg-white dark:bg-transparent shadow-[4px_4px_0px_0px_#000] dark:shadow-none font-bold rounded-none hover:bg-lime-400 hover:text-black dark:hover:text-black transition-all duration-300 active:translate-y-1 active:shadow-none focus:outline-none"
-            >
-              CONTACT
-            </a>
-          </div>
+      <!-- Mobile Menu Overlay -->
+      <div id="mobile-menu" class="mobile-menu">
+        <div class="mobile-menu__inner">
+          <a href="#hero" class="mobile-menu__link">00. Home</a>
+          <a href="#featured" class="mobile-menu__link">01. Work</a>
+          <a href="#tech" class="mobile-menu__link">02. Tech</a>
+          <a href="#rigs" class="mobile-menu__link">03. Rigs</a>
+          <a href="#terminal" class="mobile-menu__link">04. Terminal</a>
+          <a href="#contact" class="mobile-menu__cta">CONTACT</a>
         </div>
       </div>
-    </nav>
 
-    <!-- Mobile Menu Overlay -->
-    <div
-      id="mobile-menu"
-      class="fixed inset-0 z-40 bg-white/95 dark:bg-black/95 backdrop-blur-md flex flex-col items-center justify-center font-mono opacity-0 pointer-events-none md:hidden"
-    >
-      <div class="flex flex-col items-center gap-8 w-full px-6">
-        <a
-          href="#"
-          class="mobile-link text-2xl text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400 w-full text-center py-4 border-b border-black/50 dark:border-zinc-800/50"
-          >00. Home</a
-        >
-        <a
-          href="#featured"
-          class="mobile-link text-2xl text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400 w-full text-center py-4 border-b border-black/50 dark:border-zinc-800/50"
-          >01. Work</a
-        >
-        <a
-          href="#tech"
-          class="mobile-link text-2xl text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400 w-full text-center py-4 border-b border-black/50 dark:border-zinc-800/50"
-          >02. Tech</a
-        >
-        <a
-          href="#rigs"
-          class="mobile-link text-2xl text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400 w-full text-center py-4 border-b border-black/50 dark:border-zinc-800/50"
-          >03. Rigs</a
-        >
-        <a
-          href="#terminal"
-          class="mobile-link text-2xl text-zinc-600 dark:text-zinc-400 hover:text-green-700 dark:text-green-500 transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400 w-full text-center py-4 border-b border-black/50 dark:border-zinc-800/50"
-          >04. Terminal</a
-        >
-        <a
-          href="#contact"
-          class="mobile-link btn-glitch inline-flex items-center justify-center px-6 py-2 border-2 border-black dark:border-lime-400 text-black dark:text-lime-400 bg-white dark:bg-transparent shadow-[4px_4px_0px_0px_#000] dark:shadow-none font-bold rounded-none hover:bg-lime-400 hover:text-black dark:hover:text-black transition-all duration-300 active:translate-y-1 active:shadow-none focus:outline-none"
-        >
-          CONTACT
-        </a>
-      </div>
-    </div>
+      <!-- ═══════════════════ SCROLL CONTENT SECTIONS ═══════════════════ -->
+      <main id="main-content" class="main-content">
 
-    <!-- Main Portfolio Wrapper -->
-    <main
-      class="relative w-full min-h-screen flex flex-col items-center px-6 md:px-12 lg:px-24 pt-20 overflow-x-hidden"
-    >
-      <!-- Hero Section -->
-      <section
-        id="hero"
-        class="relative w-full max-w-5xl mx-auto flex flex-col items-start justify-center min-h-screen py-20 gap-6"
-      >
-        <div class="space-y-4 max-w-3xl">
-          <p
-            class="gsap-hero opacity-0 translate-y-8 text-lime-700 dark:text-lime-400 font-mono font-bold tracking-widest text-sm md:text-base uppercase"
-          >
-            Hi, my name is
-          </p>
-          <h1
-            class="gsap-hero opacity-0 translate-y-8 text-4xl md:text-7xl lg:text-8xl font-black text-black dark:text-white leading-tight md:whitespace-nowrap"
-          >
-            <span
-              class="bg-lime-300 dark:bg-lime-500 dark:text-black px-2 md:px-4 -ml-2 md:-ml-4"
-              >Ditom Baroi Antu.</span
-            >
-          </h1>
-          <h3
-            class="gsap-hero opacity-0 translate-y-8 text-2xl md:text-4xl lg:text-5xl font-bold text-zinc-600 dark:text-zinc-400 leading-tight"
-          >
-            Student Developer &<br />
-            Open-Source Contributor.
-          </h3>
-          <div class="gsap-hero opacity-0 translate-y-8">
-            <p
-              class="text-base md:text-lg lg:text-xl text-zinc-600 dark:text-zinc-400 mt-6 max-w-2xl leading-relaxed"
-            >
+        <!-- HERO -->
+        <section id="hero" class="section section--hero">
+          <div class="hero__content" data-scroll-reveal>
+            <p class="hero__greeting">Hi, my name is</p>
+            <h1 class="hero__name"><span class="hero__name-highlight">Ditom Baroi Antu.</span></h1>
+            <h3 class="hero__tagline">Student Developer &<br />Open-Source Contributor.</h3>
+            <p class="hero__bio">
               I'm an 18-year-old student-developer from Dhaka, Bangladesh.
               Currently, I'm balancing my Class XII studies with my obsession
-              for Technology.
-              <br />
+              for Technology.<br />
               Driven by the logic behind the code and a desire to create
               incredible projects, I'm beginning my journey in programming and
-              design as a student developer. I'm always pushing the limits of
-              what I can create, going from straightforward scripts to intricate
-              automation.
+              design as a student developer.
             </p>
+            <a href="#terminal" class="btn btn--primary magnetic-btn">
+              Terminal
+              <svg class="btn__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </a>
           </div>
-        </div>
+        </section>
 
-        <div class="gsap-hero opacity-0 translate-y-8 mt-10">
-          <a
-            href="#terminal"
-            class="inline-flex items-center justify-center px-8 py-4 text-sm md:text-base font-mono font-bold text-black dark:text-lime-400 bg-white dark:bg-transparent border-2 border-black dark:border-lime-400 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400/10 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] dark:hover:shadow-[6px_6px_0px_0px_#a3e635] active:translate-y-1 active:shadow-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black group magnetic-btn"
-          >
-            Terminal
-            <svg
-              class="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              ></path>
-            </svg>
-          </a>
-        </div>
-      </section>
-
-      <!-- Featured Project Section -->
-      <section
-        id="featured"
-        class="w-full max-w-5xl mx-auto flex flex-col items-start justify-center min-h-screen py-24 gap-12 border-t border-black dark:border-zinc-800"
-      >
-        <div class="space-y-4 w-full">
-          <h2
-            class="text-3xl md:text-5xl font-black text-black dark:text-white"
-          >
-            <span
-              class="text-lime-700 dark:text-lime-400 font-mono text-lg md:text-2xl mr-4 tracking-widest"
-              >01.</span
-            ><span
-              class="hover:bg-lime-300 dark:hover:bg-lime-500 hover:text-black dark:hover:text-black transition-colors px-2 md:px-4 -ml-2 md:-ml-4"
-              >Featured Work</span
-            >
-          </h2>
-          <p
-            class="text-zinc-600 dark:text-zinc-400 max-w-2xl text-base md:text-lg"
-          >
-            Engineering robust, browser-native applications with a focus on
-            local privacy and performance.
-          </p>
-        </div>
-
-        <div
-          class="w-full flex flex-col lg:flex-row gap-8 items-center lg:items-stretch"
-        >
-          <!-- Project Image Context -->
-          <div
-            class="w-full lg:w-3/5 group relative perspective-1000 gsap-project-left opacity-0 -translate-x-12"
-          >
-            <div
-              class="relative w-full aspect-video border border-black dark:border-zinc-800 bg-zinc-900/50 p-2 overflow-hidden transition-all duration-500 ease-out group-hover:border-lime-400/50"
-            >
-              <!-- Image Crossfade Container -->
-              <div
-                id="featured-image-container"
-                class="relative w-full h-full cursor-pointer"
-                title="View Project"
-              >
-                <img
-                  id="featured-img-2"
-                  src="https://ditombaroiantuart.wordpress.com/wp-content/uploads/2026/03/custom-bg-2.webp"
-                  alt="YourDynamicDashboard Alternative Screenshot"
-                  class="absolute inset-0 w-full h-full object-cover z-0 opacity-0 transition-opacity duration-700"
-                />
-                <img
-                  id="featured-img-1"
-                  src="https://ditombaroiantuart.wordpress.com/wp-content/uploads/2026/03/abstract-bg.webp"
-                  alt="YourDynamicDashboard Interface Screenshot"
-                  class="absolute inset-0 w-full h-full object-cover z-10 opacity-100 transition-opacity duration-700"
-                />
+        <!-- FEATURED PROJECT -->
+        <section id="featured" class="section section--featured">
+          <div class="section__header" data-scroll-reveal>
+            <h2 class="section__title"><span class="section__num">01.</span>Featured Work</h2>
+            <p class="section__subtitle">Engineering robust, browser-native applications with a focus on local privacy and performance.</p>
+          </div>
+          <div class="featured__layout" data-scroll-reveal>
+            <div class="featured__image-wrap">
+              <div class="featured__image-container" id="featured-image-container">
+                <img id="featured-img-2" src="https://ditombaroiantuart.wordpress.com/wp-content/uploads/2026/03/custom-bg-2.webp" alt="YourDynamicDashboard Alternative Screenshot" class="featured__img featured__img--back" loading="lazy" />
+                <img id="featured-img-1" src="https://ditombaroiantuart.wordpress.com/wp-content/uploads/2026/03/abstract-bg.webp" alt="YourDynamicDashboard Interface Screenshot" class="featured__img featured__img--front" loading="lazy" />
+                <div class="featured__img-overlay"></div>
+                <span class="featured__tap-hint">Tap to preview</span>
               </div>
-              <div
-                class="absolute inset-0 bg-lime-400/10 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-500 z-20 pointer-events-none"
-              ></div>
             </div>
-          </div>
-
-          <!-- Project Details Context -->
-          <div
-            class="w-full lg:w-2/5 flex flex-col justify-center gap-6 lg:-ml-12 z-30 relative gsap-project-right opacity-0 translate-x-12"
-          >
-            <div class="text-left lg:text-right">
-              <p
-                class="text-lime-700 dark:text-lime-400 font-mono text-sm mb-2"
-              >
-                Featured Extension
-              </p>
-              <h3
-                class="text-2xl md:text-3xl font-bold text-black dark:text-white mb-6"
-              >
-                YourDynamicDashboard
-              </h3>
-
-              <div
-                class="bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-6 md:p-8 text-zinc-800 dark:text-zinc-300 text-sm md:text-base leading-relaxed shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] dark:shadow-none transition-colors"
-              >
-                <p>
-                  A high-performance new tab browser extension engineered
-                  entirely with Vanilla JS and CSS. Prioritizes user privacy
-                  with a strictly
-                  <strong>100% local-storage architecture</strong> utilizing
-                  <strong>IndexedDB</strong> for heavy assets like custom
-                  backgrounds and caching, bypassing the need for external
-                  database dependencies.
-                </p>
+            <div class="featured__details">
+              <p class="featured__label">Featured Extension</p>
+              <h3 class="featured__project-name">YourDynamicDashboard</h3>
+              <div class="featured__desc-card">
+                <p>A high-performance new tab browser extension engineered entirely with Vanilla JS and CSS. Prioritizes user privacy with a strictly <strong>100% local-storage architecture</strong> utilizing <strong>IndexedDB</strong> for heavy assets.</p>
               </div>
-
-              <!-- Tech Stack Tags -->
-              <ul
-                class="flex flex-wrap gap-4 mt-6 text-zinc-600 dark:text-white font-mono text-sm lg:justify-end"
-              >
-                <li
-                  class="hover:text-green-700 dark:hover:text-green-500 cursor-default transition-colors"
-                >
-                  Vanilla JS
-                </li>
-                <li
-                  class="hover:text-green-700 dark:hover:text-green-500 cursor-default transition-colors"
-                >
-                  IndexedDB
-                </li>
-                <li
-                  class="hover:text-green-700 dark:hover:text-green-500 cursor-default transition-colors"
-                >
-                  HTML5/CSS3
-                </li>
-                <li
-                  class="hover:text-green-700 dark:hover:text-green-500 cursor-default transition-colors"
-                >
-                  Cross-Browser API
-                </li>
+              <ul class="featured__tech-list">
+                <li>Vanilla JS</li><li>IndexedDB</li><li>HTML5/CSS3</li><li>Cross-Browser API</li>
               </ul>
-
-              <!-- Project Links -->
-              <div class="flex gap-4 mt-8 lg:justify-end">
-                <a
-                  href="https://chromewebstore.google.com/detail/fckmlnagohleefboaleepppikpdkckjn"
-                  class="text-zinc-600 dark:text-zinc-400 hover:text-blue-500 transition-colors p-2 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
-                  aria-label="Google Chrome"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728Z"
-                    ></path>
-                  </svg>
+              <div class="featured__links">
+                <a href="https://chromewebstore.google.com/detail/fckmlnagohleefboaleepppikpdkckjn" target="_blank" rel="noopener noreferrer" aria-label="Chrome Web Store" class="featured__link">
+                  <svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728Z"></path></svg>
                 </a>
-                <a
-                  href="https://addons.mozilla.org/en-US/firefox/addon/yourdynamicdashboard/"
-                  class="text-zinc-600 dark:text-zinc-400 hover:text-orange-500 transition-colors p-2 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
-                  aria-label="Mozilla Firefox"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M8.824 7.287c.008 0 .004 0 0 0zm-2.8-1.4c.006 0 .003 0 0 0zm16.754 2.161c-.505-1.215-1.53-2.528-2.333-2.943.654 1.283 1.033 2.57 1.177 3.53l.002.02c-1.314-3.278-3.544-4.6-5.366-7.477-.091-.147-.184-.292-.273-.446a3.545 3.545 0 01-.13-.24 2.118 2.118 0 01-.172-.46.03.03 0 00-.027-.03.038.038 0 00-.021 0l-.006.001a.037.037 0 00-.01.005L15.624 0c-2.585 1.515-3.657 4.168-3.932 5.856a6.197 6.197 0 00-2.305.587.297.297 0 00-.147.37c.057.162.24.24.396.17a5.622 5.622 0 012.008-.523l.067-.005a5.847 5.847 0 011.957.222l.095.03a5.816 5.816 0 01.616.228c.08.036.16.073.238.112l.107.055a5.835 5.835 0 01.368.211 5.953 5.953 0 012.034 2.104c-.62-.437-1.733-.868-2.803-.681 4.183 2.09 3.06 9.292-2.737 9.02a5.164 5.164 0 01-1.513-.292 4.42 4.42 0 01-.538-.232c-1.42-.735-2.593-2.121-2.74-3.806 0 0 .537-2 3.845-2 .357 0 1.38-.998 1.398-1.287-.005-.095-2.029-.9-2.817-1.677-.422-.416-.622-.616-.8-.767a3.47 3.47 0 00-.301-.227 5.388 5.388 0 01-.032-2.842c-1.195.544-2.124 1.403-2.8 2.163h-.006c-.46-.584-.428-2.51-.402-2.913-.006-.025-.343.176-.389.206-.406.29-.787.616-1.136.974-.397.403-.76.839-1.085 1.303a9.816 9.816 0 00-1.562 3.52c-.003.013-.11.487-.19 1.073-.013.09-.026.181-.037.272a7.8 7.8 0 00-.069.667l-.002.034-.023.387-.001.06C.386 18.795 5.593 24 12.016 24c5.752 0 10.527-4.176 11.463-9.661.02-.149.035-.298.052-.448.232-1.994-.025-4.09-.753-5.844z"
-                    ></path>
-                  </svg>
+                <a href="https://github.com/xtditom/YourDynamicDashboard" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository" class="featured__link">
+                  <svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
                 </a>
-                <a
-                  href="https://microsoftedge.microsoft.com/addons/detail/yourdynamicdashboard/phhofebhbmicnfhmmdgikiddaboljnec"
-                  class="text-zinc-600 dark:text-zinc-400 hover:text-emerald-400 transition-colors p-2 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
-                  aria-label="Microsoft Edge"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M21.86 17.86q.14 0 .25.12.1.13.1.25t-.11.33l-.32.46-.43.53-.44.5q-.21.25-.38.42l-.22.23q-.58.53-1.34 1.04-.76.51-1.6.91-.86.4-1.74.64t-1.67.24q-.9 0-1.69-.28-.8-.28-1.48-.78-.68-.5-1.22-1.17-.53-.66-.92-1.44-.38-.77-.58-1.6-.2-.83-.2-1.67 0-1 .32-1.96.33-.97.87-1.8.14.95.55 1.77.41.82 1.02 1.5.6.68 1.38 1.21.78.54 1.64.9.86.36 1.77.56.92.2 1.8.2 1.12 0 2.18-.24 1.06-.23 2.06-.72l.2-.1.2-.05zm-15.5-1.27q0 1.1.27 2.15.27 1.06.78 2.03.51.96 1.24 1.77.74.82 1.66 1.4-1.47-.2-2.8-.74-1.33-.55-2.48-1.37-1.15-.83-2.08-1.9-.92-1.07-1.58-2.33T.36 14.94Q0 13.54 0 12.06q0-.81.32-1.49.31-.68.83-1.23.53-.55 1.2-.96.66-.4 1.35-.66.74-.27 1.5-.39.78-.12 1.55-.12.7 0 1.42.1.72.12 1.4.35.68.23 1.32.57.63.35 1.16.83-.35 0-.7.07-.33.07-.65.23v-.02q-.63.28-1.2.74-.57.46-1.05 1.04-.48.58-.87 1.26-.38.67-.65 1.39-.27.71-.42 1.44-.15.72-.15 1.38zM11.96.06q1.7 0 3.33.39 1.63.38 3.07 1.15 1.43.77 2.62 1.93 1.18 1.16 1.98 2.7.49.94.76 1.96.28 1 .28 2.08 0 .89-.23 1.7-.24.8-.69 1.48-.45.68-1.1 1.22-.64.53-1.45.88-.54.24-1.11.36-.58.13-1.16.13-.42 0-.97-.03-.54-.03-1.1-.12-.55-.1-1.05-.28-.5-.19-.84-.5-.12-.09-.23-.24-.1-.16-.1-.33 0-.15.16-.35.16-.2.35-.5.2-.28.36-.68.16-.4.16-.95 0-1.06-.4-1.96-.4-.91-1.06-1.64-.66-.74-1.52-1.28-.86-.55-1.79-.89-.84-.3-1.72-.44-.87-.14-1.76-.14-1.55 0-3.06.45T.94 7.55q.71-1.74 1.81-3.13 1.1-1.38 2.52-2.35Q6.68 1.1 8.37.58q1.7-.52 3.58-.52Z"
-                    ></path>
-                  </svg>
-                </a>
-                <a
-                  href="https://github.com/xtditom/YourDynamicDashboard"
-                  class="text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors p-2 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
-                  aria-label="GitHub Repository"
-                >
-                  <svg
-                    class="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                </a>
-                <a
-                  href="https://ditom.me/YourDynamicDashboard"
-                  class="text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors p-2 rounded-none focus:outline-none focus:ring-1 focus:ring-lime-400"
-                  aria-label="Live Demo"
-                >
-                  <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                    ></path>
-                  </svg>
+                <a href="https://ditom.me/YourDynamicDashboard" target="_blank" rel="noopener noreferrer" aria-label="Live Demo" class="featured__link">
+                  <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                 </a>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Tech Explorer Section -->
-      <section
-        id="tech"
-        class="w-full max-w-5xl mx-auto flex flex-col justify-center min-h-screen py-24 gap-12 border-t border-black dark:border-zinc-800"
-      >
-        <div class="space-y-4 w-full">
-          <h2
-            class="text-3xl md:text-5xl font-black text-black dark:text-white"
-          >
-            <span
-              class="text-lime-700 dark:text-lime-400 font-mono text-lg md:text-2xl mr-4 tracking-widest"
-              >02.</span
-            ><span
-              class="hover:bg-lime-300 dark:hover:bg-lime-500 hover:text-black dark:hover:text-black transition-colors px-2 md:px-4 -ml-2 md:-ml-4"
-              >Tech Explorer</span
-            >
-          </h2>
-          <p
-            class="text-zinc-600 dark:text-zinc-400 max-w-2xl text-base md:text-lg"
-          >
-            The tools, languages, and architectures I use to build scalable
-            digital experiences.
-          </p>
-        </div>
-
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 w-full mt-4"
-        >
-          <!-- Column 1: Current Arsenal -->
-          <div class="space-y-6">
-            <h3
-              class="gsap-tech opacity-0 translate-y-4 text-xl font-bold text-black dark:text-white border-b border-black dark:border-zinc-800 pb-4"
-            >
-              <span class="text-lime-700 dark:text-lime-400 font-mono mr-2"
-                >&gt;</span
-              >Current Arsenal
-            </h3>
-            <ul
-              class="flex flex-wrap gap-3 text-black dark:text-zinc-300 font-mono text-xs font-bold uppercase tracking-widest"
-            >
-              <li
-                class="gsap-tech tech-fill-left opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
-              >
-                HTML5 / Semantic
-              </li>
-              <li
-                class="gsap-tech tech-fill-left opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
-              >
-                CSS3 / Tailwind
-              </li>
-              <li
-                class="gsap-tech tech-fill-left opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
-              >
-                Vanilla JS (ES6+)
-              </li>
-              <li
-                class="gsap-tech tech-fill-left opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
-              >
-                Git / GitHub
-              </li>
-              <li
-                class="gsap-tech tech-fill-left opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
-              >
-                Browser APIs
-              </li>
-            </ul>
+        <!-- TECH EXPLORER -->
+        <section id="tech" class="section section--tech">
+          <div class="section__header" data-scroll-reveal>
+            <h2 class="section__title"><span class="section__num">02.</span>Tech Explorer</h2>
+            <p class="section__subtitle">The tools, languages, and architectures I use to build scalable digital experiences.</p>
           </div>
-
-          <!-- Column 2: Currently Exploring -->
-          <div class="space-y-6">
-            <h3
-              class="gsap-tech opacity-0 translate-y-4 text-lg md:text-xl font-bold text-black dark:text-white border-b border-black dark:border-zinc-800 pb-4"
-            >
-              <span class="text-lime-700 dark:text-lime-400 font-mono mr-2"
-                >&gt;</span
-              >Actively Exploring
-            </h3>
-            <ul
-              class="flex flex-wrap gap-3 text-black dark:text-zinc-300 font-mono text-xs font-bold uppercase tracking-widest"
-            >
-              <li
-                class="gsap-tech tech-fill-right opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
-              >
-                Next.js / React
-              </li>
-              <li
-                class="gsap-tech tech-fill-right opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
-              >
-                TypeScript
-              </li>
-              <li
-                class="gsap-tech tech-fill-right opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
-              >
-                Python
-              </li>
-              <li
-                class="gsap-tech tech-fill-right opacity-0 translate-y-4 border-2 border-black dark:border-zinc-700 bg-white dark:bg-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#27272a] hover:text-black dark:hover:text-black hover:shadow-none hover:translate-y-[2px] transition-all cursor-default"
-              >
-                Node.js
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- GitHub Contribution Graph -->
-        <div
-          class="w-full mt-12 bg-white dark:bg-black border border-black dark:border-zinc-800 p-6 lg:p-10 gsap-graph opacity-0 translate-y-12"
-        >
-          <h3
-            class="text-xl font-bold text-black dark:text-white mb-6 border-b border-black dark:border-zinc-800 pb-4"
-          >
-            <span class="text-lime-700 dark:text-lime-400 font-mono mr-2"
-              >&gt;</span
-            >Open-Source Contributions
-          </h3>
-          <div
-            class="w-full bg-zinc-100 dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-4 md:p-6 shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#27272a] mt-6 brightness-88 dark:brightness-100"
-          >
-            <img
-              src="https://ghchart.rshah.org/4d7c0f/xtditom"
-              alt="GitHub Contributions"
-              class="w-full block dark:hidden"
-            />
-            <img
-              src="https://ghchart.rshah.org/a3e635/xtditom"
-              alt="GitHub Contributions"
-              class="w-full hidden dark:block"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="rigs"
-        class="w-full max-w-5xl mx-auto flex flex-col justify-center min-h-screen py-24 gap-12 border-t border-black dark:border-zinc-800"
-      >
-        <div class="space-y-4 w-full">
-          <h2
-            class="text-3xl md:text-5xl font-black text-black dark:text-white"
-          >
-            <span
-              class="text-lime-700 dark:text-lime-400 font-mono text-xl md:text-2xl mr-4 tracking-widest"
-              >03.</span
-            ><span
-              class="hover:bg-lime-300 dark:hover:bg-lime-500 hover:text-black dark:hover:text-black transition-colors px-2 md:px-4 -ml-2 md:-ml-4"
-              >My Rigs</span
-            >
-          </h2>
-          <p
-            class="text-zinc-600 dark:text-zinc-400 max-w-2xl text-base md:text-lg"
-          >
-            The hardware environments I use to engineer, compile, and test my
-            local-first applications.
-          </p>
-        </div>
-
-        <div class="w-full mt-4">
-          <div
-            class="gsap-rig opacity-0 translate-y-12 bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-6 md:p-8 md:p-10 shadow-[8px_8px_0px_0px_#000] lg:shadow-[12px_12px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#27272a] font-mono transition-colors"
-          >
-            <div
-              class="flex items-center gap-3 mb-8 border-b-2 border-black dark:border-zinc-800 pb-4"
-            >
-              <div
-                class="w-3 h-3 bg-emerald-400 rounded-full animate-ping absolute opacity-75"
-              ></div>
-              <div class="w-3 h-3 bg-lime-500 rounded-full relative z-10"></div>
-              <h3
-                class="text-xl md:text-2xl font-bold text-black dark:text-white uppercase tracking-widest"
-              >
-                Workstation // SYS_00
-              </h3>
+          <div class="tech__grid" data-scroll-reveal>
+            <div class="tech__column">
+              <h3 class="tech__column-title"><span class="tech__arrow">&gt;</span> Current Arsenal</h3>
+              <ul class="tech__list tech__list--current">
+                <li class="tech__item" data-tech="html">HTML5 / Semantic</li>
+                <li class="tech__item" data-tech="css">CSS3 / Tailwind</li>
+                <li class="tech__item" data-tech="js">Vanilla JS (ES6+)</li>
+                <li class="tech__item" data-tech="git">Git / GitHub</li>
+                <li class="tech__item" data-tech="api">Browser APIs</li>
+              </ul>
             </div>
-            <ul
-              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm md:text-base text-zinc-800 dark:text-zinc-300"
-            >
-              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
-                <span
-                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
-                  >CPU</span
-                >
-                Ryzen 5 5600GT
-                <span class="text-xs opacity-75 block mt-0.5"
-                  >(3.6GHz - 4.4GHz)</span
-                >
-              </li>
-              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
-                <span
-                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
-                  >GPU</span
-                >
-                Radeon Vega 7 i-GPU
-              </li>
-              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
-                <span
-                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
-                  >RAM</span
-                >
-                <span
-                  >16GB Kingston Fury Beast
-                  <span class="text-xs opacity-75 block mt-0.5"
-                    >(8x2 Dual Channel)</span
-                  ></span
-                >
-              </li>
-              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
-                <span
-                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
-                  >Motherboard</span
-                >
-                GIGABYTE B450M K
-              </li>
-              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
-                <span
-                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
-                  >Storage</span
-                >
-                HP EX900 PLUS 512GB NVMe SSD
-              </li>
-              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
-                <span
-                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
-                  >Power</span
-                >
-                AULA 350W PSU
-              </li>
-              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
-                <span
-                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
-                  >Chassis</span
-                >
-                Maxcool Inferno MC5 mATX
-              </li>
-              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
-                <span
-                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
-                  >Display</span
-                >
-                100Hz Primary Monitor
-                <span class="text-xs opacity-75 block mt-0.5"
-                  >(Dahua DHI-LM22-Y201YF)</span
-                >
-              </li>
-            </ul>
-          </div>
-
-          <div
-            class="gsap-rig opacity-0 translate-y-12 bg-white dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-6 md:p-8 md:p-10 shadow-[8px_8px_0px_0px_#000] lg:shadow-[12px_12px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#27272a] font-mono transition-colors mt-8"
-          >
-            <div
-              class="flex items-center gap-3 mb-8 border-b-2 border-black dark:border-zinc-800 pb-4"
-            >
-              <div
-                class="w-3 h-3 bg-lime-500 rounded-full animate-ping absolute opacity-75"
-              ></div>
-              <div
-                class="w-3 h-3 bg-emerald-400 rounded-full relative z-10"
-              ></div>
-              <h3
-                class="text-xl md:text-2xl font-bold text-black dark:text-white uppercase tracking-widest"
-              >
-                Mobile // SYS_01
-                <span
-                  class="text-sm md:text-base font-normal text-zinc-500 dark:text-zinc-400 normal-case tracking-normal lg:ml-2 block lg:inline-block mt-1 lg:mt-0"
-                  >- Infinix Hot 40 Pro</span
-                >
-              </h3>
-            </div>
-            <ul
-              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm md:text-base text-zinc-800 dark:text-zinc-300"
-            >
-              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
-                <span
-                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
-                  >Chipset</span
-                >
-                Mediatek Helio G99
-              </li>
-              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
-                <span
-                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
-                  >Display</span
-                >
-                IPS LCD, 120Hz
-              </li>
-              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
-                <span
-                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
-                  >Camera</span
-                >
-                108MP Triple Camera
-              </li>
-              <li class="gsap-rig-item opacity-0 translate-y-8 flex flex-col">
-                <span
-                  class="text-lime-700 dark:text-lime-400 font-bold text-xs tracking-widest uppercase mb-1"
-                  >Memory</span
-                >
-                <span
-                  >128 GB Storage
-                  <span class="text-xs opacity-75 block mt-0.5"
-                    >(8GB RAM)</span
-                  ></span
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="terminal"
-        class="w-full max-w-5xl mx-auto flex flex-col justify-center min-h-screen py-24 gap-12 border-t border-black dark:border-zinc-800"
-      >
-        <div class="space-y-4 w-full">
-          <h2
-            class="text-3xl md:text-5xl font-black text-black dark:text-white"
-          >
-            <span
-              class="text-lime-700 dark:text-lime-400 font-mono text-xl md:text-2xl mr-4 tracking-widest"
-              >04.</span
-            ><span
-              class="hover:bg-lime-300 dark:hover:bg-lime-500 hover:text-black dark:hover:text-black transition-colors px-2 md:px-4 -ml-2 md:-ml-4"
-              >System Terminal</span
-            >
-          </h2>
-          <p
-            class="text-zinc-600 dark:text-zinc-400 max-w-2xl text-base md:text-lg"
-          >
-            Interact directly with the DOM. Type 'help' to see available
-            commands.
-          </p>
-        </div>
-
-        <div
-          id="terminal-start-container"
-          class="w-full flex justify-center py-12 hidden"
-        >
-          <button
-            id="start-terminal-btn"
-            class="inline-flex items-center justify-center px-8 py-3 text-sm font-mono font-bold text-black dark:text-lime-400 bg-white dark:bg-transparent border-2 border-black dark:border-lime-400 shadow-[4px_4px_0px_0px_#000] dark:shadow-[4px_4px_0px_0px_#27272a] hover:bg-lime-400 dark:hover:bg-lime-400/10 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] dark:hover:shadow-[6px_6px_0px_0px_#a3e635] active:translate-y-1 active:shadow-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-black"
-          >
-            ▶ Start Terminal Session
-          </button>
-        </div>
-
-        <div
-          class="gsap-terminal w-full bg-zinc-950 border-2 border-black dark:border-zinc-800 p-4 md:p-6 shadow-[8px_8px_0px_0px_#000] lg:shadow-[12px_12px_0px_0px_#000] dark:shadow-none font-mono text-sm md:text-base h-[400px] flex flex-col relative group opacity-0 translate-y-8"
-        >
-          <div
-            class="absolute top-0 left-0 w-full h-8 bg-zinc-900 border-b-2 border-black dark:border-zinc-800 flex items-center px-4 gap-2"
-          >
-            <div class="w-3 h-3 rounded-full bg-red-500"></div>
-            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <div class="w-3 h-3 rounded-full bg-green-500"></div>
-            <span
-              class="ml-4 text-xs text-zinc-500 uppercase tracking-widest font-bold"
-              >bash // xtditom.exe</span
-            >
-          </div>
-
-          <div
-            id="cli-output"
-            class="flex-1 w-full mt-8 overflow-y-auto overflow-x-hidden text-lime-400 space-y-2 pr-2 custom-scrollbar pb-4"
-          >
-            <div>
-              <span class="text-zinc-500">XTDITOM OS [Version 0.0.0]</span>
-            </div>
-            <div>
-              <span class="text-zinc-500"
-                >(c) 2026 Ditom Baroi Antu. All rights reserved.</span
-              >
-            </div>
-            <br />
-            <div>
-              Type <span class="text-white font-bold">'help'</span> to see a
-              list of available commands.
+            <div class="tech__column">
+              <h3 class="tech__column-title"><span class="tech__arrow">&gt;</span> Actively Exploring</h3>
+              <ul class="tech__list tech__list--exploring">
+                <li class="tech__item" data-tech="react">Next.js / React</li>
+                <li class="tech__item" data-tech="ts">TypeScript</li>
+                <li class="tech__item" data-tech="python">Python</li>
+                <li class="tech__item" data-tech="node">Node.js</li>
+              </ul>
             </div>
           </div>
-
-          <div class="w-full flex items-center text-lime-400 mt-2 shrink-0">
-            <span class="mr-2 text-emerald-400 font-bold hidden md:inline"
-              >guest@xtditom:~$</span
-            >
-            <span class="mr-2 text-emerald-400 font-bold md:hidden">~$</span>
-            <input
-              type="text"
-              id="cli-input"
-              class="flex-1 bg-transparent border-none outline-none text-lime-400 font-mono placeholder-zinc-700 caret-lime-400"
-              autocomplete="off"
-              spellcheck="false"
-              autofocus
-            />
+          <!-- GitHub Contributions -->
+          <div class="tech__github" data-scroll-reveal>
+            <h3 class="tech__column-title"><span class="tech__arrow">&gt;</span> Open-Source Contributions</h3>
+            <div class="tech__github-chart">
+              <img src="https://ghchart.rshah.org/4d7c0f/xtditom" alt="GitHub Contributions" class="tech__chart-img tech__chart-img--light" loading="lazy" onerror="this.style.display='none'" />
+              <img src="https://ghchart.rshah.org/a3e635/xtditom" alt="GitHub Contributions" class="tech__chart-img tech__chart-img--dark" loading="lazy" onerror="this.style.display='none'" />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Contact Section -->
-      <section
-        id="contact"
-        class="w-full max-w-2xl mx-auto flex flex-col items-center justify-center min-h-[80vh] py-24 gap-8 text-center border-t border-black dark:border-zinc-800"
-      >
-        <p
-          class="text-lime-700 dark:text-lime-400 font-mono font-bold tracking-widest text-sm uppercase gsap-contact opacity-0 translate-y-8"
-        >
-          What's Next?
-        </p>
-        <h2
-          class="text-4xl md:text-6xl font-black text-black dark:text-white gsap-contact opacity-0 translate-y-8"
-        >
-          <span
-            class="hover:bg-lime-300 dark:hover:bg-lime-500 hover:text-black dark:hover:text-black transition-colors px-2 md:px-4 py-1 -mx-2 md:-mx-4"
-            >Get In Touch</span
-          >
-        </h2>
-        <p
-          class="text-zinc-600 dark:text-zinc-400 text-base md:text-lg max-w-xl gsap-contact opacity-0 translate-y-8"
-        >
-          Whether you have a question about my work, an open-source
-          collaboration idea, or just want to say hi, my inbox is always open.
-          I'll try my best to get back to you!
-        </p>
-
-        <!-- Minimal Formspree Layout -->
-        <div
-          class="w-full max-w-3xl mx-auto bg-zinc-950 border-2 border-black dark:border-zinc-800 shadow-[8px_8px_0px_0px_#000] dark:shadow-[8px_8px_0px_0px_#27272a] flex flex-col relative group transition-colors gsap-contact opacity-0 translate-y-8 mt-8 text-left"
-        >
-          <div
-            class="w-full h-8 bg-zinc-900 border-b-2 border-black dark:border-zinc-800 flex items-center px-4 gap-2 shrink-0"
-          >
-            <div class="w-3 h-3 rounded-full bg-red-500"></div>
-            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <div class="w-3 h-3 rounded-full bg-green-500"></div>
-            <span
-              class="ml-4 text-xs text-zinc-500 uppercase tracking-widest font-bold"
-              >mail // secure_node</span
-            >
+        <!-- RIGS -->
+        <section id="rigs" class="section section--rigs">
+          <div class="section__header" data-scroll-reveal>
+            <h2 class="section__title"><span class="section__num">03.</span>My Rigs</h2>
+            <p class="section__subtitle">The hardware environments I use to engineer, compile, and test my local-first applications.</p>
           </div>
+          <div class="rigs__cards" data-scroll-reveal>
+            <div class="rig-card">
+              <div class="rig-card__header">
+                <div class="rig-card__pulse"></div>
+                <h3 class="rig-card__title">Workstation // SYS_00</h3>
+              </div>
+              <ul class="rig-card__specs">
+                <li><span class="rig-card__label">CPU</span>Ryzen 5 5600GT<small>(3.6GHz - 4.4GHz)</small></li>
+                <li><span class="rig-card__label">GPU</span>Radeon Vega 7 i-GPU</li>
+                <li><span class="rig-card__label">RAM</span>16GB Kingston Fury Beast<small>(8x2 Dual Channel)</small></li>
+                <li><span class="rig-card__label">Motherboard</span>GIGABYTE B450M K</li>
+                <li><span class="rig-card__label">Storage</span>HP EX900 PLUS 512GB NVMe SSD</li>
+                <li><span class="rig-card__label">Power</span>AULA 350W PSU</li>
+                <li><span class="rig-card__label">Chassis</span>Maxcool Inferno MC5 mATX</li>
+                <li><span class="rig-card__label">Display</span>100Hz Primary Monitor<small>(Dahua DHI-LM22-Y201YF)</small></li>
+              </ul>
+            </div>
+            <div class="rig-card">
+              <div class="rig-card__header">
+                <div class="rig-card__pulse"></div>
+                <h3 class="rig-card__title">Mobile // SYS_01 <span class="rig-card__subtitle">- Infinix Hot 40 Pro</span></h3>
+              </div>
+              <ul class="rig-card__specs">
+                <li><span class="rig-card__label">Chipset</span>Mediatek Helio G99</li>
+                <li><span class="rig-card__label">Display</span>IPS LCD, 120Hz</li>
+                <li><span class="rig-card__label">Camera</span>108MP Triple Camera</li>
+                <li><span class="rig-card__label">Memory</span>128 GB Storage<small>(8GB RAM)</small></li>
+              </ul>
+            </div>
+          </div>
+        </section>
 
-          <div class="p-6 md:p-8">
-            <form
-              id="contact-form"
-              action="https://formspree.io/f/xpqyjoyj"
-              method="POST"
-              class="w-full space-y-4"
-            >
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="flex flex-col">
-                  <label for="name" class="sr-only">Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="Name"
-                    required
-                    class="w-full bg-white dark:bg-black border-2 border-black dark:border-zinc-800 px-4 py-3 text-black dark:text-zinc-300 font-mono text-sm focus:outline-none focus:bg-zinc-50 dark:focus:bg-zinc-900 focus:border-lime-500 dark:focus:border-lime-500 focus:ring-0 transition-colors rounded-none placeholder:text-zinc-500"
-                  />
+        <!-- TERMINAL -->
+        <section id="terminal" class="section section--terminal">
+          <div class="section__header" data-scroll-reveal>
+            <h2 class="section__title"><span class="section__num">04.</span>System Terminal</h2>
+            <p class="section__subtitle">Interact directly with the system. Type 'help' to see available commands.</p>
+          </div>
+          <div class="terminal" data-scroll-reveal>
+            <div class="terminal__titlebar">
+              <div class="terminal__dot terminal__dot--red"></div>
+              <div class="terminal__dot terminal__dot--yellow"></div>
+              <div class="terminal__dot terminal__dot--green"></div>
+              <span class="terminal__titlebar-text">bash // xtditom.exe</span>
+            </div>
+            <div id="cli-output" class="terminal__output">
+              <div><span class="terminal__muted">XTDITOM OS [Version 2.0.0]</span></div>
+              <div><span class="terminal__muted">(c) 2026 Ditom Baroi Antu. All rights reserved.</span></div>
+              <br />
+              <div>Type <span class="terminal__bold">'help'</span> to see a list of available commands.</div>
+            </div>
+            <div class="terminal__input-line">
+              <span class="terminal__prompt terminal__prompt--full">guest@xtditom:~$</span>
+              <span class="terminal__prompt terminal__prompt--short">~$</span>
+              <input type="text" id="cli-input" class="terminal__input" autocomplete="off" spellcheck="false" aria-label="Terminal command input" placeholder="Type a command..." />
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="section section--contact">
+          <div class="contact__header" data-scroll-reveal>
+            <p class="contact__label">What's Next?</p>
+            <h2 class="contact__title">Get In Touch</h2>
+            <p class="contact__subtitle">Whether you have a question about my work, an open-source collaboration idea, or just want to say hi, my inbox is always open.</p>
+          </div>
+          <div class="contact__form-wrap" data-scroll-reveal>
+            <div class="terminal__titlebar">
+              <div class="terminal__dot terminal__dot--red"></div>
+              <div class="terminal__dot terminal__dot--yellow"></div>
+              <div class="terminal__dot terminal__dot--green"></div>
+              <span class="terminal__titlebar-text">mail // secure_node</span>
+            </div>
+            <div class="contact__form-body">
+              <form id="contact-form" action="https://formspree.io/f/xpqyjoyj" method="POST" class="contact__form">
+                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+                <div class="contact__form-row">
+                  <div class="contact__field">
+                    <label for="name" class="sr-only">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Name" required class="contact__input" />
+                  </div>
+                  <div class="contact__field">
+                    <label for="email" class="sr-only">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Email" required class="contact__input" />
+                  </div>
                 </div>
-                <div class="flex flex-col">
-                  <label for="email" class="sr-only">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Email"
-                    required
-                    class="w-full bg-white dark:bg-black border-2 border-black dark:border-zinc-800 px-4 py-3 text-black dark:text-zinc-300 font-mono text-sm focus:outline-none focus:bg-zinc-50 dark:focus:bg-zinc-900 focus:border-lime-500 dark:focus:border-lime-500 focus:ring-0 transition-colors rounded-none placeholder:text-zinc-500"
-                  />
+                <div class="contact__field">
+                  <label for="message" class="sr-only">Message</label>
+                  <textarea id="message" name="message" rows="5" placeholder="Message payload..." required class="contact__input contact__textarea"></textarea>
                 </div>
+                <div class="contact__submit-row">
+                  <button type="submit" class="btn btn--submit magnetic-btn">TRANSMIT</button>
+                </div>
+              </form>
+              <div id="form-success" class="contact__success hidden">
+                [OK] Payload delivered to secure node. Connection terminated.
               </div>
-              <div class="flex flex-col">
-                <label for="message" class="sr-only">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="5"
-                  placeholder="Message payload..."
-                  required
-                  class="w-full bg-white dark:bg-black border-2 border-black dark:border-zinc-800 px-4 py-3 text-black dark:text-zinc-300 font-mono text-sm focus:outline-none focus:bg-zinc-50 dark:focus:bg-zinc-900 focus:border-lime-500 dark:focus:border-lime-500 focus:ring-0 transition-colors rounded-none resize-none placeholder:text-zinc-500"
-                ></textarea>
-              </div>
-              <div class="flex justify-end pt-4">
-                <button
-                  type="submit"
-                  class="inline-flex items-center justify-center px-8 py-3 text-sm font-mono font-bold text-black bg-white dark:bg-lime-400 border-2 border-black dark:border-lime-400 shadow-[4px_4px_0px_0px_#000] dark:shadow-none hover:bg-lime-400 dark:hover:bg-transparent dark:hover:text-lime-400 dark:text-black hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] dark:hover:shadow-none active:translate-y-1 active:shadow-none transition-all duration-300 cursor-pointer w-full md:w-auto magnetic-btn"
-                >
-                  TRANSMIT
-                </button>
-              </div>
-            </form>
-
-            <div
-              id="form-success"
-              class="hidden w-full mt-4 p-6 bg-lime-400/10 border-2 border-lime-400 text-lime-700 dark:text-lime-400 font-mono text-center shadow-[4px_4px_0px_0px_#000] dark:shadow-none transition-all"
-            >
-              [OK] Payload delivered to secure node. Connection terminated.
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Footer -->
-      <footer
-        class="w-full py-8 text-center flex flex-col items-center gap-4 mt-auto"
-      >
-        <div class="flex gap-6">
-          <a
-            onclick="window.open('https://facebook.com/xtditom', '_blank')"
-            class="cursor-pointer text-zinc-600 dark:text-zinc-500 hover:text-[#1877F2] transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
-            aria-label="Facebook"
-          >
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-              ></path>
-            </svg>
-          </a>
-          <a
-            onclick="window.open('https://instagram.com/xtditom', '_blank')"
-            class="cursor-pointer text-zinc-600 dark:text-zinc-500 hover:text-[#E4405F] transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
-            aria-label="Instagram"
-          >
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.981-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
-              ></path>
-            </svg>
-          </a>
-          <a
-            onclick="window.open('https://linkedin.com/in/xtditom', '_blank')"
-            class="cursor-pointer text-zinc-600 dark:text-zinc-500 hover:text-[#0A66C2] transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
-            aria-label="LinkedIn"
-          >
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-              ></path>
-            </svg>
-          </a>
-          <a
-            onclick="window.open('https://github.com/xtditom', '_blank')"
-            class="cursor-pointer text-zinc-600 dark:text-zinc-500 hover:text-black dark:hover:text-white transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
-            aria-label="GitHub"
-          >
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </a>
-          <a
-            onclick="window.open('https://x.com/xtditom369', '_blank')"
-            class="cursor-pointer text-zinc-600 dark:text-zinc-500 hover:text-black dark:hover:text-white transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
-            aria-label="X (Twitter)"
-          >
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-              ></path>
-            </svg>
-          </a>
-          <a
-            href="mailto:hello@ditom.me"
-            class="cursor-pointer text-zinc-600 dark:text-zinc-500 hover:text-black dark:hover:text-white dark:hover:[text-shadow:0_0_12px_#fff] transition-colors focus:outline-none focus:text-lime-700 dark:focus:text-lime-400"
-            aria-label="Email"
-          >
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
-              ></path>
-            </svg>
-          </a>
+      </main>
+
+      <!-- FOOTER -->
+      <footer class="footer">
+        <div class="footer__socials">
+          <a href="https://facebook.com/xtditom" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="footer__link"><svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg></a>
+          <a href="https://instagram.com/xtditom" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="footer__link"><svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.981-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg></a>
+          <a href="https://linkedin.com/in/xtditom" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="footer__link"><svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg></a>
+          <a href="https://github.com/xtditom" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="footer__link"><svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg></a>
+          <a href="https://x.com/xtditom369" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" class="footer__link"><svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg></a>
+          <a href="mailto:hello@ditom.me" aria-label="Email" class="footer__link"><svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path></svg></a>
         </div>
-        <p
-          class="font-mono text-xs text-zinc-600 tracking-wider md:tracking-widest mt-2 px-4"
-        >
-          &copy; 2026 - DITOM BAROI ANTU
-        </p>
+        <p class="footer__copy">&copy; 2026 - DITOM BAROI ANTU</p>
       </footer>
-    </main>
 
-    <!-- App Scripts -->
-    <script src="app.js"></script>
+      <!-- Scroll Progress Indicator -->
+      <div class="scroll-progress" id="scroll-progress">
+        <div class="scroll-progress__fill"></div>
+      </div>
+
+    </div>
+
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>
