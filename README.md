@@ -1,25 +1,98 @@
-# XTDITOM // SYS 🖥️
+# XTDITOM OS v2.0 🖥️
 
-A Neo-Brutalist, OS-themed interactive developer portfolio engineered with a focus on DOM manipulation, physics-based animations, and local-first architecture.
+An immersive, OS-themed 3D portfolio built with Three.js, GSAP, and Vanilla JavaScript. Features a cyberpunk aesthetic, interactive CLI terminal, and scroll-reactive 3D environment.
 
-**Live Deployment:** [ditom.me](https://ditom.me)
+**Live:** [ditom.me](https://ditom.me)
 
-## Core Architecture
+---
 
-This portfolio ditches standard web templates in favor of a tactical, operating-system environment. It treats the browser as a terminal and the visitor as a user.
+## ✨ Highlights
 
-### Key Engineering Features
+- **Three.js 3D Background** — CyberGrid + ParticleField rendered on a WebGL canvas, with scroll-driven 180° rotation and mouse-tracked camera parallax
+- **27-Command CLI Terminal** — Fully interactive command-line interface with system info, portfolio data, games (Snake), weather API, ASCII art, and visual effects (Matrix rain, hack sim, glitch)
+- **Staggered Hero Animations** — Each hero element (greeting → name → tagline → bio → button) reveals one-by-one using GSAP stagger
+- **Scroll-Reactive Scene** — The 3D background rotates a full 180° as the user scrolls, with smoothly interpolated fog density, camera depth, and lighting shifts
+- **Cross-Browser Extension** — Featured project (YourDynamicDashboard) available on Chrome Web Store, Firefox Add-ons, and Edge Add-ons
+- **Lenis Smooth Scroll** — Buttery-smooth scrolling with GSAP ScrollTrigger integration
+- **Dark/Light Theme** — Persistent theme with `localStorage`, OS preference sync, and live terminal command (`theme dark/light`)
+- **No Link Previews** — Browser statusbar URL previews are hidden for a cleaner experience
+- **Contact Form** — Async form submission via Formspree API, plus a `mail` command in the terminal
+- **Custom Cursor** — Hardware-accelerated dot + ring cursor with hover detection (desktop only)
+- **Magnetic Buttons** — Physics-based buttons that attract toward the cursor on hover
+- **Responsive Design** — Full 3D on desktop, graceful 2D fallback on mobile with touch-optimized interactions
 
-* **Interactive CLI Terminal:** A fully functional command-line interface built with Vanilla JS. It parses arguments, executes DOM manipulation (`theme dark`), processes asynchronous API requests (`mail`), and renders HTML5 Canvas animations (`matrix`).
-* **Physics-Based UI:** Utilizes GSAP for advanced scroll-velocity distortion (momentum physics) and magnetic UI hitboxes that react to cursor proximity.
-* **Asynchronous Mail Client:** A custom AJAX contact form that intercepts native POST requests, delivering payloads via the Fetch API to Formspree without page reloads.
-* **Hardware-Level Visuals:** Features dynamic page-visibility API hooks for background tab awareness, and a cursor-tracked CSS spotlight grid.
-* **Persistent State Management:** Seamless Light/Dark mode toggling that saves to `localStorage` and syncs live with the user's system preferences.
+## 🛠 Tech Stack
 
-## Tech Stack
+| Layer | Technology |
+|---|---|
+| **3D Engine** | Three.js (WebGL2) |
+| **Animations** | GSAP + ScrollTrigger |
+| **Smooth Scroll** | Lenis |
+| **Bundler** | Vite |
+| **Styling** | Custom CSS (CSS Variables, Neo-Brutalist + Cyberpunk) |
+| **Logic** | Vanilla JavaScript (ES6+ Modules) |
+| **Contact** | Formspree API |
+| **Deployment** | GitHub Pages via GitHub Actions |
 
-* **Structure:** HTML5 / Semantic DOM
-* **Styling:** Tailwind CSS v4 (Custom Neo-Brutalist configuration)
-* **Logic:** Vanilla JavaScript (ES6+)
-* **Motion Engine:** GSAP (GreenSock Animation Platform) + ScrollTrigger
-* **Data Routing:** Formspree API
+## 📁 Project Structure
+
+```
+portfolio/
+├── index.html              # Main HTML (all sections)
+├── src/
+│   ├── main.js             # Entry point — orchestrates everything
+│   ├── styles/
+│   │   └── index.css       # Full design system + components
+│   ├── scene/
+│   │   └── SceneManager.js # Three.js scene, camera, lighting, scroll
+│   ├── objects/
+│   │   ├── CyberGrid.js    # Animated wireframe grid
+│   │   └── ParticleField.js# Floating particle system
+│   └── ui/
+│       └── Terminal.js     # CLI terminal (27 commands)
+├── public/
+│   └── favicons/           # Dynamic favicons
+├── vite.config.js          # Vite configuration
+└── package.json
+```
+
+## 🚀 Getting Started
+
+```bash
+# Clone
+git clone https://github.com/xtditom/portfolio.git
+cd portfolio
+
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+## 💻 Terminal Commands
+
+| Category | Commands |
+|---|---|
+| **System** | `whoami`, `neofetch`, `theme`, `date`, `uptime`, `history` |
+| **Portfolio** | `projects`, `socials`, `skills`, `ls`, `cat [file]` |
+| **Communication** | `mail`, `echo`, `cowsay`, `fortune`, `ping`, `weather` |
+| **Visual & Games** | `matrix`, `hack`, `snake`, `glitch`, `rickroll` |
+| **Navigation** | `goto [section]`, `help`, `clear`, `start`, `exit` |
+
+## 🌐 Featured Project
+
+**YourDynamicDashboard** — A high-performance new tab browser extension with 100% local-storage architecture.
+
+- [Chrome Web Store](https://chromewebstore.google.com/detail/fckmlnagohleefboaleepppikpdkckjn)
+- [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/yourdynamicdashboard/)
+- [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/yourdynamicdashboard/phhofebhbmicnfhmmdgikiddaboljnec)
+- [GitHub](https://github.com/xtditom/YourDynamicDashboard)
+- [Live Demo](https://ditom.me/YourDynamicDashboard)
+
+## 📄 License
+
+© 2026 Ditom Baroi Antu. All rights reserved.

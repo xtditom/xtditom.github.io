@@ -151,13 +151,19 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.set(el, { y: 40, opacity: 0 });
     });
 
-    // Hero content reveal
-    const heroContent = document.querySelector(".section--hero [data-scroll-reveal]");
-    if (heroContent) {
-      gsap.fromTo(heroContent,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
-      );
+    // Hero content — stagger each child element one by one
+    const heroItems = document.querySelectorAll(
+      ".hero__greeting, .hero__name, .hero__tagline, .hero__bio"
+    );
+    if (heroItems.length) {
+      gsap.set(heroItems, { y: 40, opacity: 0 });
+      gsap.to(heroItems, {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "power3.out",
+      });
     }
 
     // Set up scroll-triggered reveals for other sections
@@ -449,6 +455,52 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.addEventListener("mouseleave", () => { xTo(0); yTo(0); });
     });
   }
+
+  // ─── HIDE LINK PREVIEW IN BROWSER STATUSBAR ───
+  // Remove href on hover/focus so the browser doesn't show the URL preview,
+  // then restore it when the user leaves or the link activates.
+  document.querySelectorAll("a[href]").forEach((link) => {
+    const realHref = link.getAttribute("href");
+    // Skip anchor links (#section) — they don't show a preview
+    if (realHref.startsWith("#")) return;
+
+    link.addEventListener("mouseenter", () => {
+      link.dataset.href = link.getAttribute("href");
+      link.removeAttribute("href");
+    });
+    link.addEventListener("mouseleave", () => {
+      if (link.dataset.href) {
+        link.setAttribute("href", link.dataset.href);
+        delete link.dataset.href;
+      }
+    });
+    link.addEventListener("focus", () => {
+      link.dataset.href = link.getAttribute("href");
+      link.removeAttribute("href");
+    });
+    link.addEventListener("blur", () => {
+      if (link.dataset.href) {
+        link.setAttribute("href", link.dataset.href);
+        delete link.dataset.href;
+      }
+    });
+    // Restore href and navigate on click
+    link.addEventListener("click", (e) => {
+      if (link.dataset.href) {
+        e.preventDefault();
+        const url = link.dataset.href;
+        link.setAttribute("href", url);
+        delete link.dataset.href;
+        if (link.target === "_blank") {
+          window.open(url, "_blank", "noopener,noreferrer");
+        } else if (url.startsWith("mailto:")) {
+          window.location.href = url;
+        } else {
+          window.location.href = url;
+        }
+      }
+    });
+  });
 
   // ─── NAV: always visible (no hide on scroll) ───
 

@@ -20,7 +20,7 @@ export class CyberGrid {
       uniforms: {
         uTime: { value: 0 },
         uColor: { value: new THREE.Color(0xa3e635) },
-        uOpacity: { value: 0.2 },
+        uOpacity: { value: 0.23 },
         uMouseWorld: { value: new THREE.Vector3(0, 0, 0) },
       },
       vertexShader: /* glsl */ `
@@ -40,11 +40,7 @@ export class CyberGrid {
           float wave2 = cos(worldPos.z * 0.12 + uTime * 0.3) * 0.7;
           float wave3 = sin(dist * 0.08 - uTime * 1.5) * 0.8;
 
-          // ── Mouse ripple (smooth, gentle) ──
-          float mouseDist = length(worldPos.xz - uMouseWorld.xz);
-          float mouseRipple = sin(mouseDist * 0.6 - uTime * 1.8) * smoothstep(15.0, 0.0, mouseDist) * 0.6;
-
-          float displacement = (wave1 + wave2 + wave3 + mouseRipple) * smoothstep(90.0, 10.0, dist);
+          float displacement = (wave1 + wave2 + wave3) * smoothstep(90.0, 10.0, dist);
           worldPos.y += displacement;
           vDisplacement = displacement;
 
@@ -78,7 +74,7 @@ export class CyberGrid {
           float dist = length(vWorldPos.xz);
           float fade = 1.0 - smoothstep(10.0, 80.0, dist);
 
-          // Time-only pulse wave
+          // Time-only pulse wave (radial rings)
           float waveDist = length(vWorldPos.xz);
           float wave = sin(waveDist * 0.5 - uTime * 2.0) * 0.5 + 0.5;
           wave = smoothstep(0.3, 0.7, wave) * 0.3;
@@ -90,7 +86,7 @@ export class CyberGrid {
           // Displacement glow
           float dispGlow = abs(vDisplacement) * 0.12;
 
-          float alpha = grid * fade * uOpacity + wave * fade * 0.05 + mouseGlow * grid * fade + dispGlow * grid * fade;
+          float alpha = grid * fade * uOpacity + wave * fade * 0.08 + mouseGlow * grid * fade + dispGlow * grid * fade;
 
           vec3 finalColor = uColor;
           finalColor += mouseGlow * vec3(0.2, 0.4, 0.0);
@@ -145,7 +141,7 @@ export class CyberGrid {
 
   setTheme(isDark) {
     const color = isDark ? 0xa3e635 : 0x4d7c0f;
-    const opacity = isDark ? 0.2 : 0.12;
+    const opacity = isDark ? 0.28 : 0.15;
     this.gridMesh.material.uniforms.uColor.value.set(color);
     this.gridMesh.material.uniforms.uOpacity.value = opacity;
     this.glowSpot.material.uniforms.uColor.value.set(color);

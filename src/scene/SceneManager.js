@@ -143,6 +143,10 @@ export class SceneManager {
     // ── Fog density shifts with scroll ──
     this.scene.fog.density = 0.006 + this.scrollProgress * 0.006;
 
+    // ── Scroll-driven scene rotation (180° over full page scroll) ──
+    const targetRotationY = this.scrollProgress * Math.PI;
+    this.scene.rotation.y += (targetRotationY - this.scene.rotation.y) * 0.05;
+
     // ── Update all scene objects ──
     this.objects.forEach((obj) => {
       if (obj.update) {
