@@ -38,7 +38,10 @@ export class ParticleField {
 
   _createPoints() {
     const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.BufferAttribute(this.positions, 3));
+    geometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(this.positions, 3),
+    );
     geometry.setAttribute("aSize", new THREE.BufferAttribute(this.sizes, 1));
     geometry.setAttribute("aSeed", new THREE.BufferAttribute(this.seeds, 1));
 
@@ -61,6 +64,7 @@ export class ParticleField {
         uniform float uScrollVelocity;
         uniform float uPixelRatio;
         varying float vOpacity;
+        varying float vGlow;
 
         void main() {
           vec3 pos = position;
@@ -79,10 +83,11 @@ export class ParticleField {
           vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
 
           // ── Dynamic size: breathe + velocity pulse ──
-          float breathe = 1.0 + sin(uTime * 0.8 + aSeed * 3.0) * 0.25;
+          vGlow = 0.5 + 0.5 * sin(uTime * 1.8 + aSeed * 5.0);
+          float breathe = 1.0 + (vGlow - 0.5) * 0.45;
           float velocityPulse = 1.0 + abs(uScrollVelocity) * 0.4;
           float sizeFactor = aSize * breathe * velocityPulse * uPixelRatio * (200.0 / -mvPosition.z);
-          gl_PointSize = clamp(sizeFactor, 1.0, 16.0);
+          gl_PointSize = clamp(sizeFactor, 1.0, 18.0);
 
           // ── Opacity ──
           float dist = length(pos);
@@ -95,16 +100,18 @@ export class ParticleField {
       fragmentShader: /* glsl */ `
         uniform vec3 uColor;
         varying float vOpacity;
+        varying float vGlow;
 
         void main() {
           float dist = length(gl_PointCoord - 0.5);
           if (dist > 0.5) discard;
 
-          float alpha = smoothstep(0.5, 0.05, dist) * vOpacity;
+          // Pulse the core glow intensity and outer edge alpha to make it feel like it's pulsing
+          float alpha = smoothstep(0.5, 0.05, dist) * vOpacity * (0.6 + 0.4 * vGlow);
 
           // Core glow
-          float core = smoothstep(0.25, 0.0, dist) * 0.5;
-          vec3 color = uColor + core * vec3(0.3);
+          float core = smoothstep(0.25, 0.0, dist) * (0.3 + 0.7 * vGlow);
+          vec3 color = uColor + core * vec3(0.4);
 
           gl_FragColor = vec4(color, alpha);
         }
@@ -118,6 +125,10 @@ export class ParticleField {
   setTheme(isDark) {
     const color = isDark ? 0xa3e635 : 0x4d7c0f;
     this.points.material.uniforms.uColor.value.set(color);
+  }
+
+  updateAccentColor(color) {
+    this.points.material.uniforms.uColor.value.copy(color);
   }
 
   update(elapsed, delta, scrollProgress, mouse, scrollVelocity = 0) {

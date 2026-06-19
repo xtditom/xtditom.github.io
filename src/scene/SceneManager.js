@@ -17,6 +17,14 @@ export class SceneManager {
     this._camTargetY = 5;
     this._camTargetZ = 15;
 
+    // Accent Color State
+    this.scrollColorStart = new THREE.Color(this.isDark ? 0xa8e00b : 0x618206);
+    this.scrollColorEnd = new THREE.Color(this.isDark ? 0x34d3c3 : 0x34d3c3);
+    this.baseAccentColor = this.isDark ? 0xa3e635 : 0x4d7c0f;
+    this.currentAccentColor = new THREE.Color(this.baseAccentColor);
+    this.targetAccentColor = new THREE.Color(this.baseAccentColor);
+    this.isTechHovered = false;
+
     this._initRenderer();
     this._initCamera();
     this._initLighting();
@@ -48,7 +56,7 @@ export class SceneManager {
       60,
       window.innerWidth / window.innerHeight,
       0.1,
-      200
+      200,
     );
     this.camera.position.set(0, 5, 15);
     this.camera.lookAt(0, 0, 0);
@@ -99,9 +107,22 @@ export class SceneManager {
   setTheme(isDark) {
     this.isDark = isDark;
     this.scene.fog.color.set(isDark ? 0x000000 : 0xffffff);
+    this.scrollColorStart.set(isDark ? 0xa3e635 : 0x4d7c0f);
+    this.scrollColorEnd.set(isDark ? 0x34d3c3 : 0x34d3c3);
+    this.baseAccentColor = isDark ? 0xa3e635 : 0x4d7c0f;
+    this.targetAccentColor.set(this.baseAccentColor);
     this.objects.forEach((obj) => {
       if (obj.setTheme) obj.setTheme(isDark);
     });
+  }
+
+  setAccentColor(color) {
+    this.isTechHovered = true;
+    this.targetAccentColor.set(color);
+  }
+
+  resetAccentColor() {
+    this.isTechHovered = false;
   }
 
   update() {
@@ -111,7 +132,8 @@ export class SceneManager {
     const delta = this.timer.getDelta();
 
     // ── Scroll velocity (smoothed) ──
-    const rawVelocity = (this.scrollProgress - this._prevScrollProgress) / Math.max(delta, 0.001);
+    const rawVelocity =
+      (this.scrollProgress - this._prevScrollProgress) / Math.max(delta, 0.001);
     this.scrollVelocity += (rawVelocity - this.scrollVelocity) * 0.1;
 
     // ── Scroll-driven camera parallax ──
@@ -124,9 +146,12 @@ export class SceneManager {
     const mouseYOffset = this.mouse.y * 0.6;
 
     // Smooth interpolation
-    this.camera.position.x += (this._camTargetX - this.camera.position.x) * 0.03;
-    this.camera.position.y += ((this._camTargetY + mouseYOffset) - this.camera.position.y) * 0.03;
-    this.camera.position.z += (this._camTargetZ - this.camera.position.z) * 0.03;
+    this.camera.position.x +=
+      (this._camTargetX - this.camera.position.x) * 0.03;
+    this.camera.position.y +=
+      (this._camTargetY + mouseYOffset - this.camera.position.y) * 0.03;
+    this.camera.position.z +=
+      (this._camTargetZ - this.camera.position.z) * 0.03;
 
     // Look-at shifts with scroll for parallax feel
     const lookY = -this.scrollProgress * 1.5;
@@ -150,7 +175,30 @@ export class SceneManager {
     // ── Update all scene objects ──
     this.objects.forEach((obj) => {
       if (obj.update) {
-        obj.update(elapsed, delta, this.scrollProgress, this.mouse, this.scrollVelocity);
+        obj.update(
+          elapsed,
+          delta,
+          this.scrollProgress,
+          this.mouse,
+          this.scrollVelocity,
+        );
+      }
+    });
+
+    // ── Scroll-driven accent color interpolation ──
+    const scrollColor = new THREE.Color();
+    scrollColor.copy(this.scrollColorStart).lerp(this.scrollColorEnd, this.scrollProgress);
+
+    if (!this.isTechHovered) {
+      this.targetAccentColor.copy(scrollColor);
+    }
+
+    // ── Smooth Accent Color Lerp ──
+    this.currentAccentColor.lerp(this.targetAccentColor, 0.08);
+    this.accentLight.color.copy(this.currentAccentColor);
+    this.objects.forEach((obj) => {
+      if (obj.updateAccentColor) {
+        obj.updateAccentColor(this.currentAccentColor);
       }
     });
 

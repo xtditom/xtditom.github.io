@@ -141,11 +141,16 @@ export class CyberGrid {
 
   setTheme(isDark) {
     const color = isDark ? 0xa3e635 : 0x4d7c0f;
-    const opacity = isDark ? 0.28 : 0.15;
+    const opacity = isDark ? 0.08 : 0.04;
     this.gridMesh.material.uniforms.uColor.value.set(color);
     this.gridMesh.material.uniforms.uOpacity.value = opacity;
     this.glowSpot.material.uniforms.uColor.value.set(color);
-    this.glowSpot.material.uniforms.uIntensity.value = isDark ? 0.2 : 0.1;
+    this.glowSpot.material.uniforms.uIntensity.value = isDark ? 0.06 : 0.03;
+  }
+
+  updateAccentColor(color) {
+    this.gridMesh.material.uniforms.uColor.value.copy(color);
+    this.glowSpot.material.uniforms.uColor.value.copy(color);
   }
 
   update(elapsed, delta, scrollProgress, mouse, scrollVelocity = 0) {
@@ -154,7 +159,11 @@ export class CyberGrid {
     // Project mouse onto grid plane
     const mouseWorldX = mouse.x * 15;
     const mouseWorldZ = -mouse.y * 10 + 5;
-    this.gridMesh.material.uniforms.uMouseWorld.value.set(mouseWorldX, 0, mouseWorldZ);
+    this.gridMesh.material.uniforms.uMouseWorld.value.set(
+      mouseWorldX,
+      0,
+      mouseWorldZ,
+    );
 
     // Glow spot follows mouse
     this.glowSpot.material.uniforms.uTime.value = elapsed;

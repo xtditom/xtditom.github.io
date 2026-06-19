@@ -115,8 +115,14 @@ body {
   }
 }
 
+/* Text Selection Color (Lime Highlight) */
 ::selection {
-  background: var(--c-accent-bright);
+  background: #bef264;
+  color: #000;
+}
+
+.dark ::selection {
+  background: #bef264;
   color: #000;
 }
 
@@ -185,6 +191,7 @@ img {
    MOBILE 2D ANIMATED BACKGROUND (fallback when no WebGL)
    Animated aurora gradient mesh with subtle noise
    ═══════════════════════════════════════════════════════════════ */
+/* ── MOBILE ANIMATED BACKGROUND (green only) ── */
 @media (hover: none), (max-width: 767px) {
   body::before {
     content: "";
@@ -193,17 +200,17 @@ img {
     z-index: 0;
     pointer-events: none;
     background:
-      radial-gradient(ellipse 80% 50% at 20% 40%, rgba(163, 230, 53, 0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 60% at 80% 20%, rgba(52, 211, 153, 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse 70% 40% at 50% 80%, rgba(59, 130, 246, 0.04) 0%, transparent 50%);
-    animation: aurora-shift 12s ease-in-out infinite alternate;
+      radial-gradient(ellipse 90% 60% at 15% 35%, rgba(168, 224, 11, 0.14) 0%, transparent 65%),
+      radial-gradient(ellipse 70% 70% at 85% 15%, rgba(11, 224, 118, 0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 80% 50% at 50% 85%, rgba(163, 230, 53, 0.10) 0%, transparent 55%);
+    animation: aurora-shift 10s ease-in-out infinite alternate;
   }
 
   .dark body::before {
     background:
-      radial-gradient(ellipse 80% 50% at 20% 40%, rgba(163, 230, 53, 0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 60% at 80% 20%, rgba(52, 211, 153, 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse 70% 40% at 50% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 50%);
+      radial-gradient(ellipse 90% 60% at 15% 35%, rgba(168, 224, 11, 0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 70% 70% at 85% 15%, rgba(11, 224, 118, 0.14) 0%, transparent 55%),
+      radial-gradient(ellipse 80% 50% at 50% 85%, rgba(163, 230, 53, 0.12) 0%, transparent 55%);
   }
 
   /* Subtle grain overlay */
@@ -227,14 +234,17 @@ img {
 @keyframes aurora-shift {
   0% {
     background-position: 0% 0%, 100% 0%, 50% 100%;
-    filter: hue-rotate(0deg);
+    filter: hue-rotate(-5deg) brightness(0.95);
   }
-  50% {
-    filter: hue-rotate(15deg);
+  33% {
+    filter: hue-rotate(3deg) brightness(1.05);
+  }
+  66% {
+    filter: hue-rotate(-3deg) brightness(0.98);
   }
   100% {
     background-position: 100% 100%, 0% 100%, 50% 0%;
-    filter: hue-rotate(-10deg);
+    filter: hue-rotate(5deg) brightness(1.02);
   }
 }
 

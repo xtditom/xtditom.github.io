@@ -10,6 +10,7 @@ import Lenis from "lenis";
 import { SceneManager } from "./scene/SceneManager.js";
 import { CyberGrid } from "./objects/CyberGrid.js";
 import { ParticleField } from "./objects/ParticleField.js";
+import { DataStreams } from "./objects/DataStreams.js";
 import { Terminal } from "./ui/Terminal.js";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -18,19 +19,24 @@ gsap.registerPlugin(ScrollTrigger);
 // SCROLL RESTORATION — always start from top on refresh
 // ═══════════════════════════════════════════════════════════════
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-if (window.location.hash) window.history.replaceState(null, null, window.location.pathname);
+if (window.location.hash)
+  window.history.replaceState(null, null, window.location.pathname);
 window.scrollTo(0, 0);
 window.addEventListener("beforeunload", () => window.scrollTo(0, 0));
 
 // ═══════════════════════════════════════════════════════════════
 // DETECT WEBGL + DEVICE CAPABILITIES
 // ═══════════════════════════════════════════════════════════════
-const isDesktop = window.matchMedia("(hover: hover) and (min-width: 768px)").matches;
+const isDesktop = window.matchMedia(
+  "(hover: hover) and (min-width: 768px)",
+).matches;
 const hasWebGL = (() => {
   try {
     const c = document.createElement("canvas");
     return !!(c.getContext("webgl2") || c.getContext("webgl"));
-  } catch { return false; }
+  } catch {
+    return false;
+  }
 })();
 
 // ═══════════════════════════════════════════════════════════════
@@ -51,6 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const grid = new CyberGrid();
       grid.setTheme(isDark);
       scene.addObject(grid);
+
+      const streams = new DataStreams();
+      streams.setTheme(isDark);
+      scene.addObject(streams);
 
       const particles = new ParticleField(350);
       particles.setTheme(isDark);
@@ -92,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     anchor.addEventListener("click", (e) => {
       const href = anchor.getAttribute("href");
       if (!href || href === "#") return;
-      
+
       const target = document.querySelector(href);
       if (target) {
         e.preventDefault();
@@ -135,7 +145,11 @@ document.addEventListener("DOMContentLoaded", () => {
       ease: "none",
     })
     .to(progressWrap, { opacity: 1, duration: 0.2 }, "-=0.2")
-    .to(progressBar, { width: "100%", duration: 0.6, ease: "power2.inOut" }, "-=0.1")
+    .to(
+      progressBar,
+      { width: "100%", duration: 0.6, ease: "power2.inOut" },
+      "-=0.1",
+    )
     .to({}, { duration: 0.3 });
 
   // ─── HERO REVEAL ───
@@ -147,13 +161,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Re-hide for scroll triggers (except hero which reveals immediately)
-    document.querySelectorAll(".section:not(.section--hero) [data-scroll-reveal]").forEach((el) => {
-      gsap.set(el, { y: 40, opacity: 0 });
-    });
+    document
+      .querySelectorAll(".section:not(.section--hero) [data-scroll-reveal]")
+      .forEach((el) => {
+        gsap.set(el, { y: 40, opacity: 0 });
+      });
 
     // Hero content — stagger each child element one by one
     const heroItems = document.querySelectorAll(
-      ".hero__greeting, .hero__name, .hero__tagline, .hero__bio"
+      ".hero__greeting, .hero__name, .hero__tagline, .hero__bio",
     );
     if (heroItems.length) {
       gsap.set(heroItems, { y: 40, opacity: 0 });
@@ -167,25 +183,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Set up scroll-triggered reveals for other sections
-    document.querySelectorAll(".section:not(.section--hero) [data-scroll-reveal]").forEach((el) => {
-      gsap.to(el, {
-        scrollTrigger: {
-          trigger: el,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-        y: 0,
-        opacity: 1,
-        duration: 1.2,
-        ease: "power3.out",
+    document
+      .querySelectorAll(".section:not(.section--hero) [data-scroll-reveal]")
+      .forEach((el) => {
+        gsap.to(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: "power3.out",
+        });
       });
-    });
 
     // Terminal entrance animation
     const terminalEl = document.querySelector(".terminal");
     if (terminalEl) {
-      gsap.fromTo(terminalEl,
-        { scaleY: 0.5, scaleX: 0.9, rotateX: 15, transformOrigin: "top center" },
+      gsap.fromTo(
+        terminalEl,
+        {
+          scaleY: 0.5,
+          scaleX: 0.9,
+          rotateX: 15,
+          transformOrigin: "top center",
+        },
         {
           scrollTrigger: {
             trigger: "#terminal",
@@ -197,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
           rotateX: 0,
           duration: 1.6,
           ease: "expo.out",
-        }
+        },
       );
     }
 
@@ -298,25 +322,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // OS theme sync
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-    if (localStorage.getItem("theme") === null) {
-      if (e.matches) {
-        document.documentElement.classList.add("dark");
-        iconSun?.classList.remove("hidden");
-        iconMoon?.classList.add("hidden");
-      } else {
-        document.documentElement.classList.remove("dark");
-        iconSun?.classList.add("hidden");
-        iconMoon?.classList.remove("hidden");
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", (e) => {
+      if (localStorage.getItem("theme") === null) {
+        if (e.matches) {
+          document.documentElement.classList.add("dark");
+          iconSun?.classList.remove("hidden");
+          iconMoon?.classList.add("hidden");
+        } else {
+          document.documentElement.classList.remove("dark");
+          iconSun?.classList.add("hidden");
+          iconMoon?.classList.remove("hidden");
+        }
+        if (scene) scene.setTheme(e.matches);
       }
-      if (scene) scene.setTheme(e.matches);
-    }
-  });
+    });
 
   // ─── MOBILE MENU ───
   const mobileMenuBtn = document.getElementById("mobile-menu-btn");
   const mobileMenu = document.getElementById("mobile-menu");
-  const mobileLinks = document.querySelectorAll(".mobile-menu__link, .mobile-menu__cta");
+  const mobileLinks = document.querySelectorAll(
+    ".mobile-menu__link, .mobile-menu__cta",
+  );
 
   if (mobileMenuBtn && mobileMenu) {
     let isOpen = false;
@@ -328,7 +356,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     mobileMenuBtn.addEventListener("click", toggle);
-    mobileLinks.forEach((link) => link.addEventListener("click", () => isOpen && toggle()));
+    mobileLinks.forEach((link) =>
+      link.addEventListener("click", () => isOpen && toggle()),
+    );
   }
 
   // ─── FEATURED IMAGE CROSSFADE ───
@@ -337,8 +367,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const img2 = document.getElementById("featured-img-2");
 
   if (imgContainer && img1 && img2) {
-    const showAlt = () => { img1.style.opacity = "0"; img2.style.opacity = "1"; };
-    const showMain = () => { img1.style.opacity = "1"; img2.style.opacity = "0"; };
+    const showAlt = () => {
+      img1.style.opacity = "0";
+      img2.style.opacity = "1";
+    };
+    const showMain = () => {
+      img1.style.opacity = "1";
+      img2.style.opacity = "0";
+    };
 
     if (isDesktop) {
       imgContainer.addEventListener("mouseenter", showAlt);
@@ -409,7 +445,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(dot);
     document.body.appendChild(ring);
 
-    let dotX = 0, dotY = 0, ringX = 0, ringY = 0;
+    let dotX = 0,
+      dotY = 0,
+      ringX = 0,
+      ringY = 0;
 
     window.addEventListener("mousemove", (e) => {
       dotX = e.clientX;
@@ -426,7 +465,8 @@ document.addEventListener("DOMContentLoaded", () => {
     cursorLoop();
 
     // Hover detection
-    const hoverTargets = "a, button, input, textarea, .tech__item, .featured__image-container, .magnetic-btn";
+    const hoverTargets =
+      "a, button, input, textarea, .tech__item, .featured__image-container, .magnetic-btn";
     document.addEventListener("mouseover", (e) => {
       if (e.target.closest(hoverTargets)) {
         dot.classList.add("is-hovering");
@@ -444,15 +484,24 @@ document.addEventListener("DOMContentLoaded", () => {
   // ─── MAGNETIC BUTTONS ───
   if (isDesktop) {
     document.querySelectorAll(".magnetic-btn").forEach((btn) => {
-      const xTo = gsap.quickTo(btn, "x", { duration: 1, ease: "elastic.out(1, 0.3)" });
-      const yTo = gsap.quickTo(btn, "y", { duration: 1, ease: "elastic.out(1, 0.3)" });
+      const xTo = gsap.quickTo(btn, "x", {
+        duration: 1,
+        ease: "elastic.out(1, 0.3)",
+      });
+      const yTo = gsap.quickTo(btn, "y", {
+        duration: 1,
+        ease: "elastic.out(1, 0.3)",
+      });
 
       btn.addEventListener("mousemove", (e) => {
         const rect = btn.getBoundingClientRect();
         xTo((e.clientX - rect.left - rect.width / 2) * 0.4);
         yTo((e.clientY - rect.top - rect.height / 2) * 0.4);
       });
-      btn.addEventListener("mouseleave", () => { xTo(0); yTo(0); });
+      btn.addEventListener("mouseleave", () => {
+        xTo(0);
+        yTo(0);
+      });
     });
   }
 
@@ -518,4 +567,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // ─── TERMINAL INIT ───
   const terminal = new Terminal();
   if (scene) terminal.setSceneManager(scene);
+
+  // ─── DYNAMIC ACCENT COLORS ON TECH HOVER ───
+  const techColors = {
+    html: 0xe34c26,
+    css: 0x264de4,
+    js: 0xf0db4f,
+    git: 0xf05032,
+    api: 0x00ffff,
+    react: 0x61dbfb,
+    ts: 0x007acc,
+    python: 0xffd43b,
+    node: 0x339933,
+  };
+
+  document.querySelectorAll(".tech__item").forEach((item) => {
+    item.addEventListener("mouseenter", () => {
+      const tech = item.getAttribute("data-tech");
+      if (tech && techColors[tech] !== undefined && scene) {
+        scene.setAccentColor(techColors[tech]);
+      }
+    });
+    item.addEventListener("mouseleave", () => {
+      if (scene) scene.resetAccentColor();
+    });
+  });
 });

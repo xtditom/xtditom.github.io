@@ -28,7 +28,8 @@ export class Terminal {
   }
 
   _printBanner() {
-    if (window.innerWidth > 768) {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    if (!isMobile) {
       this.output.innerHTML = `<pre style="color:#a3e635;line-height:1.15;font-size:0.7rem">
 ██╗  ██╗████████╗██████╗ ██╗████████╗ ██████╗ ███╗   ███╗
 ╚██╗██╔╝╚══██╔══╝██╔══██╗██║╚══██╔══╝██╔═══██╗████╗ ████║
@@ -41,12 +42,18 @@ export class Terminal {
 <div><span style="color:#71717a">(c) 2026 Ditom Baroi Antu. All rights reserved.</span></div><br>
 <div>Type <span style="color:#fff;font-weight:700">'help'</span> to see available commands.</div>`;
     } else {
-      this.output.innerHTML = `<pre style="color:#a3e635;line-height:1.3">
-▀▄▀ ▀█▀ █▀▄ █ ▀█▀ █▀█ █▀▄▀█
-█ █  █  █▄▀ █  █  █▄█ █ ▀ █</pre>
-<div style="color:#34d399;font-weight:700">XTDITOM OS v2.0</div>
-<div><span style="color:#71717a">(c) 2026 Ditom Baroi Antu.</span></div><br>
-<div>Type <span style="color:#fff;font-weight:700">'help'</span> for commands.</div>`;
+      // Mobile: clean card-style banner (no block art) with a styled "[ XTDITOM ]" header
+      this.output.innerHTML = `
+<div style="border:1px solid #27272a;border-radius:4px;padding:0.75rem 1rem;margin-bottom:0.5rem;background:rgba(163,230,53,0.05)">
+  <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.5rem">
+    <div style="width:8px;height:8px;border-radius:50%;background:#a3e635;box-shadow:0 0 8px #a3e635;flex-shrink:0"></div>
+    <span style="color:#a3e635;font-weight:800;font-size:1rem;letter-spacing:0.12em">[ XTDITOM ]</span>
+    <span style="color:#52525b;font-size:0.7rem;margin-left:auto">OS v2.0</span>
+  </div>
+  <div style="color:#34d399;font-size:0.75rem;font-weight:600;margin-bottom:0.25rem">Student Developer &amp; Open-Source Contributor</div>
+  <div style="color:#3f3f46;font-size:0.65rem">(c) 2026 Ditom Baroi Antu. All rights reserved.</div>
+</div>
+<div style="margin-top:0.25rem">Type <span style="color:#fff;font-weight:700">'help'</span> for commands.</div>`;
     }
   }
 
@@ -75,7 +82,9 @@ export class Terminal {
 
   _bindEvents() {
     // Focus input when clicking terminal area
-    this.output.parentElement.addEventListener("click", () => this.input.focus());
+    this.output.parentElement.addEventListener("click", () =>
+      this.input.focus(),
+    );
 
     this.input.addEventListener("keydown", (e) => {
       if (this.gameActive) return; // Let game handle input
@@ -111,11 +120,33 @@ export class Terminal {
     const partial = this.input.value.trim().toLowerCase();
     if (!partial) return;
     const allCommands = [
-      "help", "whoami", "skills", "start", "neofetch", "theme",
-      "mail", "matrix", "clear", "exit", "history", "goto",
-      "projects", "socials", "date", "uptime", "fortune",
-      "weather", "hack", "snake", "rickroll", "cat", "ls", "echo",
-      "ping", "cowsay", "glitch"
+      "help",
+      "whoami",
+      "skills",
+      "start",
+      "neofetch",
+      "theme",
+      "mail",
+      "matrix",
+      "clear",
+      "exit",
+      "history",
+      "goto",
+      "projects",
+      "socials",
+      "date",
+      "uptime",
+      "fortune",
+      "weather",
+      "hack",
+      "snake",
+      "rickroll",
+      "cat",
+      "ls",
+      "echo",
+      "ping",
+      "cowsay",
+      "glitch",
     ];
     const match = allCommands.find((c) => c.startsWith(partial));
     if (match) this.input.value = match;
@@ -137,26 +168,36 @@ export class Terminal {
       if (cmd === "cancel" || cmd === "exit" || cmd === "clear") {
         this.mailState = "idle";
         if (cmd === "cancel") {
-          this._print(`<div class="mt-2"><span style="color:#fff">${this._sanitize(rawInput)}</span></div><div style="color:#facc15;margin-left:1rem">[ABORTED] Mail protocol terminated.</div>`);
+          this._print(
+            `<div class="mt-2"><span style="color:#fff">${this._sanitize(rawInput)}</span></div><div style="color:#facc15;margin-left:1rem">[ABORTED] Mail protocol terminated.</div>`,
+          );
           this.input.value = "";
           return;
         }
       } else {
-        this._print(`<div class="mt-2"><span style="color:#fff">${this._sanitize(rawInput)}</span></div>`);
+        this._print(
+          `<div class="mt-2"><span style="color:#fff">${this._sanitize(rawInput)}</span></div>`,
+        );
 
         if (this.mailState === "awaiting_email") {
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(rawInput)) {
-            this._print(`<div style="color:#f87171;margin-left:1rem">Invalid email format. Try again or type 'cancel':</div><div class="mt-1"><span style="color:#34d399;font-weight:700">Email:</span></div>`);
+            this._print(
+              `<div style="color:#f87171;margin-left:1rem">Invalid email format. Try again or type 'cancel':</div><div class="mt-1"><span style="color:#34d399;font-weight:700">Email:</span></div>`,
+            );
             this.input.value = "";
             return;
           }
           this.mailData.email = rawInput;
           this.mailState = "awaiting_message";
-          this._print(`<div style="color:#a3e635;margin-left:1rem">Email accepted.</div><div class="mt-2"><span style="color:#34d399;font-weight:700">Message:</span></div>`);
+          this._print(
+            `<div style="color:#a3e635;margin-left:1rem">Email accepted.</div><div class="mt-2"><span style="color:#34d399;font-weight:700">Message:</span></div>`,
+          );
         } else if (this.mailState === "awaiting_message") {
           this.mailData.message = rawInput;
-          this._print(`<div style="color:#facc15;margin-left:1rem">Transmitting payload to server...</div>`);
+          this._print(
+            `<div style="color:#facc15;margin-left:1rem">Transmitting payload to server...</div>`,
+          );
           this.input.disabled = true;
 
           fetch("https://formspree.io/f/xpqyjoyj", {
@@ -169,13 +210,16 @@ export class Terminal {
             }),
           })
             .then((r) => {
-              this._print(r.ok
-                ? `<div style="color:#34d399;font-weight:700;margin-left:1rem">[OK] Message delivered successfully.</div>`
-                : `<div style="color:#f87171;margin-left:1rem">[ERROR] Server rejected the payload.</div>`
+              this._print(
+                r.ok
+                  ? `<div style="color:#34d399;font-weight:700;margin-left:1rem">[OK] Message delivered successfully.</div>`
+                  : `<div style="color:#f87171;margin-left:1rem">[ERROR] Server rejected the payload.</div>`,
               );
             })
             .catch(() => {
-              this._print(`<div style="color:#f87171;margin-left:1rem">[ERROR] Network failure.</div>`);
+              this._print(
+                `<div style="color:#f87171;margin-left:1rem">[ERROR] Network failure.</div>`,
+              );
             })
             .finally(() => {
               this.mailState = "idle";
@@ -189,8 +233,11 @@ export class Terminal {
     }
 
     // ── STANDARD COMMANDS ──
-    const promptPrefix = window.innerWidth > 768 ? "guest@xtditom:~$" : "~$";
-    this._print(`<div class="mt-2"><span style="color:#34d399;font-weight:700;margin-right:0.5rem">${promptPrefix}</span><span style="color:#fff">${this._sanitize(rawInput)}</span></div>`);
+    const isMobilePrompt = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    const promptPrefix = !isMobilePrompt ? "guest@xtditom:~$" : "~$";
+    this._print(
+      `<div class="mt-2"><span style="color:#34d399;font-weight:700;margin-right:0.5rem">${promptPrefix}</span><span style="color:#fff">${this._sanitize(rawInput)}</span></div>`,
+    );
 
     // ═══════════════════════════════════════════════════
     //  HELP
@@ -229,85 +276,122 @@ export class Terminal {
 &nbsp;&nbsp;<b>exit</b> — Terminate session
 </div>`);
 
-    // ═══════════════════════════════════════════════════
-    //  SIMPLE COMMANDS (lookup table)
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  SIMPLE COMMANDS (lookup table)
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "whoami") {
-      this._print(`<div style="color:#a3e635;margin-left:1rem">Ditom Baroi Antu. 18-year-old student developer from Dhaka, Bangladesh. Currently exploring the Tech World &amp; Planning my future in it.</div>`);
-
+      this._print(
+        `<div style="color:#a3e635;margin-left:1rem">Ditom Baroi Antu. 18-year-old student developer from Dhaka, Bangladesh. Currently exploring the Tech World &amp; Planning my future in it.</div>`,
+      );
     } else if (cmd === "skills") {
-      this._print(`<div style="color:#a3e635;margin-left:1rem">HTML5, CSS3, JavaScript (ES6+), Three.js, GSAP, Tailwind CSS v4, Next.js, Python, C++</div>`);
-
+      this._print(
+        `<div style="color:#a3e635;margin-left:1rem">HTML5, CSS3, JavaScript (ES6+), Three.js, GSAP, Tailwind CSS v4, Next.js, Python, C++</div>`,
+      );
     } else if (cmd === "sudo") {
-      this._print(`<div style="color:#f87171;margin-left:1rem">Access denied. Nice try. This incident will be reported.</div>`);
+      this._print(
+        `<div style="color:#f87171;margin-left:1rem">Access denied. Nice try. This incident will be reported.</div>`,
+      );
 
-    // ═══════════════════════════════════════════════════
-    //  CLEAR / START
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  CLEAR / START
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "clear") {
       this.output.innerHTML = "";
-
     } else if (cmd === "start") {
       this._printBanner();
 
-    // ═══════════════════════════════════════════════════
-    //  HISTORY
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  HISTORY
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "history") {
-      const histLines = this.history.map((h, i) => `&nbsp;&nbsp;${i + 1}&nbsp;&nbsp;${this._sanitize(h)}`).join("<br>");
-      this._print(`<div style="color:#a3e635;margin-left:1rem">${histLines}</div>`);
+      const histLines = this.history
+        .map((h, i) => `&nbsp;&nbsp;${i + 1}&nbsp;&nbsp;${this._sanitize(h)}`)
+        .join("<br>");
+      this._print(
+        `<div style="color:#a3e635;margin-left:1rem">${histLines}</div>`,
+      );
 
-    // ═══════════════════════════════════════════════════
-    //  GOTO
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  GOTO
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "goto") {
       const target = args[1]?.toLowerCase();
-      const sections = { home: "#hero", hero: "#hero", work: "#featured", featured: "#featured", tech: "#tech", rigs: "#rigs", terminal: "#terminal", contact: "#contact" };
+      const sections = {
+        home: "#hero",
+        hero: "#hero",
+        work: "#featured",
+        featured: "#featured",
+        tech: "#tech",
+        rigs: "#rigs",
+        terminal: "#terminal",
+        contact: "#contact",
+      };
       if (target && sections[target]) {
-        document.querySelector(sections[target])?.scrollIntoView({ behavior: "smooth" });
-        this._print(`<div style="color:#a3e635;margin-left:1rem">Navigating to: ${this._sanitize(target)}</div>`);
+        document
+          .querySelector(sections[target])
+          ?.scrollIntoView({ behavior: "smooth" });
+        this._print(
+          `<div style="color:#a3e635;margin-left:1rem">Navigating to: ${this._sanitize(target)}</div>`,
+        );
       } else {
-        this._print(`<div style="color:#f87171;margin-left:1rem">Usage: goto [home|work|tech|rigs|terminal|contact]</div>`);
+        this._print(
+          `<div style="color:#f87171;margin-left:1rem">Usage: goto [home|work|tech|rigs|terminal|contact]</div>`,
+        );
       }
 
-    // ═══════════════════════════════════════════════════
-    //  THEME
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  THEME
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "theme") {
       const mode = args[1]?.toLowerCase();
       const lightIcon = document.getElementById("icon-sun");
       const darkIcon = document.getElementById("icon-moon");
       if (mode === "dark") {
         if (document.documentElement.classList.contains("dark")) {
-          this._print(`<div style="color:#facc15;margin-left:1rem">System is already in Dark theme.</div>`);
+          this._print(
+            `<div style="color:#facc15;margin-left:1rem">System is already in Dark theme.</div>`,
+          );
         } else {
           document.documentElement.classList.add("dark");
           localStorage.setItem("theme", "dark");
           if (lightIcon) lightIcon.classList.remove("hidden");
           if (darkIcon) darkIcon.classList.add("hidden");
-          this._print(`<div style="color:#a3e635;margin-left:1rem">System theme updated to: DARK.</div>`);
-          window.dispatchEvent(new CustomEvent("themechange", { detail: { dark: true } }));
+          this._print(
+            `<div style="color:#a3e635;margin-left:1rem">System theme updated to: DARK.</div>`,
+          );
+          window.dispatchEvent(
+            new CustomEvent("themechange", { detail: { dark: true } }),
+          );
         }
       } else if (mode === "light") {
         if (!document.documentElement.classList.contains("dark")) {
-          this._print(`<div style="color:#facc15;margin-left:1rem">System is already in Light theme.</div>`);
+          this._print(
+            `<div style="color:#facc15;margin-left:1rem">System is already in Light theme.</div>`,
+          );
         } else {
           document.documentElement.classList.remove("dark");
           localStorage.setItem("theme", "light");
           if (lightIcon) lightIcon.classList.add("hidden");
           if (darkIcon) darkIcon.classList.remove("hidden");
-          this._print(`<div style="color:#a3e635;margin-left:1rem">System theme updated to: LIGHT.</div>`);
-          window.dispatchEvent(new CustomEvent("themechange", { detail: { dark: false } }));
+          this._print(
+            `<div style="color:#a3e635;margin-left:1rem">System theme updated to: LIGHT.</div>`,
+          );
+          window.dispatchEvent(
+            new CustomEvent("themechange", { detail: { dark: false } }),
+          );
         }
       } else {
-        this._print(`<div style="color:#f87171;margin-left:1rem">${mode ? `Invalid theme: ${this._sanitize(mode)}. ` : ""}Usage: theme [light/dark]</div>`);
+        this._print(
+          `<div style="color:#f87171;margin-left:1rem">${mode ? `Invalid theme: ${this._sanitize(mode)}. ` : ""}Usage: theme [light/dark]</div>`,
+        );
       }
 
-    // ═══════════════════════════════════════════════════
-    //  NEOFETCH
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  NEOFETCH
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "neofetch") {
-      this._print(`<div style="color:#a3e635;margin:1rem 0 0 1rem;display:flex;gap:1.5rem;flex-wrap:wrap;align-items:flex-start"><pre style="color:#34d399;font-weight:700;line-height:1.2;display:none" class="neofetch-ascii">
+      this
+        ._print(`<div style="color:#a3e635;margin:1rem 0 0 1rem;display:flex;gap:1.5rem;flex-wrap:wrap;align-items:flex-start"><pre style="color:#34d399;font-weight:700;line-height:1.2;display:none" class="neofetch-ascii">
   \\\\\\\\\\
    \\\\\\\\\\\\\\
     \\\\\\\\\\\\\\
@@ -316,26 +400,39 @@ export class Terminal {
   //    \\\\\\\\\\\\\\
 </pre><div><span style="color:#fff;font-weight:700">ditom@sys_00</span><br><span style="color:#52525b">-------------------------</span><br><span style="color:#34d399;font-weight:700">OS:</span> XTDITOM OS v2.0<br><span style="color:#34d399;font-weight:700">Host:</span> Workstation // SYS_00<br><span style="color:#34d399;font-weight:700">Renderer:</span> Three.js r${REVISION}<br><span style="color:#34d399;font-weight:700">CPU:</span> Ryzen 5 5600GT<br><span style="color:#34d399;font-weight:700">GPU:</span> Radeon Vega 7<br><span style="color:#34d399;font-weight:700">Memory:</span> 16GB Dual Channel<br><span style="color:#34d399;font-weight:700">Uptime:</span> 18 Years</div></div>`);
       // Show ASCII art on desktop
-      if (window.innerWidth > 768) {
+      const isMobileNeofetch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+      if (!isMobileNeofetch) {
         const ascii = this.output.querySelector(".neofetch-ascii:last-of-type");
         if (ascii) ascii.style.display = "block";
       }
 
-    // ═══════════════════════════════════════════════════
-    //  MAIL
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  MAIL
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "mail") {
       this.mailState = "awaiting_email";
-      this._print(`<div style="color:#a3e635;margin-left:1rem">Initializing direct message protocol...</div><div class="mt-2"><span style="color:#34d399;font-weight:700">Email:</span></div>`);
+      this._print(
+        `<div style="color:#a3e635;margin-left:1rem">Initializing direct message protocol...</div><div class="mt-2"><span style="color:#34d399;font-weight:700">Email:</span></div>`,
+      );
 
-    // ═══════════════════════════════════════════════════
-    //  MATRIX
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  MATRIX
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "matrix") {
-      this._print(`<div style="color:#a3e635;margin-left:1rem">Initializing visual protocol...</div>`);
+      this._print(
+        `<div style="color:#a3e635;margin-left:1rem">Initializing visual protocol...</div>`,
+      );
       const terminal = this.output.closest(".terminal");
       const cvs = document.createElement("canvas");
-      Object.assign(cvs.style, { position: "absolute", top: "0", left: "0", width: "100%", height: "100%", zIndex: "50", pointerEvents: "none" });
+      Object.assign(cvs.style, {
+        position: "absolute",
+        top: "0",
+        left: "0",
+        width: "100%",
+        height: "100%",
+        zIndex: "50",
+        pointerEvents: "none",
+      });
       terminal.appendChild(cvs);
 
       const ctx = cvs.getContext("2d");
@@ -355,7 +452,8 @@ export class Terminal {
         for (let i = 0; i < drops.length; i++) {
           const text = chars[Math.floor(Math.random() * chars.length)];
           ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-          if (drops[i] * fontSize > cvs.height && Math.random() > 0.975) drops[i] = 0;
+          if (drops[i] * fontSize > cvs.height && Math.random() > 0.975)
+            drops[i] = 0;
           drops[i]++;
         }
       }, 33);
@@ -365,25 +463,31 @@ export class Terminal {
         cvs.remove();
         this.input.disabled = false;
         this.input.focus();
-        this._print(`<div style="color:#34d399;margin-left:1rem">[OK] Protocol terminated. System restored.</div>`);
+        this._print(
+          `<div style="color:#34d399;margin-left:1rem">[OK] Protocol terminated. System restored.</div>`,
+        );
       }, 5000);
 
-    // ═══════════════════════════════════════════════════
-    //  EXIT
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  EXIT
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "exit") {
-      this._print(`<div style="color:#f87171;margin-left:1rem">Terminating session interface...</div>`);
+      this._print(
+        `<div style="color:#f87171;margin-left:1rem">Terminating session interface...</div>`,
+      );
       this.input.disabled = true;
 
       setTimeout(() => {
-        this._print(`<div style="color:#71717a;margin-left:1rem;margin-top:0.5rem">Session terminated. Type <span style="color:#fff;font-weight:700">'start'</span> to reboot.</div>`);
+        this._print(
+          `<div style="color:#71717a;margin-left:1rem;margin-top:0.5rem">Session terminated. Type <span style="color:#fff;font-weight:700">'start'</span> to reboot.</div>`,
+        );
         this.input.disabled = false;
         this.input.focus();
       }, 1200);
 
-    // ═══════════════════════════════════════════════════
-    //  PROJECTS
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  PROJECTS
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "projects") {
       this._print(`<div style="margin-left:1rem">
 <span style="color:#fff;font-weight:700">═══ PROJECTS ═══</span><br><br>
@@ -395,9 +499,9 @@ export class Terminal {
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://ditom.me" target="_blank" style="color:#60a5fa">Live</a> · <a href="https://github.com/xtditom/portfolio" target="_blank" style="color:#60a5fa">GitHub</a>
 </div>`);
 
-    // ═══════════════════════════════════════════════════
-    //  SOCIALS
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  SOCIALS
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "socials") {
       this._print(`<div style="margin-left:1rem">
 <span style="color:#fff;font-weight:700">═══ CONNECT ═══</span><br><br>
@@ -410,65 +514,81 @@ export class Terminal {
 <span style="color:#a3e635">Website</span>&nbsp;&nbsp;&nbsp;→ <a href="https://ditom.me" target="_blank" style="color:#60a5fa">ditom.me</a>
 </div>`);
 
-    // ═══════════════════════════════════════════════════
-    //  DATE
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  DATE
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "date") {
       const now = new Date();
       const formatted = now.toLocaleString("en-US", {
-        weekday: "long", year: "numeric", month: "long", day: "numeric",
-        hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true,
-        timeZoneName: "short"
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+        timeZoneName: "short",
       });
-      this._print(`<div style="color:#a3e635;margin-left:1rem">${formatted}</div>`);
+      this._print(
+        `<div style="color:#a3e635;margin-left:1rem">${formatted}</div>`,
+      );
 
-    // ═══════════════════════════════════════════════════
-    //  UPTIME
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  UPTIME
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "uptime") {
       const now = new Date();
-      const bootTime = new Date(this.sessionStart).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+      const bootTime = new Date(this.sessionStart).toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      });
       this._print(`<div style="margin-left:1rem">
 <span style="color:#34d399;font-weight:700">Session started:</span> <span style="color:#a3e635">${bootTime}</span><br>
 <span style="color:#34d399;font-weight:700">Uptime:</span> <span style="color:#a3e635">${this._formatUptime()}</span><br>
 <span style="color:#34d399;font-weight:700">Commands run:</span> <span style="color:#a3e635">${this.history.length}</span>
 </div>`);
 
-    // ═══════════════════════════════════════════════════
-    //  FORTUNE
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  FORTUNE
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "fortune") {
       const quotes = [
-        "\"Any fool can write code that a computer can understand. Good programmers write code that humans can understand.\" — Martin Fowler",
-        "\"First, solve the problem. Then, write the code.\" — John Johnson",
-        "\"Experience is the name everyone gives to their mistakes.\" — Oscar Wilde",
-        "\"Code is like humor. When you have to explain it, it's bad.\" — Cory House",
-        "\"Fix the cause, not the symptom.\" — Steve Maguire",
-        "\"Optimism is an occupational hazard of programming: feedback is the treatment.\" — Kent Beck",
-        "\"Simplicity is the soul of efficiency.\" — Austin Freeman",
-        "\"Make it work, make it right, make it fast.\" — Kent Beck",
-        "\"The best error message is the one that never shows up.\" — Thomas Fuchs",
-        "\"A language that doesn't affect the way you think about programming is not worth knowing.\" — Alan Perlis",
+        '"Any fool can write code that a computer can understand. Good programmers write code that humans can understand." — Martin Fowler',
+        '"First, solve the problem. Then, write the code." — John Johnson',
+        '"Experience is the name everyone gives to their mistakes." — Oscar Wilde',
+        '"Code is like humor. When you have to explain it, it\'s bad." — Cory House',
+        '"Fix the cause, not the symptom." — Steve Maguire',
+        '"Optimism is an occupational hazard of programming: feedback is the treatment." — Kent Beck',
+        '"Simplicity is the soul of efficiency." — Austin Freeman',
+        '"Make it work, make it right, make it fast." — Kent Beck',
+        '"The best error message is the one that never shows up." — Thomas Fuchs',
+        '"A language that doesn\'t affect the way you think about programming is not worth knowing." — Alan Perlis',
         "\"Programming isn't about what you know; it's about what you can figure out.\" — Chris Pine",
-        "\"The only way to learn a new programming language is by writing programs in it.\" — Dennis Ritchie",
-        "\"Talk is cheap. Show me the code.\" — Linus Torvalds",
-        "\"Programs must be written for people to read, and only incidentally for machines to execute.\" — Harold Abelson",
+        '"The only way to learn a new programming language is by writing programs in it." — Dennis Ritchie',
+        '"Talk is cheap. Show me the code." — Linus Torvalds',
+        '"Programs must be written for people to read, and only incidentally for machines to execute." — Harold Abelson',
         "\"It's not a bug — it's an undocumented feature.\" — Anonymous",
-        "\"Deleted code is debugged code.\" — Jeff Sickel",
-        "\"If debugging is the process of removing bugs, then programming must be the process of putting them in.\" — Edsger Dijkstra",
+        '"Deleted code is debugged code." — Jeff Sickel',
+        '"If debugging is the process of removing bugs, then programming must be the process of putting them in." — Edsger Dijkstra',
         "\"The most dangerous phrase in the language is 'We've always done it this way.'\" — Grace Hopper",
-        "\"Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away.\" — Antoine de Saint-Exupéry",
-        "\"In theory, theory and practice are the same. In practice, they're not.\" — Yogi Berra",
+        '"Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away." — Antoine de Saint-Exupéry',
+        '"In theory, theory and practice are the same. In practice, they\'re not." — Yogi Berra',
       ];
       const quote = quotes[Math.floor(Math.random() * quotes.length)];
-      this._print(`<div style="color:#a3e635;margin-left:1rem;font-style:italic">${quote}</div>`);
+      this._print(
+        `<div style="color:#a3e635;margin-left:1rem;font-style:italic">${quote}</div>`,
+      );
 
-    // ═══════════════════════════════════════════════════
-    //  WEATHER
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  WEATHER
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "weather") {
       const city = args.slice(1).join(" ") || "Dhaka";
-      this._print(`<div style="color:#a3e635;margin-left:1rem">Fetching weather data for ${this._sanitize(city)}...</div>`);
+      this._print(
+        `<div style="color:#a3e635;margin-left:1rem">Fetching weather data for ${this._sanitize(city)}...</div>`,
+      );
       this.input.disabled = true;
 
       fetch(`https://wttr.in/${encodeURIComponent(city)}?format=j1`)
@@ -499,37 +619,72 @@ export class Terminal {
 </div>`);
         })
         .catch(() => {
-          this._print(`<div style="color:#f87171;margin-left:1rem">[ERROR] Could not fetch weather for "${this._sanitize(city)}". Check city name.</div>`);
+          this._print(
+            `<div style="color:#f87171;margin-left:1rem">[ERROR] Could not fetch weather for "${this._sanitize(city)}". Check city name.</div>`,
+          );
         })
         .finally(() => {
           this.input.disabled = false;
           this.input.focus();
         });
 
-    // ═══════════════════════════════════════════════════
-    //  HACK
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  HACK
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "hack") {
-      this._print(`<div style="color:#a3e635;margin-left:1rem">[INIT] Penetration testing module activated...</div>`);
+      this._print(
+        `<div style="color:#a3e635;margin-left:1rem">[INIT] Penetration testing module activated...</div>`,
+      );
       this.input.disabled = true;
 
-      const rIP = () => `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+      const rIP = () =>
+        `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
       const rPort = () => Math.floor(Math.random() * 65535);
 
       const hackLines = [
         { text: `[SCAN] Enumerating network interfaces...`, color: "#a3e635" },
-        { text: `[SCAN] Target acquired: ${rIP()}:${rPort()}`, color: "#a3e635" },
-        { text: `[BRUTE] Attempting SSH handshake on port ${rPort()}...`, color: "#a3e635" },
-        { text: `[CRACK] Decrypting RSA-4096 key... ████████░░ 80%`, color: "#facc15" },
-        { text: `[CRACK] Decrypting RSA-4096 key... ██████████ 100%`, color: "#34d399" },
-        { text: `[INJECT] SQL payload → SELECT * FROM users WHERE 1=1`, color: "#a3e635" },
+        {
+          text: `[SCAN] Target acquired: ${rIP()}:${rPort()}`,
+          color: "#a3e635",
+        },
+        {
+          text: `[BRUTE] Attempting SSH handshake on port ${rPort()}...`,
+          color: "#a3e635",
+        },
+        {
+          text: `[CRACK] Decrypting RSA-4096 key... ████████░░ 80%`,
+          color: "#facc15",
+        },
+        {
+          text: `[CRACK] Decrypting RSA-4096 key... ██████████ 100%`,
+          color: "#34d399",
+        },
+        {
+          text: `[INJECT] SQL payload → SELECT * FROM users WHERE 1=1`,
+          color: "#a3e635",
+        },
         { text: `[PROXY] Routing through ${rIP()}`, color: "#a3e635" },
-        { text: `[PROXY] Bouncing signal: Tokyo → Berlin → São Paulo`, color: "#a3e635" },
-        { text: `[BYPASS] Firewall neutralized. Port 22 open.`, color: "#34d399" },
-        { text: `[DUMP] Exfiltrating ${(Math.random() * 10).toFixed(1)}GB of classified data...`, color: "#facc15" },
-        { text: `[ACCESS] Root shell obtained. Welcome, operator.`, color: "#34d399" },
+        {
+          text: `[PROXY] Bouncing signal: Tokyo → Berlin → São Paulo`,
+          color: "#a3e635",
+        },
+        {
+          text: `[BYPASS] Firewall neutralized. Port 22 open.`,
+          color: "#34d399",
+        },
+        {
+          text: `[DUMP] Exfiltrating ${(Math.random() * 10).toFixed(1)}GB of classified data...`,
+          color: "#facc15",
+        },
+        {
+          text: `[ACCESS] Root shell obtained. Welcome, operator.`,
+          color: "#34d399",
+        },
         { text: ``, color: "#a3e635" },
-        { text: `[ALERT] Just kidding. This is a portfolio, not a pentest suite. 😄`, color: "#facc15" },
+        {
+          text: `[ALERT] Just kidding. This is a portfolio, not a pentest suite. 😄`,
+          color: "#facc15",
+        },
       ];
 
       let i = 0;
@@ -541,24 +696,32 @@ export class Terminal {
           return;
         }
         if (hackLines[i].text) {
-          this._print(`<div style="color:${hackLines[i].color};margin-left:1rem">${hackLines[i].text}</div>`);
+          this._print(
+            `<div style="color:${hackLines[i].color};margin-left:1rem">${hackLines[i].text}</div>`,
+          );
         } else {
           this._print(`<br>`);
         }
         i++;
       }, 450);
 
-    // ═══════════════════════════════════════════════════
-    //  SNAKE
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  SNAKE
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "snake") {
-      this._print(`<div style="color:#a3e635;margin-left:1rem">Starting Snake... Arrow keys to move. ESC or QUIT button to exit.</div>`);
+      this._print(
+        `<div style="color:#a3e635;margin-left:1rem">Starting Snake... Arrow keys to move. ESC or QUIT button to exit.</div>`,
+      );
       const terminal = this.output.closest(".terminal");
       const cvs = document.createElement("canvas");
       Object.assign(cvs.style, {
-        position: "absolute", top: "0", left: "0",
-        width: "100%", height: "100%", zIndex: "50",
-        background: "#0a0a0a"
+        position: "absolute",
+        top: "0",
+        left: "0",
+        width: "100%",
+        height: "100%",
+        zIndex: "50",
+        background: "#0a0a0a",
       });
       terminal.appendChild(cvs);
 
@@ -566,10 +729,19 @@ export class Terminal {
       const quitBtn = document.createElement("button");
       quitBtn.textContent = "✕ QUIT";
       Object.assign(quitBtn.style, {
-        position: "absolute", top: "8px", right: "8px", zIndex: "51",
-        background: "rgba(239,68,68,0.85)", color: "#fff", border: "none",
-        padding: "6px 14px", fontFamily: "var(--font-mono)", fontSize: "11px",
-        cursor: "pointer", fontWeight: "700", letterSpacing: "0.1em"
+        position: "absolute",
+        top: "8px",
+        right: "8px",
+        zIndex: "51",
+        background: "rgba(239,68,68,0.85)",
+        color: "#fff",
+        border: "none",
+        padding: "6px 14px",
+        fontFamily: "var(--font-mono)",
+        fontSize: "11px",
+        cursor: "pointer",
+        fontWeight: "700",
+        letterSpacing: "0.1em",
       });
       terminal.appendChild(quitBtn);
 
@@ -592,25 +764,35 @@ export class Terminal {
       const spawnFood = () => {
         let pos;
         do {
-          pos = { x: Math.floor(Math.random() * cols), y: Math.floor(Math.random() * rows) };
-        } while (snake.some(s => s.x === pos.x && s.y === pos.y));
+          pos = {
+            x: Math.floor(Math.random() * cols),
+            y: Math.floor(Math.random() * rows),
+          };
+        } while (snake.some((s) => s.x === pos.x && s.y === pos.y));
         return pos;
       };
       let food = spawnFood();
 
       // Keyboard controls
       const keyHandler = (e) => {
-        if (e.key === "Escape") { gameOver = true; return; }
+        if (e.key === "Escape") {
+          gameOver = true;
+          return;
+        }
         if (e.key === "ArrowUp" && dir.y !== 1) nextDir = { x: 0, y: -1 };
-        else if (e.key === "ArrowDown" && dir.y !== -1) nextDir = { x: 0, y: 1 };
-        else if (e.key === "ArrowLeft" && dir.x !== 1) nextDir = { x: -1, y: 0 };
-        else if (e.key === "ArrowRight" && dir.x !== -1) nextDir = { x: 1, y: 0 };
+        else if (e.key === "ArrowDown" && dir.y !== -1)
+          nextDir = { x: 0, y: 1 };
+        else if (e.key === "ArrowLeft" && dir.x !== 1)
+          nextDir = { x: -1, y: 0 };
+        else if (e.key === "ArrowRight" && dir.x !== -1)
+          nextDir = { x: 1, y: 0 };
         e.preventDefault();
       };
       document.addEventListener("keydown", keyHandler);
 
       // Touch controls for mobile
-      let touchStartX = 0, touchStartY = 0;
+      let touchStartX = 0,
+        touchStartY = 0;
       const touchStartHandler = (e) => {
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
@@ -633,7 +815,9 @@ export class Terminal {
       cvs.addEventListener("touchend", touchEndHandler, { passive: true });
 
       // Quit button handler
-      quitBtn.addEventListener("click", () => { gameOver = true; });
+      quitBtn.addEventListener("click", () => {
+        gameOver = true;
+      });
 
       // Cleanup function
       const cleanup = () => {
@@ -646,21 +830,34 @@ export class Terminal {
         this.gameActive = false;
         this.input.disabled = false;
         this.input.focus();
-        this._print(`<div style="color:#34d399;margin-left:1rem">[GAME OVER] Final score: <span style="color:#fff;font-weight:700">${score}</span>. Snake terminated.</div>`);
+        this._print(
+          `<div style="color:#34d399;margin-left:1rem">[GAME OVER] Final score: <span style="color:#fff;font-weight:700">${score}</span>. Snake terminated.</div>`,
+        );
       };
 
       // Game loop
       const gameLoop = setInterval(() => {
-        if (gameOver) { cleanup(); return; }
+        if (gameOver) {
+          cleanup();
+          return;
+        }
 
         dir = { ...nextDir };
         const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
 
         // Wall collision
-        if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows) { gameOver = true; cleanup(); return; }
+        if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows) {
+          gameOver = true;
+          cleanup();
+          return;
+        }
 
         // Self collision
-        if (snake.some(s => s.x === head.x && s.y === head.y)) { gameOver = true; cleanup(); return; }
+        if (snake.some((s) => s.x === head.x && s.y === head.y)) {
+          gameOver = true;
+          cleanup();
+          return;
+        }
 
         snake.unshift(head);
 
@@ -679,24 +876,43 @@ export class Terminal {
         ctx.strokeStyle = "#1a1a1a";
         ctx.lineWidth = 0.5;
         for (let x = 0; x <= cols; x++) {
-          ctx.beginPath(); ctx.moveTo(x * gridSize, 0); ctx.lineTo(x * gridSize, cvs.height); ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(x * gridSize, 0);
+          ctx.lineTo(x * gridSize, cvs.height);
+          ctx.stroke();
         }
         for (let y = 0; y <= rows; y++) {
-          ctx.beginPath(); ctx.moveTo(0, y * gridSize); ctx.lineTo(cvs.width, y * gridSize); ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(0, y * gridSize);
+          ctx.lineTo(cvs.width, y * gridSize);
+          ctx.stroke();
         }
 
         // Draw food
         ctx.fillStyle = "#ef4444";
         ctx.shadowColor = "#ef4444";
         ctx.shadowBlur = 8;
-        ctx.fillRect(food.x * gridSize + 2, food.y * gridSize + 2, gridSize - 4, gridSize - 4);
+        ctx.fillRect(
+          food.x * gridSize + 2,
+          food.y * gridSize + 2,
+          gridSize - 4,
+          gridSize - 4,
+        );
         ctx.shadowBlur = 0;
 
         // Draw snake
         snake.forEach((seg, i) => {
           ctx.fillStyle = i === 0 ? "#a3e635" : "#4d7c0f";
-          if (i === 0) { ctx.shadowColor = "#a3e635"; ctx.shadowBlur = 6; }
-          ctx.fillRect(seg.x * gridSize + 1, seg.y * gridSize + 1, gridSize - 2, gridSize - 2);
+          if (i === 0) {
+            ctx.shadowColor = "#a3e635";
+            ctx.shadowBlur = 6;
+          }
+          ctx.fillRect(
+            seg.x * gridSize + 1,
+            seg.y * gridSize + 1,
+            gridSize - 2,
+            gridSize - 2,
+          );
           if (i === 0) ctx.shadowBlur = 0;
         });
 
@@ -708,18 +924,23 @@ export class Terminal {
         // Draw controls hint
         ctx.fillStyle = "#52525b";
         ctx.font = "11px monospace";
-        const hint = window.innerWidth > 768 ? "Arrow keys to move · ESC to quit" : "Swipe to move";
+        const isMobileSnake = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+        const hint =
+          !isMobileSnake
+            ? "Arrow keys to move · ESC to quit"
+            : "Swipe to move";
         ctx.fillText(hint, 10, cvs.height - 10);
-
       }, 120);
 
-    // ═══════════════════════════════════════════════════
-    //  PING
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  PING
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "ping") {
       const target = args[1] || "ditom.me";
       const fakeIP = `${Math.floor(Math.random() * 200) + 50}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
-      this._print(`<div style="color:#a3e635;margin-left:1rem">PING ${this._sanitize(target)} (${fakeIP}): 56 data bytes</div>`);
+      this._print(
+        `<div style="color:#a3e635;margin-left:1rem">PING ${this._sanitize(target)} (${fakeIP}): 56 data bytes</div>`,
+      );
       this.input.disabled = true;
 
       let seq = 0;
@@ -727,41 +948,99 @@ export class Terminal {
       const interval = setInterval(() => {
         if (seq >= 4) {
           clearInterval(interval);
-          const avg = (latencies.reduce((a, b) => a + b, 0) / latencies.length).toFixed(1);
+          const avg = (
+            latencies.reduce((a, b) => a + b, 0) / latencies.length
+          ).toFixed(1);
           const min = Math.min(...latencies).toFixed(1);
           const max = Math.max(...latencies).toFixed(1);
-          this._print(`<div style="color:#a3e635;margin-left:1rem"><br>--- ${this._sanitize(target)} ping statistics ---<br>4 packets transmitted, 4 received, <span style="color:#34d399">0% packet loss</span><br>rtt min/avg/max = ${min}/${avg}/${max} ms</div>`);
+          this._print(
+            `<div style="color:#a3e635;margin-left:1rem"><br>--- ${this._sanitize(target)} ping statistics ---<br>4 packets transmitted, 4 received, <span style="color:#34d399">0% packet loss</span><br>rtt min/avg/max = ${min}/${avg}/${max} ms</div>`,
+          );
           this.input.disabled = false;
           this.input.focus();
           return;
         }
         const latency = parseFloat((Math.random() * 40 + 8).toFixed(1));
         latencies.push(latency);
-        this._print(`<div style="color:#a3e635;margin-left:1rem">64 bytes from ${this._sanitize(target)}: icmp_seq=${seq} ttl=64 time=${latency} ms</div>`);
+        this._print(
+          `<div style="color:#a3e635;margin-left:1rem">64 bytes from ${this._sanitize(target)}: icmp_seq=${seq} ttl=64 time=${latency} ms</div>`,
+        );
         seq++;
       }, 800);
 
-    // ═══════════════════════════════════════════════════
-    //  RICKROLL
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  RICKROLL
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "rickroll") {
       const songs = [
-        { title: "Rick Astley - Never Gonna Give You Up", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", lyrics: "🎵 Never gonna give you up, never gonna let you down..." },
-        { title: "Darude - Sandstorm", url: "https://www.youtube.com/watch?v=y6120QOlsfU", lyrics: "🎵 DU DU DU DU DU DUUUUU..." },
-        { title: "Nyan Cat", url: "https://www.youtube.com/watch?v=QH2-TGUlwu4", lyrics: "🐱 Nyan nyan nyan nyan nyan nyan nyan..." },
-        { title: "Toto - Africa", url: "https://www.youtube.com/watch?v=FTQbiNvZqaY", lyrics: "🎵 I bless the rains down in Africa..." },
-        { title: "A-ha - Take On Me", url: "https://www.youtube.com/watch?v=djV11Xbc914", lyrics: "🎵 Take on me... take me on..." },
-        { title: "Smash Mouth - All Star", url: "https://www.youtube.com/watch?v=L_jWHffIx5E", lyrics: "🎵 Somebody once told me the world is gonna roll me..." },
-        { title: "Bee Gees - Stayin' Alive", url: "https://www.youtube.com/watch?v=fNFzfwLM72c", lyrics: "🎵 Ah, ha, ha, ha, stayin' alive, stayin' alive..." },
-        { title: "PSY - Gangnam Style", url: "https://www.youtube.com/watch?v=9bZkp7q19f0", lyrics: "🎵 Oppan Gangnam Style..." },
-        { title: "Daft Punk - Around the World", url: "https://www.youtube.com/watch?v=LKYPYj2XX80", lyrics: "🎵 Around the world, around the world..." },
-        { title: "Europe - The Final Countdown", url: "https://www.youtube.com/watch?v=9jK-NcRmVcw", lyrics: "🎵 It's the final countdown... DUN DUN DUN DUN..." },
-        { title: "Survivor - Eye of the Tiger", url: "https://www.youtube.com/watch?v=btPJPFnesV4", lyrics: "🎵 Rising up, back on the street..." },
-        { title: "Bag Raiders - Shooting Stars", url: "https://www.youtube.com/watch?v=feA64wXhbjo", lyrics: "🎵 It's late and I'm awake, staring at the wall..." },
+        {
+          title: "Rick Astley - Never Gonna Give You Up",
+          url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+          lyrics: "🎵 Never gonna give you up, never gonna let you down...",
+        },
+        {
+          title: "Darude - Sandstorm",
+          url: "https://www.youtube.com/watch?v=y6120QOlsfU",
+          lyrics: "🎵 DU DU DU DU DU DUUUUU...",
+        },
+        {
+          title: "Nyan Cat",
+          url: "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+          lyrics: "🐱 Nyan nyan nyan nyan nyan nyan nyan...",
+        },
+        {
+          title: "Toto - Africa",
+          url: "https://www.youtube.com/watch?v=FTQbiNvZqaY",
+          lyrics: "🎵 I bless the rains down in Africa...",
+        },
+        {
+          title: "A-ha - Take On Me",
+          url: "https://www.youtube.com/watch?v=djV11Xbc914",
+          lyrics: "🎵 Take on me... take me on...",
+        },
+        {
+          title: "Smash Mouth - All Star",
+          url: "https://www.youtube.com/watch?v=L_jWHffIx5E",
+          lyrics: "🎵 Somebody once told me the world is gonna roll me...",
+        },
+        {
+          title: "Bee Gees - Stayin' Alive",
+          url: "https://www.youtube.com/watch?v=fNFzfwLM72c",
+          lyrics: "🎵 Ah, ha, ha, ha, stayin' alive, stayin' alive...",
+        },
+        {
+          title: "PSY - Gangnam Style",
+          url: "https://www.youtube.com/watch?v=9bZkp7q19f0",
+          lyrics: "🎵 Oppan Gangnam Style...",
+        },
+        {
+          title: "Daft Punk - Around the World",
+          url: "https://www.youtube.com/watch?v=LKYPYj2XX80",
+          lyrics: "🎵 Around the world, around the world...",
+        },
+        {
+          title: "Europe - The Final Countdown",
+          url: "https://www.youtube.com/watch?v=9jK-NcRmVcw",
+          lyrics: "🎵 It's the final countdown... DUN DUN DUN DUN...",
+        },
+        {
+          title: "Survivor - Eye of the Tiger",
+          url: "https://www.youtube.com/watch?v=btPJPFnesV4",
+          lyrics: "🎵 Rising up, back on the street...",
+        },
+        {
+          title: "Bag Raiders - Shooting Stars",
+          url: "https://www.youtube.com/watch?v=feA64wXhbjo",
+          lyrics: "🎵 It's late and I'm awake, staring at the wall...",
+        },
       ];
 
-      this._print(`<div style="color:#a3e635;margin-left:1rem">[INIT] Music Roulette Protocol activated...</div>`);
-      this._print(`<div style="color:#facc15;margin-left:1rem;margin-top:0.25rem">🎰 Spinning the wheel...</div>`);
+      this._print(
+        `<div style="color:#a3e635;margin-left:1rem">[INIT] Music Roulette Protocol activated...</div>`,
+      );
+      this._print(
+        `<div style="color:#facc15;margin-left:1rem;margin-top:0.25rem">🎰 Spinning the wheel...</div>`,
+      );
       this.input.disabled = true;
 
       // Animated spinner effect
@@ -771,22 +1050,32 @@ export class Terminal {
         const randomSong = songs[Math.floor(Math.random() * songs.length)];
         // Clear previous spin line and print new one
         const spinLines = this.output.querySelectorAll(".rickroll-spin");
-        spinLines.forEach(el => el.remove());
-        this._print(`<div class="rickroll-spin" style="color:#71717a;margin-left:1rem">▶ ${randomSong.title}</div>`);
+        spinLines.forEach((el) => el.remove());
+        this._print(
+          `<div class="rickroll-spin" style="color:#71717a;margin-left:1rem">▶ ${randomSong.title}</div>`,
+        );
         spins++;
 
         if (spins >= totalSpins) {
           clearInterval(spinInterval);
           // Remove spinner line
-          this.output.querySelectorAll(".rickroll-spin").forEach(el => el.remove());
+          this.output
+            .querySelectorAll(".rickroll-spin")
+            .forEach((el) => el.remove());
 
           // Pick final song
           const pick = songs[Math.floor(Math.random() * songs.length)];
-          this._print(`<div style="color:#a3e635;margin-left:1rem;margin-top:0.5rem">🎯 <span style="color:#fff;font-weight:700">${pick.title}</span></div>`);
-          this._print(`<div style="color:#a3e635;margin-left:1rem">${pick.lyrics}</div>`);
+          this._print(
+            `<div style="color:#a3e635;margin-left:1rem;margin-top:0.5rem">🎯 <span style="color:#fff;font-weight:700">${pick.title}</span></div>`,
+          );
+          this._print(
+            `<div style="color:#a3e635;margin-left:1rem">${pick.lyrics}</div>`,
+          );
 
           setTimeout(() => {
-            this._print(`<div style="color:#facc15;margin-left:1rem;margin-top:0.25rem">Opening... <a href="${pick.url}" target="_blank" style="color:#60a5fa">Click here if blocked</a></div>`);
+            this._print(
+              `<div style="color:#facc15;margin-left:1rem;margin-top:0.25rem">Opening... <a href="${pick.url}" target="_blank" style="color:#60a5fa">Click here if blocked</a></div>`,
+            );
             window.open(pick.url, "_blank");
             this.input.disabled = false;
             this.input.focus();
@@ -794,9 +1083,9 @@ export class Terminal {
         }
       }, 150);
 
-    // ═══════════════════════════════════════════════════
-    //  LS
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  LS
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "ls") {
       this._print(`<div style="margin-left:1rem">
 <span style="color:#60a5fa;font-weight:700">about/</span>&nbsp;&nbsp;&nbsp;
@@ -809,9 +1098,9 @@ export class Terminal {
 <span style="color:#71717a">.gitignore</span>
 </div>`);
 
-    // ═══════════════════════════════════════════════════
-    //  CAT
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  CAT
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "cat") {
       const file = args[1]?.toLowerCase();
       const files = {
@@ -856,34 +1145,42 @@ website&nbsp;&nbsp;&nbsp;= <a href="https://ditom.me" target="_blank" style="col
       };
 
       if (!file) {
-        this._print(`<div style="color:#f87171;margin-left:1rem">Usage: cat [filename] — Try 'ls' to see available files.</div>`);
+        this._print(
+          `<div style="color:#f87171;margin-left:1rem">Usage: cat [filename] — Try 'ls' to see available files.</div>`,
+        );
       } else if (files[file]) {
         this._print(files[file]);
       } else {
-        this._print(`<div style="color:#f87171;margin-left:1rem">cat: ${this._sanitize(file)}: No such file or directory</div>`);
+        this._print(
+          `<div style="color:#f87171;margin-left:1rem">cat: ${this._sanitize(file)}: No such file or directory</div>`,
+        );
       }
 
-    // ═══════════════════════════════════════════════════
-    //  ECHO
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  ECHO
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "echo") {
       const text = args.slice(1).join(" ");
       if (text) {
-        this._print(`<div style="color:#a3e635;margin-left:1rem">${this._sanitize(text)}</div>`);
+        this._print(
+          `<div style="color:#a3e635;margin-left:1rem">${this._sanitize(text)}</div>`,
+        );
       } else {
         this._print(`<div style="margin-left:1rem"><br></div>`);
       }
 
-    // ═══════════════════════════════════════════════════
-    //  COWSAY
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  COWSAY
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "cowsay") {
-      const message = args.slice(1).join(" ") || "Moo! Type something after cowsay";
+      const message =
+        args.slice(1).join(" ") || "Moo! Type something after cowsay";
       const safeMsg = this._sanitize(message);
       const len = message.length;
       const top = " " + "_".repeat(len + 2);
       const bottom = " " + "-".repeat(len + 2);
-      this._print(`<pre style="color:#a3e635;margin-left:1rem;line-height:1.3">${top}
+      this
+        ._print(`<pre style="color:#a3e635;margin-left:1rem;line-height:1.3">${top}
 &lt; ${safeMsg} &gt;
 ${bottom}
         \\   ^__^
@@ -892,11 +1189,13 @@ ${bottom}
                 ||----w |
                 ||     ||</pre>`);
 
-    // ═══════════════════════════════════════════════════
-    //  GLITCH
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  GLITCH
+      // ═══════════════════════════════════════════════════
     } else if (cmd === "glitch") {
-      this._print(`<div style="color:#f87171;margin-left:1rem">[WARN] System instability detected...</div>`);
+      this._print(
+        `<div style="color:#f87171;margin-left:1rem">[WARN] System instability detected...</div>`,
+      );
 
       const style = document.createElement("style");
       style.id = "glitch-effect-style";
@@ -936,14 +1235,18 @@ ${bottom}
       setTimeout(() => {
         document.body.classList.remove("glitching");
         style.remove();
-        this._print(`<div style="color:#34d399;margin-left:1rem">[OK] System stabilized. All processes nominal.</div>`);
+        this._print(
+          `<div style="color:#34d399;margin-left:1rem">[OK] System stabilized. All processes nominal.</div>`,
+        );
       }, 3000);
 
-    // ═══════════════════════════════════════════════════
-    //  UNKNOWN COMMAND
-    // ═══════════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════
+      //  UNKNOWN COMMAND
+      // ═══════════════════════════════════════════════════
     } else {
-      this._print(`<div style="color:#f87171;margin-left:1rem">bash: ${this._sanitize(cmd)}: command not found. Type 'help'.</div>`);
+      this._print(
+        `<div style="color:#f87171;margin-left:1rem">bash: ${this._sanitize(cmd)}: command not found. Type 'help'.</div>`,
+      );
     }
 
     this.input.value = "";
