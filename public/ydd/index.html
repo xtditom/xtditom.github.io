@@ -6,9 +6,10 @@
   <title>YourDynamicDashboard — Privacy-First Browser Start Page</title>
   <meta name="description" content="Transform your new tab into a productivity powerhouse. YourDynamicDashboard is a blazing-fast, privacy-first browser extension with voice search, customizable widgets, and stunning themes.">
   <meta name="theme-color" content="#0a0908">
+  <link rel="icon" type="image/png" href="favicons/ydd-128.png">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="YourDynamicDashboard — Privacy-First Browser Start Page">
+  <meta property="og:title" content="YourDynamicDashboard — Privacy-First Minimalist Browser Start Page">
   <meta property="og:description" content="A blazing-fast, customizable new tab page that respects your privacy. Voice search, weather, todo lists, and beautiful themes.">
   <meta property="og:image" content="https://ditombaroiantuart.wordpress.com/wp-content/uploads/2026/02/custom-bg-2.png">
   <meta property="og:type" content="website">
@@ -74,7 +75,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=1.1">
 </head>
 
 <body class="font-body bg-obsidian-950 text-warm-100">
@@ -91,7 +92,7 @@
   <!-- ══════════════════════════════════════
        Navbar
        ══════════════════════════════════════ -->
-  <nav id="navbar" class="glass-nav fixed top-0 left-0 right-0 z-50">
+  <nav id="navbar" class="glass-nav fixed top-0 left-0 right-0" style="z-index: 250;">
     <div class="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
       <!-- Logo -->
       <a href="#" class="flex items-center gap-2 no-underline">
@@ -102,9 +103,9 @@
 
       <!-- Desktop Nav -->
       <div class="desktop-nav hidden md:flex items-center gap-8">
-        <a href="#features" class="nav-link">Features</a>
         <a href="#demo" class="nav-link">Demo</a>
         <a href="#modes" class="nav-link">Modes</a>
+        <a href="#features" class="nav-link">Features</a>
         <a href="https://xtditom.github.io/YourDynamicDashboard/" target="_blank" rel="noopener noreferrer" class="nav-link portfolio">
           Live Try
           <svg class="inline-block w-3 h-3 ml-0.5 -mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -560,6 +561,6 @@
     </div>
   </div>
 
-  <script src="main.js" defer></script>
+  <script src="main.js?v=1.1" defer></script>
 </body>
 </html>
