@@ -726,6 +726,22 @@ img {
   font-weight: 900;
 }
 
+.section__title-highlight {
+  background: #8fc23e;
+  color: #000000;
+  padding: 0.05em 0.3em;
+  margin-left: -0.1em;
+  position: relative;
+  display: inline-block;
+  box-shadow: var(--shadow-sm);
+  line-height: 1.2;
+}
+
+.dark .section__title-highlight {
+  background: #8bb14b;
+  color: #000000;
+}
+
 .section__num {
   color: var(--c-accent);
   font-family: var(--font-mono);
