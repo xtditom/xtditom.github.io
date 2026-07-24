@@ -13,7 +13,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: "index.html",
-        ydd: "public/ydd/index.html",
+        ydd: "ydd/index.html",
       },
     },
   },
